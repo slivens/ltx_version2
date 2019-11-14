@@ -9,6 +9,7 @@ import { createStore } from 'redux';
 import reducers from './app/redux/reducers/index';
 // import 'antd/dist/antd.less';
 import './assets/iconfot/iconfont';
+
 let store = createStore(reducers);
 ReactDOM.render(
     <Provider store={store}>

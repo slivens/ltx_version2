@@ -4,7 +4,15 @@ import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
 import './style/index.less';
 import ConmonCard from '../../components/conmonCard';
+import {connect} from 'react-redux';
+import axios from 'axios';
+import commonUrl from '../../config';
 const datasource=[
+    {
+        title:"同步课堂",
+        path:"/tbkt",
+        pic:"ycjp.png"  
+      },
     {
       title:"我要报名",
       path:"/iwapply",
@@ -26,9 +34,15 @@ const datasource=[
         pic:"xl.png"
     }
 ]
-class index extends Component {
+class Lndx extends Component {
+    state={
+        menudadta:[]
+    }
     gowhere=(path)=>{
         this.props.history.push(path)
+    }
+    componentWillMount(){
+        this.setState({menudadta:this.props.menudata})
     }
     render() {
         return (
@@ -47,7 +61,7 @@ class index extends Component {
                     老年大学</div>
                     <div className="volunteer_entry">
                 {
-                    datasource.map((item, index) =>
+                    this.state.menudadta.map((item, index) =>
                     <ConmonCard
                         item={item}
                         key={index}
@@ -61,4 +75,9 @@ class index extends Component {
     }
 }
 
-export default withRouter(index);
+
+const mapStateToProps=(state,ownprops)=>({
+    menudata:state.menuData
+})
+const LndxComp=withRouter(Lndx)
+export default connect(mapStateToProps,null)(LndxComp);

@@ -13,14 +13,13 @@ class index extends Component {
     componentWillMount(){
         const {pathname} = this.props.location;
         const actId = pathname.split('/')[2];
-        console.log(actId)
         axios.post(`${commonUrl}/app/qryActivityDetail.do`,
         {actId}
          )
         .then(res => {
             if(res.data.code==="success"){
                 this.setState({detail:res.data.data})
-                console.log(res)
+                
             }
         })
     }

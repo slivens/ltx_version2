@@ -18,7 +18,6 @@ class Mycomp extends Component {
     }
     render() {
         const {userinfo} =this.props;
-        console.log('@@@@user',userinfo)
         return (
             <div className="my">
                 <div className="my_info">
@@ -54,7 +53,7 @@ class Mycomp extends Component {
 }
 const mapStateToProps=(state,ownprops)=>{
 return {
-    userinfo:state
+    userinfo:state.userinfo
 }
 }
 

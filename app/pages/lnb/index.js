@@ -4,6 +4,9 @@ import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
 import './style/index.less';
 import ConmonCard from '../../components/conmonCard';
+import {connect} from 'react-redux';
+import axios from 'axios';
+import commonUrl from '../../config';
 const datasource=[
     {
       title:"养生之道",
@@ -26,9 +29,16 @@ const datasource=[
         pic:"dzfwpt.png"
     }
 ]
-class index extends Component {
+class Lnb extends Component {
+    state={
+        menudadta:[]
+    }
     gowhere=(path)=>{
         this.props.history.push(path)
+    }
+    componentWillMount(){
+        this.setState({menudadta:this.props.menudata})
+        
     }
     render() {
         return (
@@ -47,7 +57,7 @@ class index extends Component {
                     老年报</div>
                     <div className="lnb_entry">
                 {
-                    datasource.map((item, index) =>
+                    this.state.menudadta.map((item, index) =>
                     <ConmonCard
                         item={item}
                         key={index}
@@ -61,4 +71,8 @@ class index extends Component {
     }
 }
 
-export default withRouter(index);
+const mapStateToProps=(state,ownprops)=>({
+    menudata:state.menuData
+})
+const LnbComp=withRouter(Lnb)
+export default connect(mapStateToProps,null)(LnbComp);

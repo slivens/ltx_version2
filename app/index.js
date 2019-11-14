@@ -13,9 +13,9 @@ import {
     Yszd,Ycjp,Dzfwt,
     Shgc,ComonList,
     Resetpwd,Suggest,
-    About,Help
+    About,Help,
+    Tbkt
 } from './pages';
-import Lottie from './components/lottie';
 const App = ({ history, location }) => {
     const router = {
         '': <Login />,
@@ -25,7 +25,6 @@ const App = ({ history, location }) => {
         'message': <Message />,
         'my': <My />,
         'detail': <Detail />,
-        'lot': <Lottie />,
         'tel': <Telbooks />,
         'mybranch': <Mybranch />,
         'zbinfo': <Zbinfo />,
@@ -35,24 +34,26 @@ const App = ({ history, location }) => {
         'zbdetail': <Zbdetail />,
         'myactive': <Myactive />,
         'eduTrain': <EduTrain />,
-        'ztjs': <Ztjs />,
+        'ztjs': <Ztjs/>,
         'iwapply':<Apply path="Reg" title="报名"/>,
         'iwleave':<Apply path="leave" title="请假"/>,
         'iwsearch':<Apply path="sech" title="查询"/>,
         'schooldate':<SchoolDate/>,
-        'zyzbd':<Volunteerbaodao/>,
+        // 'zyzbd':<Volunteerbaodao/>,
+        'zyzbd':<ComonList title="志愿者报道" branchtype="zyzbd"/>,
         'lnb':<Lnb/>,
-        'yszd':<Yszd/>,
-        'ycjp':<Ycjp/>,
-        'dzfwt':<Dzfwt/>,
-        'shgc':<Shgc/>,
+        'yszd':<ComonList title="养生之道" branchtype="yszd"/>,
+        'ycjp':<ComonList title="原创精品" branchtype="ycjp"/>,
+        'dzfwt':<ComonList title="读者服务平台" branchtype="dzfwt"/>,
+        'shgc':<ComonList title="史海钩沉" branchtype="shgc"/>,
         'ldyzj':<ComonList title="老党员之家" branchtype="ldyzj"/>,
         'lgbdx':<ComonList title="老干部党校" branchtype="lgbdx"/>,
         'hsjd':<ComonList title="红色基地" branchtype="hsjd"/>,
         'resetpwd':<Resetpwd/>,
         'suggest':<Suggest/>,
         'about':<About/>,
-        'help':<Help/>
+        'help':<Help/>,
+        'tbkt':<Tbkt/>
     }
     const { pathname } = location;
     const path = pathname.split('/')[1];

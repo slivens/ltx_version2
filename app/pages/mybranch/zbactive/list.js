@@ -4,7 +4,6 @@ import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
 import InfiniteScroll from "react-infinite-scroll-component";
 import {withRouter} from 'react-router-dom';
-import activeData from '../../../../assets/data/activitiy.json';
 import axios from 'axios';
 import commonUrl from '../../../config/index';
 class list extends Component {
@@ -18,11 +17,6 @@ class list extends Component {
             this.setState({ hasMore: false });
             return;
         }
-        setTimeout(() => {
-            this.setState({
-                items: this.state.items.concat(activeData)
-            });
-        }, 500);
     };
     godetail=(id)=>{
         this.props.history.push(`/detail/${id}`)
@@ -46,7 +40,6 @@ class list extends Component {
     }
     render() {
         const {items} = this.state;
-        console.log('@@@1111',items)
         return (
             <div className="zbactive_box">
             <InfiniteScroll

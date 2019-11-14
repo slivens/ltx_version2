@@ -4,6 +4,13 @@ const AddUserInfo =  info =>{
         info
     }
 }
+const changeMenu = data=>{
+    return {
+        type:"CHANGE_MENU",
+        data
+    }
+}
 export {
-    AddUserInfo
+    AddUserInfo,
+    changeMenu
 }

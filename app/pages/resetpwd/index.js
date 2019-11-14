@@ -18,7 +18,6 @@ class ResetPwdComp extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 if(values.newPwd!==values.oncenewPwd){
                    return Toast.fail('两次输入的新密码不一致，请确认！',2)
                 }

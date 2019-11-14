@@ -28,7 +28,6 @@ class Logincomp extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 axios.post(`${commonUrl}/app/appLogin.do`, { username: values.username, password: values.password })
                     .then(res => {
                         if (res.data.code === "success") {
@@ -61,6 +60,7 @@ class Logincomp extends Component {
                                 this.props.handleUserinfo(res.data.data);
                                 this.props.history.push('/home');
                             } else {
+                                this.props.history.push('/login');
                                 Toast.fail(`登录失败：${res.data.message}`, 2)
                             }
                         })

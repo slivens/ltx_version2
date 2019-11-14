@@ -2,7 +2,6 @@ import React, { Component, useState, useEffect } from 'react';
 import './style/index.less';
 import { Link, withRouter } from 'react-router-dom';
 const NavBar = ({ history, location, match, className }) => {
-    console.log('@@@@@@@', location, match)
     const [active, setAcitve] = useState('hotnews')
 
     return (

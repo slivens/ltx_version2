@@ -25,7 +25,6 @@ class index extends Component {
         Toast.loading('Loading...',0);
         axios.post(`${commonUrl}/app/qryMailList.do`,{personCategory,unitId}).then(
             res=>{
-                console.log(res)
                 if(res.data.code==='success'){
                    this.setState({datasource:res.data.data})
                    Toast.hide(); 
@@ -37,12 +36,10 @@ class index extends Component {
         )
     }
     SearchChange=(searchContent)=>{
-        console.log('@@@value',searchContent)
         const {personCategory,unitId}=this.props;
         // Toast.loading('Loading...',0);
         axios.post(`${commonUrl}/app/qryMailList.do`,{personCategory,unitId,searchContent}).then(
             res=>{
-                console.log(res)
                 if(res.data.code==='success'){
                    this.setState({datasource:res.data.data})
                 //    Toast.hide(); 
@@ -72,7 +69,7 @@ class index extends Component {
                 </div>
                 <SearchBar placeholder="搜索..." maxLength={20} onChange={this.SearchChange}/>
                 <div className="telbooks_member">
-                <Accordion defaultActiveKey="0" className="my-accordion" onChange={this.onChange}>
+                <Accordion className="my-accordion" onChange={this.onChange}>
                     {   datasource?
                         datasource.map((item,index) =>
                             <Accordion.Panel key={index} header={item.department}>
@@ -105,8 +102,8 @@ class index extends Component {
 
 const mapStateToProps = (state,ownprops)=>{
     return{
-        unitId:state.unitId,
-        personCategory:state.personCategory
+        unitId:state.userinfo.unitId,
+        personCategory:state.userinfo.personCategory
     }
 }
 export default connect(mapStateToProps, null)(withRouter(index));

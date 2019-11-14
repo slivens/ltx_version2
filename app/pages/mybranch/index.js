@@ -5,6 +5,10 @@ import './style/index.less';
 import { Card, WhiteSpace, WingBlank } from 'antd-mobile';
 import { withRouter } from 'react-router-dom';
 import ConmonCard from '../../components/conmonCard';
+import axios from 'axios';
+import commonUrl from '../../config';
+import {connect} from 'react-redux';
+import {changeMenu} from '../../redux/actions';
 const datasource = [
     {
         title: "支部信息",
@@ -32,9 +36,16 @@ const datasource = [
         pic:"hsjd.png"
     }
 ]
-class index extends Component {
+class MyBracnh extends Component {
+    state={
+        menudata:[],
+        menuid:this.props.location.params
+    }
     gowhere=(path)=>{
             this.props.history.push(path)
+    }
+    componentWillMount(){
+        this.setState({menudadta:this.props.menudata})
     }
     render() {
         return (
@@ -53,7 +64,7 @@ class index extends Component {
                     我的支部</div>
                     <div className="my_branch_entry">
                 {
-                    datasource.map((item, index) =>
+                    this.state.menudadta.map((item, index) =>
                     <ConmonCard
                         item={item}
                         key={index}
@@ -66,5 +77,11 @@ class index extends Component {
         );
     }
 }
-
-export default withRouter(index);
+const mapStateToProps=(state,ownprops)=>({
+    menudata:state.menuData
+})
+const mapDispatchToProps=(dispatch,ownprops)=>({
+    fetchMenu:(data)=>dispatch(changeMenu(data))
+})
+const MyBracnhComp=withRouter(MyBracnh)
+export default connect(mapStateToProps,mapDispatchToProps)(MyBracnhComp);

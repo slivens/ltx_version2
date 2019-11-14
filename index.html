@@ -15,6 +15,13 @@
     if(!window.Promise) {
       document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
     }
+    //获取hbuilder打包后的版本号
+    document.addEventListener('plusready', function () {
+		   	plus.runtime.getProperty(plus.runtime.appid, function (wgtinfo) {
+                //appid属性
+                window.ltxVersion=wgtinfo.version //添加全局属性
+            });
+        })
   </script>
   <script type="text/javascript">
     //手机端的适配

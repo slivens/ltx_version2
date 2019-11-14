@@ -4,6 +4,7 @@ import 'antd/es/icon/style';
 import './style/index.less';
 import { withRouter } from 'react-router-dom';
 class index extends Component {
+  
     render() {
         return (
             <div className="about">
@@ -23,7 +24,7 @@ class index extends Component {
                 <div className="version_bg">
                 <img src={require('../../../assets/images/logo.png')}/>
                 </div>
-                <div style={{textAlign:"center"}}>版本：v1.0.2</div>
+                <div style={{textAlign:"center"}}>版本：{window.ltxVersion||"最新版本"}</div>
                 </div>
         );
     }

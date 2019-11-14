@@ -15,7 +15,6 @@ class Zbinfo extends Component {
     componentWillMount() {
         axios.post(`${commonUrl}/app/findPartyBranchInfo.do`,{partyBranchId:this.props.partyBranchId})
         .then(res=>{
-            console.log('@@@@@app',res)
             this.setState({infodata:res.data.data})
         })
     }
@@ -77,7 +76,6 @@ class Zbinfo extends Component {
     }
 }
 const mapStateToProps = (state,ownprops)=>{
-    console.log('@@@state',state)
     return{
         partyBranchId:state.partyBranchId
     }

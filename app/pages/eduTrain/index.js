@@ -5,10 +5,10 @@ import 'antd/es/icon/style';
 import './style/index.less';
 import { Tabs, WhiteSpace ,Badge} from 'antd-mobile';
 // import ConmonCard from '../../components/conmonCard';
-import List from './list';
-import plane from '../../../assets/data/培训计划.json';
-import info from '../../../assets/data/培训资料.json';
-import talk from '../../../assets/data/经验交流.json';
+import axios from 'axios';
+import commonUrl from '../../config';
+import ListView from '../../components/homeListView';
+import {connect} from 'react-redux';
 const datasource=[
     {
       title:"我要报名",
@@ -33,26 +33,37 @@ const tabs = [
     { title: "培训交流" ,key:"tab3"},
   ];
 
-class index extends Component {
+class Edutrain extends Component {
     constructor(props) {
-        console.log('@@@222')
         super(props)
         this.state={
-            data:plane,
+            data:[],
             tabs:"tab1",
         }
     }
-    
+    fetchdadta=(type)=>{
+        axios.post(`${commonUrl}/app/qryNewsListByCode.do`,{columnCode:type})
+        .then(res=>{
+            if(res.data.code==='success'){
+                this.setState({data:res.data.data})
+            }
+            
+        })
+    }
+    componentWillMount(){
+        this.fetchdadta('trainPlan')
+           
+    }
     tabsOnchange=(tab,index)=>{
         switch(tab.title){
             case "培训计划":
-                this.setState({data:plane,tabs:"tab1"});
+                this.fetchdadta('trainPlan');
                 break;
             case "培训资料":
-                this.setState({data:info,tabs:"tab2"});
+                this.fetchdadta('trainData');
                 break;
             case "培训交流":
-                this.setState({data:talk,tabs:"tab3"});
+                this.fetchdadta('experience');
                 break;
             default:
                 this.setState({data:[]})
@@ -60,7 +71,6 @@ class index extends Component {
         }
     }
     render() {
-        console.log('@@@@@render')
         return (
             <div className="eduTrain">
                 <div className="eduTrain_topbar">
@@ -79,7 +89,7 @@ class index extends Component {
                     </div> */}
                     <Tabs tabs={tabs}
                     initialPage={"tab1"}
-                    page={this.state.tabs}
+                    // page={this.state.tabs}
                     tabBarUnderlineStyle={{borderColor:"#F83A2E"}}
                     tabBarActiveTextColor={"#F83A2E"}
                     onChange={this.tabsOnchange}
@@ -87,10 +97,16 @@ class index extends Component {
                 >
                 </Tabs>
                 <WhiteSpace size="lg"/>
-                <List data={this.state.data}/>
+                {/* <List data={this.state.data}/> */}
+                <ListView style={{height:'calc(100% - .5rem - 58.5px)'}} data={this.state.data}/>
             </div>
         );
     }
 }
 
-export default withRouter(index);
+
+const mapStateToProps=(state,ownprops)=>({
+    userId:state.id
+})
+const EdutrainComp=withRouter(Edutrain)
+export default connect(mapStateToProps,null)(EdutrainComp);

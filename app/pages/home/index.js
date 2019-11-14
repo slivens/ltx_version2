@@ -7,10 +7,10 @@ import './style/index.less';
 import NoticeBar from '../../components/noticeBar';
 import Banner from '../../components/banner';
 import ListView from '../../components/homeListView';
-import homedata from '../../../assets/data/homedata.json';
-import provinceNews from '../../../assets/data/provinceNews.json';
-import countyNews from '../../../assets/data/countyNews.json';
-import { Tabs, WhiteSpace ,Badge} from 'antd-mobile';
+import axios from 'axios';
+import commonUrl from '../../config';
+import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
+import { connect } from 'react-redux';
 const notice_data = [
     {
         title: "党建先锋",
@@ -39,27 +39,76 @@ const notice_data = [
     },
 ]
 const tabs = [
-    { title: "工作要闻",key:"tab1" },
-    { title: "省直动态" ,key:"tab2"},
-    { title: "市县动态" ,key:"tab3"},
-  ];
-class index extends Component {
-    state={
-        data:homedata
+    { title: "工作要闻", key: "tab1" },
+    { title: "省直动态", key: "tab2" },
+    { title: "市县动态", key: "tab3" },
+];
+class Home extends Component {
+    state = {
+        data: [],
+        notice_data: []
     }
-    tabsOnchange=(tab,index)=>{
-        switch(tab.title){
+    fetchdata = (type) => {
+        axios.post(`${commonUrl}/app/qryNewsListByCode.do`, { columnCode: type })
+            .then(res => {
+                if (res.data.code === 'success') {
+                    this.setState({ data: res.data.data })
+                }
+
+            })
+    }
+    componentWillMount() {
+        axios.post(`${commonUrl}/app/qryAppMenuList.do`, { userId: this.props.userid })
+            .then(res => {
+                if (res.data.code === 'success') {
+                    let noticeData = res.data.data
+                    const newdata = noticeData.map(item => {
+                        switch (item.title) {
+                            case "党建先锋":
+                                return {
+                                    ...item,
+                                    path: "/mybranch"
+                                }
+                            case "学习教育":
+                                return {
+                                    ...item,
+                                    path: "/eduTrain"
+                                }
+                            case "志愿者":
+                                return {
+                                    ...item,
+                                    path: "/volunteer"
+                                }
+                            case "老年大学":
+                                return {
+                                    ...item,
+                                    path: "/lndx"
+                                }
+                            case "老年报":
+                                return {
+                                    ...item,
+                                    path: "/lnb"
+                                }
+                        }
+                    })
+                    this.setState({ notice_data: newdata })
+                }
+            })
+        this.fetchdata("workNews");
+    }
+    tabsOnchange = (tab, index) => {
+        switch (tab.title) {
             case "工作要闻":
-                this.setState({data:homedata});
+                this.fetchdata("workNews");
                 break;
             case "省直动态":
-                this.setState({data:provinceNews});
+                this.fetchdata("provinceNews");
                 break;
             case "市县动态":
-                this.setState({data:countyNews});
+                this.fetchdata("countyNews");
                 break;
             default:
-                this.setState({data:[]})
+                this.setState({ data: [] })
                 break;
         }
     }
@@ -81,14 +130,14 @@ class index extends Component {
                 </div>
                 {/* <NavBar/> */}
                 <Banner />
-                <NoticeBar data={notice_data} />
-                <WhiteSpace/>
+                <NoticeBar data={this.state.notice_data} />
+                <WhiteSpace />
                 <Tabs tabs={tabs}
                     initialPage={"tab1"}
-                    tabBarUnderlineStyle={{borderColor:"#F83A2E"}}
+                    tabBarUnderlineStyle={{ borderColor: "#F83A2E" }}
                     tabBarActiveTextColor={"#F83A2E"}
                     onChange={this.tabsOnchange}
-                    // onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+                // onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
                 >
                 </Tabs>
                 <ListView data={this.state.data} />
@@ -98,4 +147,8 @@ class index extends Component {
     }
 }
 
-export default index;
+const mapStateToProps = (state, ownProps) => ({
+    userid: state.userinfo.id
+})
+
+export default connect(mapStateToProps, null)(Home);

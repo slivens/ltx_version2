@@ -4,23 +4,50 @@ import 'antd/es/icon/style';
 import './style/index.less';
 import {withRouter} from 'react-router-dom';
 import Listview from '../../../components/homeListView';
-import ldyzj from '../../../../assets/data/老党员之家.json';
-import lgbdx from '../../../../assets/data/老干部党校.json';
-import hsjd from '../../../../assets/data/红色基地.json';
+import axios from 'axios';
+import commonUrl from '../../../config';
+import Nodata from '../../../components/nodata';
 class index extends Component {
+    state={
+        listdata:[]
+    }
     switchData=()=>{
+     
+    }
+    componentWillMount(){
         const {branchtype} = this.props;
         switch(branchtype){
             case "ldyzj":
-                return ldyzj;
+                return this.fetchdadta("oldPartyHome");
             case "lgbdx":
-                return lgbdx;
+                return this.fetchdadta("oldPartySchool");
             case "hsjd":
-                return hsjd;
+                return this.fetchdadta("redBase");
+                case "zyzbd":
+                return this.fetchdadta("volunteer");
+                case "yszd":
+                return this.fetchdadta("health");
+                case "shgc":
+                return this.fetchdadta("history");
+                case "ycjp":
+                return this.fetchdadta("original");
+                case "dzfwt":
+                return this.fetchdadta("server");
+                case "general":
+                return this.fetchdadta("general");
             default:
                 return [];
 
         }
+    }
+    fetchdadta=(type)=>{
+        axios.post(`${commonUrl}/app/qryNewsListByCode.do`,{columnCode:type})
+        .then(res=>{
+            if(res.data.code==='success'){
+                this.setState({listdata:res.data.data})
+            }
+            
+        })
     }
     render() {
         return (
@@ -38,7 +65,11 @@ class index extends Component {
                         }} type="left" />
                     {this.props.title}</div>
                     <div className="mybranch_list_entry">
-                    <Listview data={this.switchData()}/>
+                        {
+                            this.state.listdata.length?
+                            <Listview data={this.state.listdata}/>
+                            :<Nodata style={{height:"100%"}}/>
+                        }
                     </div>
             </div>
         );

@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
+import {withRouter} from 'react-router-dom';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
 import './style/index.less';
-import {withRouter} from 'react-router-dom';
-import Listview from '../../../components/homeListView';
-import volunteerdata from '../../../../assets/data/original.json';
 class index extends Component {
     render() {
         return (
-            <div className="ycjp">
-                <div className="ycjp_topbar">
+            <div className="lndx_tbkt">
+                <div className="lndx_tbkt_topbar">
                     <Icon
                         onClick={() => this.props.history.goBack()}
                         style={{
@@ -20,10 +18,11 @@ class index extends Component {
                             fontSize: ".24rem",
                             transform: "translateY(-50%)"
                         }} type="left" />
-                    原创精品</div>
-                    <div className="ycjp_entry">
-                    <Listview data={volunteerdata}/>
-                    </div>
+                    同步课堂</div>
+                <iframe style={{
+                    width:'100%',
+                    height:"calc(100% - .6rem)"
+                }} src={`http://new.wx.fj.mihua.tv/tbkt/index.html`}/>
             </div>
         );
     }

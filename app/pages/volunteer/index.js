@@ -5,6 +5,9 @@ import 'antd/es/icon/style';
 import './style/index.less';
 import ConmonCard from '../../components/conmonCard';
 import TestButton from './testComp';
+import {connect} from 'react-redux';
+import axios from 'axios';
+import commonUrl from '../../config';
 const datasource=[
     {
       title:"总体介绍",
@@ -17,17 +20,23 @@ const datasource=[
         pic:"zyzbd.png"
     }
 ]
-class index extends Component {
+class Volunteer extends Component {
     constructor(props){
         super(props)
+        this.state={
+            menudadta:[]
+        }
         this.refbtn=React.createRef();
     }
     
     gowhere=(path)=>{
         this.props.history.push(path)
     }
+    componentWillMount(){
+         this.setState({menudadta:this.props.menudata})
+       
+    }
     componentDidMount() {
-        console.log('@@@@@ref',this.refbtn.current)
     }
     render() {
         return (
@@ -46,7 +55,7 @@ class index extends Component {
                     志愿者</div>
                     <div className="volunteer_entry">
                 {
-                    datasource.map((item, index) =>
+                    this.state.menudadta.map((item, index) =>
                     <ConmonCard
                         item={item}
                         key={index}
@@ -55,10 +64,14 @@ class index extends Component {
                     )
                 }
                     </div>
-                <TestButton ref={this.refbtn}>提交</TestButton>
             </div>
         );
     }
 }
 
-export default withRouter(index);
+
+const mapStateToProps=(state,ownprops)=>({
+    menudata:state.menuData
+})
+const VolunteerComp=withRouter(Volunteer)
+export default connect(mapStateToProps,null)(VolunteerComp);
