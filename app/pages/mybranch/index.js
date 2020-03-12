@@ -61,7 +61,7 @@ class MyBracnh extends Component {
                             fontSize: ".24rem",
                             transform: "translateY(-50%)"
                         }} type="left" />
-                    我的支部</div>
+                    党建先锋</div>
                     <div className="my_branch_entry">
                 {
                     this.state.menudadta.map((item, index) =>

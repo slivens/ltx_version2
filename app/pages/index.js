@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-08-28 16:34:35
+ * @LastEditTime : 2020-01-16 16:33:14
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \ltx\app\pages\index.js
+ */
 export {default as Login} from './login';
 export {default as Server} from './server';
 export {default as Message} from './message';
@@ -28,3 +36,8 @@ export {default as Suggest} from './suggest';
 export {default as About} from './about';
 export {default as Help} from './help';
 export {default as Tbkt} from './lndx/tbkt';
+export {default as MesgsDetail} from './message/mesgsDetail';
+export {default as Hdzx} from './hdzx';
+export {default as Search} from './search';
+export {default as Allmember} from './mybranch/zbdetail/allmember';
+export {default as HomeServer} from './homeServer';

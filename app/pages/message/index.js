@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-08-28 16:32:23
+ * @LastEditTime: 2019-12-12 16:53:56
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \ltx\app\pages\message\index.js
+ */
 import React, { Component } from 'react';
 import FooterBar from '../../components/footerBar/footerbar';
 import { SegmentedControl, WingBlank } from 'antd-mobile';
@@ -5,6 +13,9 @@ import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
 import './style/index.less';
 import List from './list';
+import axios from 'axios';
+import commonUrl from '../../config';
+import {connect} from 'react-redux';
 const data=[
     {   
         title:"系统通知",
@@ -26,6 +37,17 @@ const data=[
     }
 ]
 class index extends Component {
+    state={
+        mesgs:[]
+    }
+    componentWillMount(){
+        axios.post(`${commonUrl}/app/queryMsgList.do`,{userId:9984})
+        .then(res=>{
+            if(res.data.code==="success"){
+                this.setState({mesgs:res.data.data})
+            }
+        })
+    }
     render() {
         return (
             <div className="mesg">
@@ -50,7 +72,7 @@ class index extends Component {
                 </div> */}
                 <List>
                     {
-                        data.map(
+                        this.state.mesgs.map(
                             (item,key)=><List.Item key={key} {...item}/>
                             )
                     }
@@ -61,4 +83,9 @@ class index extends Component {
     }
 }
 
-export default index;
+const mapStateToProps=(state,onwporps)=>{
+    return{
+        userId:state.userinfo.id
+    }
+}
+export default connect(mapStateToProps)(index)

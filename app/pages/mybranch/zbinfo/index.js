@@ -77,7 +77,7 @@ class Zbinfo extends Component {
 }
 const mapStateToProps = (state,ownprops)=>{
     return{
-        partyBranchId:state.partyBranchId
+        partyBranchId:state.userinfo.partyBranchId
     }
 }
 const reduxzbinfo= withRouter(Zbinfo);

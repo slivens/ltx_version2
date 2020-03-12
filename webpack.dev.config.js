@@ -107,7 +107,7 @@ const config = {
         port: 8080,
         proxy: {
             "/api": {
-                target: "http://192.168.111.210:8080",
+                target: "http://192.168.111.132:8080",
                 pathRewrite: {
                     "^/api": ""
                 }

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import FooterBar from '../../components/footerBar/footerbar';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
+import Input from 'antd/es/input';
+import 'antd/es/input/style';
 const prefix = "ltx_home";
 import './style/index.less';
 import NoticeBar from '../../components/noticeBar';
@@ -11,6 +13,9 @@ import axios from 'axios';
 import commonUrl from '../../config';
 import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
 import { connect } from 'react-redux';
+import {withRouter} from 'react-router-dom';
+import {changeSearchValue} from '../../redux/actions';
+const { Search } = Input;
 const notice_data = [
     {
         title: "党建先锋",
@@ -39,14 +44,16 @@ const notice_data = [
     },
 ]
 const tabs = [
-    { title: "工作要闻", key: "tab1" },
-    { title: "省直动态", key: "tab2" },
-    { title: "市县动态", key: "tab3" },
+    { title: "时政要闻", key: "tab1",columnCode:"workNews" },
+    { title: "银龄新闻", key: "tab2",columnCode:"provinceNews" },
+    { title: "文史精粹", key: "tab3",columnCode:"countyNews" },
+    { title: "养生乐游", key: "tab4",columnCode:"health" },
 ];
 class Home extends Component {
     state = {
         data: [],
-        notice_data: []
+        notice_data: [],
+        nowtabs:"tab1"
     }
     fetchdata = (type) => {
         axios.post(`${commonUrl}/app/qryNewsListByCode.do`, { columnCode: type })
@@ -84,7 +91,12 @@ class Home extends Component {
                                     ...item,
                                     path: "/lndx"
                                 }
-                            case "老年报":
+                            case "活动中心":
+                                return {
+                                    ...item,
+                                    path: "/hdzx"
+                                }
+                                case "老年报":
                                 return {
                                     ...item,
                                     path: "/lnb"
@@ -94,18 +106,38 @@ class Home extends Component {
                     this.setState({ notice_data: newdata })
                 }
             })
-        this.fetchdata("workNews");
+            if(localStorage.getItem("tabs")){
+                const tab= JSON.parse(localStorage.getItem("tabs"));
+
+
+                this.setState({nowtabs:tab.key});
+                this.fetchdata(tab.columnCode);
+            }else{
+
+                this.fetchdata("workNews");
+            }
     }
     tabsOnchange = (tab, index) => {
         switch (tab.title) {
-            case "工作要闻":
+            case "时政要闻":
+                this.setState({nowtabs:tab.key});
+                localStorage.setItem("tabs",JSON.stringify(tab));
                 this.fetchdata("workNews");
                 break;
-            case "省直动态":
+            case "银龄新闻":
+                this.setState({nowtabs:tab.key});
+                localStorage.setItem("tabs",JSON.stringify(tab));
                 this.fetchdata("provinceNews");
                 break;
-            case "市县动态":
+            case "文史精粹":
+                this.setState({nowtabs:tab.key});
+                localStorage.setItem("tabs",JSON.stringify(tab));
                 this.fetchdata("countyNews");
+                break;
+            case "养生乐游":
+                this.setState({nowtabs:tab.key});
+                localStorage.setItem("tabs",JSON.stringify(tab));
+                this.fetchdata("health");
                 break;
             default:
                 this.setState({ data: [] })
@@ -116,23 +148,41 @@ class Home extends Component {
         return (
             <div className={prefix}>
                 <div className={prefix + '_topBar'}>
-                    <span>首页</span>
-                    <Icon style={{
-                        position: "absolute",
-                        right: ".1rem",
-                        top: "50%",
-                        color: "#F7F8F4",
-                        fontSize: ".24rem",
-                        transform: "translateY(-50%)"
-                    }}
+                    {/*<span>首页</span>*/}
+                    <div className="header_logo"><img src={require('../../../assets/images/HeaderLogo.png')}/></div>
+                    <div className="header_search" 
+                        onClick={()=>this.searchRef.focus()}
+                        >
+                        <Input
+                            ref={ref=>this.searchRef=ref}
+                            onFocus={()=>this.props.history.push({pathname:'/search',params:'home'})}
+                            prefix={<Icon style={{color:"white"}} type="search"/>}
+                            placeholder="搜索"
+                            style={{
+                                width: "2.2rem",
+                                color: "white",
+                                bottom: ".02rem",
+                            }}
+                        />
+                        </div>
+                    <div 
+                        style={{
+                            position: "absolute",
+                            right: ".1rem",
+                            top: "50%",
+                            color: "#F7F8F4",
+                            fontSize: ".17rem",
+                            transform: "translateY(-50%)"
+                        }}
                         type="search"
-                    />
+                    ><Icon type="snippets" /> 专题</div> 
                 </div>
                 {/* <NavBar/> */}
                 <Banner />
                 <NoticeBar data={this.state.notice_data} />
                 <WhiteSpace />
                 <Tabs tabs={tabs}
+                    page={this.state.nowtabs}
                     initialPage={"tab1"}
                     tabBarUnderlineStyle={{ borderColor: "#F83A2E" }}
                     tabBarActiveTextColor={"#F83A2E"}
@@ -150,5 +200,12 @@ class Home extends Component {
 const mapStateToProps = (state, ownProps) => ({
     userid: state.userinfo.id
 })
+const mapdispatchToProps=(dispatch, ownProps)=>{
+    return {
+        searchhandle:(value)=>{
+            dispatch(changeSearchValue(value))
+        }
+    }
+}
 
-export default connect(mapStateToProps, null)(Home);
+export default connect(mapStateToProps, mapdispatchToProps)(withRouter(Home));

@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-09-29 15:45:40
+ * @LastEditTime: 2019-12-02 13:40:22
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \ltx\app\pages\mybranch\comonList\index.js
+ */
 import React, { Component } from 'react';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
@@ -35,6 +43,16 @@ class index extends Component {
                 return this.fetchdadta("server");
                 case "general":
                 return this.fetchdadta("general");
+                case "hdzx":
+                return this.fetchdadta("hdzx");
+                case "hdkx":
+                return this.fetchdadta("hdkx");
+                case "hdgg":
+                return this.fetchdadta("hdgg");
+                case "hdzs":
+                return this.fetchdadta("hdzs");
+                case "lgbfc":
+                return this.fetchdadta("lgbfc");
             default:
                 return [];
 

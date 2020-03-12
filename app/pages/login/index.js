@@ -23,7 +23,19 @@ class Logincomp extends Component {
     componentWillUnmount() {
         clearInterval(this.timer);
     }
-   
+    bindPhone=(id="")=>{
+        if(window.deviceId&&window.deviceType){
+            axios.post(`${commonUrl}/app/bindDeviceInfo.do`,{
+                deviceId:window.deviceId,
+                deviceType:window.deviceType,
+                userId:id
+            }).then(res=>{
+                if(res.data.code==='success'){
+                    console.log('******绑定设备成功******')
+                }
+            })
+        }
+    }
     handleLogin = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -40,11 +52,19 @@ class Logincomp extends Component {
                                 localStorage.setItem('password',values.password);
                             }
                             localStorage.setItem('loginState','online');
+                            //绑定设备信息
+                            try {
+                                this.bindPhone(res.data.data.id);
+                            } catch (error) {
+                                console.log(err)
+                            }
                             Toast.success('登录成功', 1, () => this.timer = setTimeout(this.props.history.push('/home'), 2000));
 
                         } else {
                             Toast.fail(`登录失败：${res.data.message}`, 2)
                         }
+                    }).catch((err)=>{
+                        Toast.fail(`登录失败：${err}`, 2)
                     })
             }
         });
@@ -72,22 +92,6 @@ class Logincomp extends Component {
     render() {
         const { username_err, pssword_err } = this.state;
         const { getFieldDecorator } = this.props.form;
-        //此段cookie设置在Hbuilder失效 不支持。
-        // let obj={};
-        // if (document.cookie) {
-        //     const arr = document.cookie.split(';');
-        //     console.log(arr)
-        //     for (let item of arr) {
-        //         const values = item.trim().split('=');
-        //         obj[values[0]] = values[1].trim();
-        //     }
-
-        // }
-        // let initusername, initpwd;
-        // if ('username' in obj) initusername = obj.username;
-        // else initusername = '';
-        // if ('password' in obj) initpwd = obj.password;
-        // else initpwd = '';
         const initusername=localStorage.getItem('username')||'';
         const initpwd=localStorage.getItem('password')||'';
         return (

@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-08-30 13:25:13
+ * @LastEditTime: 2020-01-15 11:18:53
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \ltx\app\components\footerBar\footerbar.js
+ */
 import React, { Component } from 'react';
 import './style/index.less';
 // import Icon from 'antd/es/icon';
@@ -15,7 +23,7 @@ class footerbar extends Component {
         return (
             <div className="footerbar">
                 <Flex>
-                   <Flex.Item onClick={()=>this.gowhere('/home')}>
+                   <Flex.Item onClick={()=>localStorage.getItem('username')?this.gowhere('/home'):this.gowhere('/login')}>
                        <div className={path==="home"?"active":""} >
                        <Icon
                             className="footer_icon"
@@ -24,7 +32,7 @@ class footerbar extends Component {
                             <div className="footer_title">首页</div>
                        </div>
                     </Flex.Item>
-                   <Flex.Item onClick={()=>this.gowhere('/tel')}>
+                   <Flex.Item onClick={()=>localStorage.getItem('username')?this.gowhere('/tel'):this.gowhere('/login')}>
                    <div className={path==="tel"?"active":""} >
                        <Icon
                             className="footer_icon"
@@ -33,7 +41,7 @@ class footerbar extends Component {
                        <div className="footer_title">通讯录</div>
                        </div>
                     </Flex.Item>
-                   <Flex.Item onClick={()=>this.gowhere('/message')}>
+                   <Flex.Item onClick={()=>localStorage.getItem('username')?this.gowhere('/message'):this.gowhere('/login')}>
                    <div className={path==="message"?"active":""} >
                        <Icon
                             className="footer_icon"
@@ -42,7 +50,7 @@ class footerbar extends Component {
                             <div className="footer_title">消息</div>
                             </div>
                     </Flex.Item>
-                   <Flex.Item onClick={()=>this.gowhere('/my')}>
+                   <Flex.Item onClick={()=>localStorage.getItem('username')?this.gowhere('/my'):this.gowhere('/login')}>
                    <div className={path==="my"?"active":""} >
                        <Icon
                             className="footer_icon"

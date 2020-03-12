@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-09-19 10:36:55
+ * @LastEditTime: 2020-02-25 17:50:27
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \ltx\app\pages\mybranch\zbactive\index.js
+ */
 import React, { Component } from 'react';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
@@ -5,7 +13,44 @@ import './style/index.less';
 import Zbtj from './zbtj';
 import {withRouter} from 'react-router-dom';
 import List from './list';
+import axios from 'axios';
+import commonUrl from '../../../config/index';
+import {connect} from 'react-redux';
+const test="http://192.168.111.132:8080";
 class zbactive extends Component {
+    state={items:[]}
+    tabonChange=(tab)=>{
+        console.log('@@@@@@tab',tab)
+        this.fetchdata(tab)
+    }
+    componentWillMount(){
+        let tab=localStorage.getItem('branch_tab')
+        if(tab){
+            this.fetchdata(JSON.parse(tab));
+        }else{
+            this.fetchdata()
+        }
+    }
+    fetchdata=(tab)=>{
+        console.log('@@@@@@tab',tab)
+        let obj={};
+        if(tab&&tab.title==='我参与的'){
+            obj.userId=this.props.userid;
+        }
+        if(tab&&tab.title==='我发布的'){
+            this.setState({items:[]})
+            return
+        }
+        console.log('@@@@@obj',obj)
+        axios.post(`${commonUrl}/app/activity/findActivityList.do`,obj
+         )
+        .then(res => {
+            if(res.data.code==="success"){
+                this.setState({items:res.data.data})
+            }else{
+            }
+        })
+    }
     render() {
         return (
             <div className="zbactive">
@@ -23,7 +68,8 @@ class zbactive extends Component {
                         type="left" 
                         />
                     支部活动
-                    <span
+                    <Icon
+                    type="menu"
                     style={{
                         position: "absolute",
                         right: ".1rem",
@@ -32,15 +78,23 @@ class zbactive extends Component {
                         fontSize: ".18rem",
                         transform: "translateY(-50%)"
                     }} 
-                    onClick={()=>this.props.history.push('/myactive')}
-                    >我的</span>
+                    onClick={()=>{}}
+                    />
                     </div>
-                    <Zbtj/>
+                    <div className="zbactive-box">
+                    <Zbtj tabonChange={this.tabonChange}/>
                     <div style={{height:".2rem"}}/>
-                    <List/>
+                    <List items={this.state.items}/>
+                    </div>
             </div>
         );
     }
 }
-
-export default withRouter(zbactive);
+const mapStateToProps = (state, ownProps) => ({
+    userid: state.userinfo.id
+})
+const mapdispatchToProps=(dispatch, ownProps)=>{
+    return {
+    }
+}
+export default connect(mapStateToProps,mapdispatchToProps)(withRouter(zbactive));

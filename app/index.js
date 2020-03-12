@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-08-28 10:36:08
+ * @LastEditTime: 2020-02-19 11:43:31
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \ltx\app\index.js
+ */
 import React from 'react';
 import './less/index.less';
 import { withRouter } from 'react-router-dom';
@@ -14,7 +22,9 @@ import {
     Shgc,ComonList,
     Resetpwd,Suggest,
     About,Help,
-    Tbkt
+    Tbkt,MesgsDetail,
+    Hdzx,Search,
+    Allmember,HomeServer
 } from './pages';
 const App = ({ history, location }) => {
     const router = {
@@ -49,11 +59,20 @@ const App = ({ history, location }) => {
         'ldyzj':<ComonList title="老党员之家" branchtype="ldyzj"/>,
         'lgbdx':<ComonList title="老干部党校" branchtype="lgbdx"/>,
         'hsjd':<ComonList title="红色基地" branchtype="hsjd"/>,
+        'hdzx':<Hdzx/>,
+        'hdkx':<ComonList title="活动快讯" branchtype="hdkx"/>,
+        'hdgg':<ComonList title="活动公告" branchtype="hdgg"/>,
+        'hdzs':<ComonList title="活动展示" branchtype="hdzs"/>,
+        'lgbfc':<ComonList title="老干部风采" branchtype="lgbfc"/>,
         'resetpwd':<Resetpwd/>,
         'suggest':<Suggest/>,
         'about':<About/>,
         'help':<Help/>,
-        'tbkt':<Tbkt/>
+        'tbkt':<Tbkt/>,
+        'search':<Search/>,
+        'allmember':<Allmember/>,
+        'mesgsDetail':<MesgsDetail/>,
+        'homeServer':<HomeServer/>
     }
     const { pathname } = location;
     const path = pathname.split('/')[1];

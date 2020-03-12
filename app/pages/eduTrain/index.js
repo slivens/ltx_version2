@@ -28,9 +28,9 @@ const datasource=[
     }
 ]
 const tabs = [
-    { title: "培训计划",key:"tab1" },
-    { title: "培训资料" ,key:"tab2"},
-    { title: "培训交流" ,key:"tab3"},
+    { title: "培训计划",key:"tab1",columnCode:"trainPlan" },
+    { title: "培训资料" ,key:"tab2",columnCode:"trainData"},
+    { title: "培训交流" ,key:"tab3",columnCode:"experience"},
   ];
 
 class Edutrain extends Component {
@@ -51,18 +51,30 @@ class Edutrain extends Component {
         })
     }
     componentWillMount(){
-        this.fetchdadta('trainPlan')
+        if(localStorage.getItem("edu_tabs")){
+            const tab= JSON.parse(localStorage.getItem("edu_tabs"));
+            this.setState({tabs:tab.key});
+            this.fetchdadta(tab.columnCode);
+        }else{
+            this.fetchdadta("trainPlan");
+        }
            
     }
     tabsOnchange=(tab,index)=>{
         switch(tab.title){
             case "培训计划":
+                this.setState({tabs:tab.key});
+                localStorage.setItem("edu_tabs",JSON.stringify(tab));
                 this.fetchdadta('trainPlan');
                 break;
             case "培训资料":
+                this.setState({tabs:tab.key});
+                localStorage.setItem("edu_tabs",JSON.stringify(tab));
                 this.fetchdadta('trainData');
                 break;
             case "培训交流":
+                this.setState({tabs:tab.key});
+                localStorage.setItem("edu_tabs",JSON.stringify(tab));
                 this.fetchdadta('experience');
                 break;
             default:
@@ -84,12 +96,12 @@ class Edutrain extends Component {
                             fontSize: ".24rem",
                             transform: "translateY(-50%)"
                         }} type="left" />
-                     教育培训</div>
+                     学习教育</div>
                     {/* <div className="eduTrain_entry">
                     </div> */}
                     <Tabs tabs={tabs}
                     initialPage={"tab1"}
-                    // page={this.state.tabs}
+                    page={this.state.tabs}
                     tabBarUnderlineStyle={{borderColor:"#F83A2E"}}
                     tabBarActiveTextColor={"#F83A2E"}
                     onChange={this.tabsOnchange}

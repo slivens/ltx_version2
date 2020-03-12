@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-08-28 16:32:58
+ * @LastEditTime: 2019-12-17 09:33:50
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \ltx\app\pages\my\index.js
+ */
 import React, { Component } from 'react';
 import FooterBar from '../../components/footerBar/footerbar';
 import './style/index.less';
@@ -7,13 +15,23 @@ import { Badge,Button,WhiteSpace } from 'antd-mobile';
 import List from '../../components/List';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
+import commonUrl from '../../config';
+import axios from 'axios';
 class Mycomp extends Component {
     forgetpwd=()=>{
         this.props.history.push('/resetpwd');
     }
     loginout=()=>{
         localStorage.setItem("loginState","loginout");
-        localStorage.removeItem("password");
+        localStorage.clear();
+        if(window.deviceId){
+            axios.post(`${commonUrl}/app/unBindDeviceInfo.do`,{deviceId:window.deviceId,userId:this.props.userinfo.id})
+            .then(res=>{
+                if(res.data.code==='success'){
+                    console.log('******解绑设备成功******')
+                }
+            })
+        }
         this.props.history.push('/login');
     }
     render() {
@@ -36,13 +54,13 @@ class Mycomp extends Component {
                     </List> */}
                     {/* <WhiteSpace size="xl"/> */}
                     <List>
-                        <List.Item onClick={this.forgetpwd} type="user">修改密码</List.Item>
-                        <List.Item onClick={()=>this.props.history.push('/suggest')} type="user">意见反馈</List.Item>
+                        <List.Item onClick={this.forgetpwd} >修改密码</List.Item>
+                        <List.Item onClick={()=>this.props.history.push('/suggest')} >意见反馈</List.Item>
                     </List>
                     <WhiteSpace size="xl"/>
                     <List>
-                        <List.Item onClick={()=>this.props.history.push('/about')} type="user">关于</List.Item>
-                        <List.Item onClick={()=>this.props.history.push('/help')} type="user">帮助</List.Item>
+                        <List.Item onClick={()=>this.props.history.push('/about')} >关于</List.Item>
+                        <List.Item onClick={()=>this.props.history.push('/help')} >帮助</List.Item>
                     </List>
                     <WhiteSpace size="xl"/>
                     <Button onClick={this.loginout}>退出登录</Button>

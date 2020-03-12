@@ -1,22 +1,26 @@
 @import '../../../less/common.less';
 
 .ltx_itemDetail {
+    height: 100%;
     &_topbar {
         .topBar;
     }
 
     &_body {
         padding: .2rem;
+        height: calc(100% - .5rem);
+        overflow: auto;
 
         .title {
-            font-size: .2rem;
+            font-size: .19rem;
             font-weight: 700;
         }
 
         .date {
             margin: .05rem auto;
-            font-size: .17rem;
-            color: #b3adad;
+            font-size: .15rem;
+            color: #c1c6cb;
+            // background: #efefef;
         }
 
         .pic {
@@ -32,10 +36,69 @@
 
         .content {
             font-size: .18rem;
+            text-align: justify;
             img{
                 width: 100%;
                 height: 100%;
             }
+        }
+    }
+   
+}
+
+.word_small{
+    .title{
+        font-size:.15rem ;
+    }
+    .date{
+        font-size:.12rem;
+    }
+    .content{
+        p{
+                font-size:.14rem !important;
+        }
+        p{
+            span{
+                font-size:.14rem !important;
+            }
+        }
+    }
+}
+.word_default {
+    .title{
+       font-size:.19rem; 
+    }
+    .date{
+        font-size:.15rem;
+    }
+    .content{
+        p{
+            span{
+                font-size:.18rem !important;
+            }
+        }
+        p{
+                font-size:.18rem !important;
+        }
+    }
+}
+.word_big{
+    .title{
+       font-size:.24rem; 
+    }
+    .date{
+        font-size:.18rem;
+    }
+    .content{
+        p{
+            span{
+                font-size: .22rem !important;
+            }
+        }
+        p{
+            
+                font-size: .22rem !important;
+          
         }
     }
 }
