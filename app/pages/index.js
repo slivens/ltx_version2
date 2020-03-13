@@ -40,4 +40,5 @@ export {default as MesgsDetail} from './message/mesgsDetail';
 export {default as Hdzx} from './hdzx';
 export {default as Search} from './search';
 export {default as Allmember} from './mybranch/zbdetail/allmember';
+export {default as PushActivity} from './mybranch/pushActivity';
 export {default as HomeServer} from './homeServer';

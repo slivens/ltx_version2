@@ -24,7 +24,8 @@ import {
     About,Help,
     Tbkt,MesgsDetail,
     Hdzx,Search,
-    Allmember,HomeServer
+    Allmember,HomeServer,
+    PushActivity
 } from './pages';
 const App = ({ history, location }) => {
     const router = {
@@ -72,7 +73,8 @@ const App = ({ history, location }) => {
         'search':<Search/>,
         'allmember':<Allmember/>,
         'mesgsDetail':<MesgsDetail/>,
-        'homeServer':<HomeServer/>
+        'homeServer':<HomeServer/>,
+        'pushActivity':<PushActivity/>
     }
     const { pathname } = location;
     const path = pathname.split('/')[1];
