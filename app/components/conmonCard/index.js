@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, WhiteSpace, WingBlank } from 'antd-mobile';
 import './style/index.less';
 export default ({item,onClick})=>{
+    console.log(item)
     return(
     <WingBlank size="lg" >
                             <WhiteSpace size="lg" />

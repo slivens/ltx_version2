@@ -24,7 +24,8 @@ import {
     About,Help,
     Tbkt,MesgsDetail,
     Hdzx,Search,
-    Allmember,HomeServer
+    Allmember,HomeServer,
+    Consolation,Zyww
 } from './pages';
 const App = ({ history, location }) => {
     const router = {
@@ -72,7 +73,12 @@ const App = ({ history, location }) => {
         'search':<Search/>,
         'allmember':<Allmember/>,
         'mesgsDetail':<MesgsDetail/>,
-        'homeServer':<HomeServer/>
+        'homeServer':<HomeServer/>,
+        'consolation':<Consolation/>,
+        'zyww':<Zyww/>,
+        'zdjrww':<Consolation/>,
+        'tbknhww':<Consolation/>,
+        'zhww':<Consolation/>,
     }
     const { pathname } = location;
     const path = pathname.split('/')[1];

@@ -41,3 +41,5 @@ export {default as Hdzx} from './hdzx';
 export {default as Search} from './search';
 export {default as Allmember} from './mybranch/zbdetail/allmember';
 export {default as HomeServer} from './homeServer';
+export {default as Consolation} from './consolation';
+export {default as Zyww} from './consolation/zyww';
