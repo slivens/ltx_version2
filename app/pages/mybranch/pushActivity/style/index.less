@@ -1,0 +1,60 @@
+@import '../../../../less/common.less';
+
+.pushactive {
+    height: 100%;
+    background: #f4f4f4;
+
+    &_topbar {
+        .topBar;
+    }
+}
+.pushactive_box{
+    height: calc(100% - .5rem - .8rem);
+    overflow: scroll;
+}
+.am-image-picker-list {
+    // height: 1.5rem;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    .am-flexbox {
+        margin: 0 !important;
+        .am-flexbox-item {
+            flex: 0;
+            margin: 20px auto !important;
+            justify-content: center;
+            min-width: 2.6rem;
+            height: 1.3rem;
+            .am-image-picker-item-content{
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+            }
+            input {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+}
+.pushTime{
+    .am-list-content{
+        flex: none !important;
+        margin-right: 10px;
+    }
+    .am-list-extra{
+        flex:1;
+        text-align: left !important;
+        
+    }
+}
+.activebtn{
+    width: 100%;
+    background: #fff;
+    height: .8rem;
+    position: fixed;
+    bottom: 0;
+    
+    .am-button{
+        color: #fff;
+    }
+}

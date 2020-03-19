@@ -1,0 +1,83 @@
+@import '../../../../less/common.less';
+
+.zyListView {
+  height: auto;
+  background: #ffffff;
+  &_item {
+    padding: .05rem .15rem;
+    height: .65rem;
+    box-sizing: border-box;
+    border-bottom: @border-bottom;
+
+    &_top {
+      width: 100%;
+      margin-bottom: .02rem;
+      &_title {
+        span{
+          font-weight: 700;
+          font-size: .18rem;
+        }
+      }
+    }
+    &_bottom {
+      width: 100%;
+      bottom: 0;
+      font-size: .15rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      color: #c1c6cb;
+      &_left {
+        float: left;
+      }
+      &_right {
+        float: right;
+      }
+    }
+  }
+  &_topbar {
+    .topBar;
+  }
+  .homeListView {
+    height: auto;
+  }
+}
+
+.ww_footerbar {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  height: .6rem;
+  border-top: 1px solid #EFEFEF;
+  z-index: 1000;
+  background: #FFFFFF;
+  padding-top: .04rem;
+  text-align: center;
+  color: #f02933;
+  line-height: .6rem;
+  font-size: .19rem;
+  &_commit_button {
+    width: 84%;
+    /*color: #fff9f3!important;*/
+    color: #ffffff!important;
+    background-color: #fb5231!important;
+    height: 40px !important;
+    line-height: 40px !important;
+    margin: .05rem auto;
+    border-radius: 20px !important;
+  }
+
+  .am-flexbox {
+    height: 100%;
+    text-align: center;
+  }
+  .active {
+    color: #FC5131 !important;
+    .icon {
+      color: #FC5131 !important;
+    }
+  }
+  .footer_title {
+    font-size: .14rem;
+  }
+}

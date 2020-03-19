@@ -25,7 +25,8 @@ import {
     Tbkt,MesgsDetail,
     Hdzx,Search,
     Allmember,HomeServer,
-    Consolation,Zyww
+    PushActivity, Consolation,
+    Zyww,ZywwDetail,ZywwRegister
 } from './pages';
 const App = ({ history, location }) => {
     const router = {
@@ -74,8 +75,11 @@ const App = ({ history, location }) => {
         'allmember':<Allmember/>,
         'mesgsDetail':<MesgsDetail/>,
         'homeServer':<HomeServer/>,
+        'pushActivity':<PushActivity/>,
         'consolation':<Consolation/>,
         'zyww':<Zyww/>,
+        'zywwDetail':<ZywwDetail/>,
+        'zywwRegister':<ZywwRegister/>,
         'zdjrww':<Consolation/>,
         'tbknhww':<Consolation/>,
         'zhww':<Consolation/>,

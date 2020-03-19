@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import Icon from 'antd/es/icon';
-import 'antd/es/icon/style';
+import {connect} from 'react-redux';
 import { Card, WhiteSpace, WingBlank } from 'antd-mobile';
 import { withRouter } from 'react-router-dom';
+import Icon from 'antd/es/icon';
+import 'antd/es/icon/style';
 import ConmonCard from '../../components/conmonCard';
-import axios from 'axios';
-import commonUrl from '../../config';
-import {connect} from 'react-redux';
 import {changeMenu} from '../../redux/actions';
+import './style/index.less';
 const datasource = [
     {
         title: "住院慰问",
@@ -43,8 +42,8 @@ class Consolation extends Component {
     }
     render() {
         return (
-            <div className="my_branch">
-                <div className="my_branch_topbar">
+            <div className="consolation">
+                <div className="consolation_topbar">
                     <Icon
                         onClick={() => this.props.history.goBack()}
                         style={{
@@ -56,7 +55,7 @@ class Consolation extends Component {
                             transform: "translateY(-50%)"
                         }} type="left" />
                     慰问管理</div>
-                    <div className="my_branch_entry">
+                    <div className="consolation_entry">
                 {
                     this.state.menudadta.map((item, index) =>
                     <ConmonCard
