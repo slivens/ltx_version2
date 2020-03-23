@@ -7,6 +7,6 @@
  * @FilePath: \ltx\app\config\index.js
  */
 // const commonUrl = 'http://218.5.2.250:11889';
-// const commonUrl = 'http://192.168.111.132:8080';
-const commonUrl = '/api';
+const commonUrl = 'http://192.168.111.132:8080';
+//const commonUrl = '/api';
 export default commonUrl;

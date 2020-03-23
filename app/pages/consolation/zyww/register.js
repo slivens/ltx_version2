@@ -12,7 +12,7 @@ import Form from 'antd/es/form';
 import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
 import './style/index.less';
-import {caseData} from "./data";
+import {caseData,detailInfoData} from "./data";
 import CommitFooterbar from "../components/commitFooterbar";
 import commonUrl from '../../../config';
 
@@ -24,6 +24,7 @@ class ZywwRegisterConn extends Component {
         this.state = {
             datasource: "",
             files: [],
+            detailData: detailInfoData
         }
     }
 
@@ -87,7 +88,7 @@ class ZywwRegisterConn extends Component {
 
 
     render() {
-        const {files} = this.state;
+        const {files,detailData} = this.state;
         const {getFieldDecorator} = this.props.form;
         return (
             <div className={prefix}>
@@ -108,6 +109,7 @@ class ZywwRegisterConn extends Component {
                     <List>
                         <Form.Item>
                             {getFieldDecorator('wwdx', {
+                                initialValue: detailData && detailData.wwdx,
                                 rules: [{required: true, message: '请选择慰问对象'}],
                             })(
                                 <InputItem
@@ -118,6 +120,7 @@ class ZywwRegisterConn extends Component {
                         </Form.Item>
                         <Form.Item>
                             {getFieldDecorator('wwdw', {
+                                initialValue: detailData && detailData.wwdw,
                                 rules: [{required: true, message: '请选择慰问单位'}],
                             })(
                                 <InputItem
@@ -128,6 +131,7 @@ class ZywwRegisterConn extends Component {
                         </Form.Item>
                         <Form.Item>
                             {getFieldDecorator('wwsj', {
+                                initialValue: detailData && new Date(detailData.wwsj),
                                 rules: [{required: true, message: '请选择慰问时间'}],
                             })(
                                 <DatePicker
@@ -145,6 +149,7 @@ class ZywwRegisterConn extends Component {
                     <List>
                         <Form.Item>
                             {getFieldDecorator('jzyy', {
+                                initialValue: detailData && detailData.jzyy,
                                 rules: [{required: true, message: '请输入就诊医院'}],
                             })(
                                 <InputItem
@@ -156,6 +161,7 @@ class ZywwRegisterConn extends Component {
 
                         <Form.Item>
                             {getFieldDecorator('sbsj', {
+                                initialValue: detailData && new Date(detailData.sbsj),
                                 rules: [{required: true, message: '请选择生病时间'}],
                             })(
                                 <DatePicker
@@ -170,6 +176,7 @@ class ZywwRegisterConn extends Component {
 
                         <Form.Item>
                             {getFieldDecorator('sblx', {
+                                initialValue: detailData && detailData.sblx,
                                 rules: [{required: true, message: '请输入生病类型'}],
                             })(
                                 <InputItem
@@ -180,6 +187,7 @@ class ZywwRegisterConn extends Component {
                         </Form.Item>
                         <Form.Item>
                             {getFieldDecorator('sbyy', {
+                                initialValue: detailData && detailData.sbyy,
                                 rules: [{required: true, message: '请输入生病原因'}],
                             })(  <InputItem
                                     placeholder="请输入生病原因"
@@ -190,6 +198,7 @@ class ZywwRegisterConn extends Component {
 
                         <Form.Item>
                             {getFieldDecorator('zysj', {
+                                initialValue: detailData && new Date(detailData.zysj),
                                 rules: [{required: true, message: '请选择住院时间'}],
                             })(
                                 <DatePicker
@@ -205,6 +214,7 @@ class ZywwRegisterConn extends Component {
 
                         <Form.Item>
                             {getFieldDecorator('zyjl', {
+                                initialValue: detailData && detailData.zyjl,
                                 rules: [{required: true, message: '请输入住院记录'}],
                             })(
                                 <InputItem
@@ -216,6 +226,7 @@ class ZywwRegisterConn extends Component {
 
                         <Form.Item>
                             {getFieldDecorator('sfkf', {
+                                initialValue: detailData && detailData.kf,
                                 rules: [{required: true, message: '请选择是否康复'}],
                             })(
 
@@ -234,6 +245,7 @@ class ZywwRegisterConn extends Component {
 
                         <Form.Item>
                             {getFieldDecorator('bz', {
+                                initialValue: detailData && detailData.bz,
                                 rules: [{required: true, message: '请输入备注内容'}],
                             })(
                                 <TextareaItem
@@ -250,6 +262,7 @@ class ZywwRegisterConn extends Component {
                     <List>
                         <Form.Item>
                             {getFieldDecorator('wwry', {
+                                initialValue: detailData && detailData.wwry,
                                 rules: [{required: true, message: '请选择慰问人员'}],
                             })(
                                 <InputItem
@@ -261,6 +274,7 @@ class ZywwRegisterConn extends Component {
 
                         <Form.Item>
                             {getFieldDecorator('wwqk', {
+                                initialValue: detailData && detailData.wwqk,
                                 rules: [{required: true, message: '请输入慰问情况'}],
                             })(
                                 <TextareaItem
@@ -272,8 +286,10 @@ class ZywwRegisterConn extends Component {
                             )}
                         </Form.Item>
 
+
                         <Form.Item>
                             {getFieldDecorator('yjjy', {
+                                initialValue: detailData && detailData.yjjy,
                                 rules: [{required: true, message: '请输入意见建议'}],
                             })(
                                 <TextareaItem

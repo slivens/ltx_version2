@@ -42,6 +42,10 @@ export {default as Search} from './search';
 export {default as Allmember} from './mybranch/zbdetail/allmember';
 export {default as HomeServer} from './homeServer';
 export {default as PushActivity} from './mybranch/pushActivity';
+export {default as Ldyzj} from './mybranch/ldyzj';
+export {default as Lgbdx} from './mybranch/lgbdx';
+export {default as PartyDetail} from './mybranch/partyDetail';
+export {default as PartyMember} from './mybranch/partyDetail/allmember';
 export {default as Consolation} from './consolation'
 export {default as Zyww} from './consolation/zyww';
 export {default as ZywwDetail} from './consolation/zyww/detail';

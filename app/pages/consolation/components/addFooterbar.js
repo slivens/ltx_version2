@@ -12,8 +12,7 @@ class AddFooterbar extends Component {
     };
 
     render() {
-        const {history, location, registerPath} = this.props;
-        const path = location.pathname.split('/')[1];
+        const {registerPath} = this.props;
         return (
             <div className={prefix} onClick={() => this.goRegister(registerPath)}>
                 新增记录

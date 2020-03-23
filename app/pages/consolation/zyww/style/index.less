@@ -44,28 +44,27 @@
       }
     }
     .am-textarea-control textarea {
+      color: #333;
       &::placeholder {
         color: #bbb;
         font-size: 16px;
       }
     }
-    .am-list-body {
-      padding: 0 .05rem;
-    }
-    .am-list-item {
-      border-bottom: 1px solid #e1e1e1 !important;
-    }
+
+
     .am-list-item .am-list-line .am-list-content {
       flex: 0.4;
       color: #666666;
     }
     .am-list-item .am-list-line .am-list-extra {
       flex: 1;
-      color: #bbb;
+      color: #333;
+      font-size: 17px;
       text-align: left;
     }
     .am-textarea-label {
       color: #666666;
+      width: .962rem;
     }
     .ant-form-explain{
       position: relative;
@@ -82,18 +81,28 @@
     }
     .am-list-item .am-list-line .am-list-extra {
       flex: 1;
-      color: #000;
+      color: #333;
       text-align: left;
       font-size: 17px;
     }
     .am-textarea-disabled .am-textarea-label{
       color: #666666;
+      width: .962rem;
     }
     .am-textarea-control textarea:disabled{
-      color: #000;
+      color: #333;
       line-height: 1.5;
     }
   }
+
+  .am-list-body {
+    padding: 0 .05rem;
+  }
+  .am-list-item{
+    position: static;
+    border-bottom: 1px solid #e1e1e1 !important;
+  }
+
 
   /* .am-list-item .am-list-line .am-list-arrow{
      background-image:url("../../../../../assets/images/nodata.png");
