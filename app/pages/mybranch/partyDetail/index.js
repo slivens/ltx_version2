@@ -9,7 +9,7 @@ import commonUrl from '../../../config';
 import DetailBox from './detailBox';
 import {connect} from 'react-redux';
 
-import {judgePersonStatus, actDetails} from '../components/data';
+const test = "http://127.0.0.1:8088";
 
 class index extends Component {
     constructor(props) {
@@ -18,8 +18,6 @@ class index extends Component {
             detail: {},
             memberStatus: {},
         };
-        this.personStaus = {};
-        this.leaveStatus = {};
     }
 
     componentWillMount() {
@@ -29,35 +27,23 @@ class index extends Component {
     fetchData = () => {
         const {pathname} = this.props.location;
         const actId = pathname.split('/')[2];
-        this.setState({memberStatus: judgePersonStatus.data})
-        this.setState({detail: actDetails.data})
-        /* axios.post(`${commonUrl}/app/activity/judgePersonStatus.do`, {activityId: actId, userId: this.props.userId})
-         .then(res => {
-         if (res.data.code === "success") {
-         this.setState({memberStatus: res.data.data})
-         }
-         });*/
-        /* axios.post(`${commonUrl}/app/activity/findActDetails.do`, {activityId: actId})
-         .then(res => {
-         if (res.data.code === "success") {
-         this.setState({detail: res.data.data})
-         }
-         })*/
+        axios.post(`${test}/app/subAct/judgePersonStatus.do`, {activityId: actId, userId: this.props.userId})
+            .then(res => {
+                if (res.data.code === "success") {
+                    this.setState({memberStatus: res.data.data})
+                }
+            });
+        axios.post(`${test}/app/subAct/getActDetails.do`, {activityId: actId})
+            .then(res => {
+                if (res.data.code === "success") {
+                    this.setState({detail: res.data.data})
+                }
+            })
     };
 
     componentDidMount() {
 
     }
-
-    leave = (status) => {
-        if (status.isLeave) {
-            this.leaveStatus = {code: "5"};
-            return "取消请假"
-        } else {
-            this.leaveStatus = {code: "3"};
-            return "请假"
-        }
-    };
 
 
     regPersons = (items) => {
@@ -69,7 +55,7 @@ class index extends Component {
                             <img src={require('../../../../assets/images/male.png')} key={index}/>
                         )
                     } else {
-                        return <img src={require('../../../../assets/images/female.png')}/>
+                        return <img src={require('../../../../assets/images/female.png')} key={index}/>
                     }
                 })
             } else {
@@ -77,10 +63,10 @@ class index extends Component {
                     (item, index) => {
                         if (item.sex === "男") {
                             return (
-                                <img src={require('../../../../assets/images/male.png')}/>
+                                <img src={require('../../../../assets/images/male.png')} key={index}/>
                             )
                         } else {
-                            return <img src={require('../../../../assets/images/female.png')}/>
+                            return <img src={require('../../../../assets/images/female.png')} key={index}/>
                         }
                     }
                 )
@@ -88,46 +74,54 @@ class index extends Component {
         }
     };
 
-    actClick = (type) => {
+    actClick = (status) => {
         const {pathname} = this.props.location;
         const actId = pathname.split('/')[2];
         const {userId} = this.props;
-        axios.post(`${commonUrl}/app/activity/operatePerson.do`, {activityId: actId, userId, operateType: type.code})
-            .then(res => {
-                if (res.data.code === "success") {
-                    Toast.success(res.data.message);
-                    this.fetchData();
-                } else {
-                    Toast.fail(res.data.message)
-                }
-            })
+        let params = {activityId: actId, userId};
+        if (status.actStatus === 0) {
+            if (status.isReg === 0) {
+                axios.post(`${test}/app/subAct/personReg.do`, params)
+                    .then(res => {
+                        if (res.data.code === "success") {
+                            Toast.success(res.data.message);
+                            this.fetchData();
+                        } else {
+                            Toast.fail(res.data.message)
+                        }
+                    })
+            } else {
+                axios.post(`${test}/app/subAct/cancelReg.do`, params)
+                    .then(res => {
+                        if (res.data.code === "success") {
+                            Toast.success(res.data.message);
+                            this.fetchData();
+                        } else {
+                            Toast.fail(res.data.message)
+                        }
+                    })
+            }
+        }
+
+
     };
 
     renderActStatus = (status) => {
-        if (status.isReg) {
-            this.personStaus = {code: "4"}
-        } else {
-            this.personStaus = {code: "1"}
-        }
-        return status.isReg ? "取消报名" : "我要报名";
-    };
-
-    btncolor = (status) => {
-        if (status.isReg) {
-            return "#c1c1c1";
-        } else {
-            return "#F5432F";
+        if (status.actStatus === 0) {
+            return status.isReg ? "取消报名" : "我要报名";
+        } else if (status.actStatus === 1) {
+            return "活动进行中";
+        } else if (status.actStatus === 2) {
+            return "活动已结束"
         }
     };
 
-    showQj = (status) => {
-        if (status.isInvited) {
-            if (status.actStatus == 3 && status.isReg) {
-                return true
-            }
-            else return false
+    btnColor = (status) => {
+        //未报名显示高亮按钮
+        if (status.actStatus == 0 && !status.isReg) {
+            return "#F5432F"
         } else {
-            return false
+            return "#c1c1c1"
         }
     };
 
@@ -136,7 +130,6 @@ class index extends Component {
         const {detail, memberStatus} = this.state;
         const {pathname} = this.props.location;
         const actId = pathname.split('/')[2];
-        /*   console.log('@@@@@@@detail', this.showQj(memberStatus));*/
         return (
             <div className="zbdetail">
                 <div className="zbdetail_topbar">
@@ -226,17 +219,17 @@ class index extends Component {
                 <div className="activebtn">
                     <Flex style={{height: "100%"}} align="center" justify="center">
                         <Button
-                            onClick={() => this.actClick(this.personStaus)}
+                            onClick={() => this.actClick(memberStatus)}
                             style={{
                                 display: "inline-block",
                                 verticalAlign: "middle",
                                 width: "2.8rem",
                                 margin: "0 auto",
-                                background: this.btncolor(this.state.memberStatus),
+                                background: this.btnColor(memberStatus),
                                 // marginLeft:".1rem"
                             }}
                         >
-                            {this.renderActStatus(this.state.memberStatus)}
+                            {this.renderActStatus(memberStatus)}
                         </Button>
                     </Flex>
                 </div>
@@ -244,10 +237,20 @@ class index extends Component {
         );
     }
 }
-const mapStateToProps = (state, ownProps) => ({
-    userId: state.userinfo.id
-})
-const mapdispatchToProps = (dispatch, ownProps) => {
-    return {}
-}
-export default connect(mapStateToProps, mapdispatchToProps)(withRouter(index));
+const
+    mapStateToProps = (state, ownProps) => ({
+        userId: state.userinfo.id
+    });
+const
+    mapdispatchToProps = (dispatch, ownProps) => {
+        return {}
+    };
+export
+default
+
+connect(mapStateToProps, mapdispatchToProps)
+
+(
+    withRouter(index)
+)
+;

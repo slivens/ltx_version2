@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
@@ -9,9 +8,12 @@ import axios from 'axios';
 import commonUrl from '../../../config/index';
 import {Badge} from 'antd-mobile';
 import {allPerson} from '../components/data';
+
+const test = "http://127.0.0.1:8088";
+
 class allmember extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             items: []
         }
@@ -20,43 +22,13 @@ class allmember extends Component {
     componentDidMount() {
         const {actId} = this.props.location;
         this.setState({items: allPerson.data})
-        /*axios.post(`${commonUrl}/app/activity/findAllPersonsByActId.do`,{activityId:actId})
+        /*axios.post(`${test}/app/subAct/getAllRegPerson.do`, {activityId: actId})
          .then(res => {
-         if(res.data.code==="success"){
-         this.setState({items:res.data.data})
-         }else{
+         if (res.data.code === "success") {
+         this.setState({items: res.data.data})
+         } else {
          }
          })*/
-    }
-
-    renderStatus = (status) => {
-        switch (status) {
-            case 0:
-                return {
-                    title: "未报名",
-                    color: "#ffa30f"
-                };
-            case 1:
-                return {
-                    title: "已报名",
-                    color: "#60db34"
-                };
-                ;
-            case 2:
-                return {
-                    title: "已签到",
-                    color: "#c1c1c1 "
-                };
-                ;
-            case 3:
-                return {
-                    title: "已请假",
-                    color: "#71a9fe"
-                };
-                ;
-            default:
-                break;
-        }
     }
 
     render() {
@@ -81,9 +53,9 @@ class allmember extends Component {
                     全部人员
                 </div>
                 <div className="allmember_box">
-                    {params.map((item, index) => {
+                    {items.map((item, index) => {
                         return (
-                            <div className="allmember_item" key={index}>
+                            <div className="allmember_item" key={`allmember_item_${index}`}>
                                 {
                                     item.sex === "男"
                                         ? <img src={require('../../../../assets/images/male.png')}/>

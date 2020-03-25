@@ -9,6 +9,8 @@ import 'antd/es/empty/style';
 import commonUrl from '../../../config/index';
 import "./style/index.less";
 
+const test = "http://127.0.0.1:8088";
+
 const prefix = "party";
 
 class PartyList extends Component {

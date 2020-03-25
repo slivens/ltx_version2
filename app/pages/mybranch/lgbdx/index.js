@@ -9,7 +9,7 @@ import PartyTab from '../components/partyTab';
 import commonUrl from '../../../config/index';
 import {activityList} from '../components/data';
 import './style/index.less';
-const test = "http://192.168.111.132:8080";
+const test = "http://127.0.0.1:8088";
 
 const tabs = [
     {title: '全部活动', key: 't1'},
@@ -24,7 +24,7 @@ class zbactive extends Component {
     };
 
     componentWillMount() {
-        let tab = localStorage.getItem('branch_tab')
+        let tab = localStorage.getItem('branch_tab');
         if (tab) {
             this.fetchdata(JSON.parse(tab));
         } else {
@@ -39,19 +39,21 @@ class zbactive extends Component {
 
 
     fetchdata = (tab) => {
+        const {unitId} = this.props;
         let obj = {};
-        if (tab && tab.title === '全部活动') {
-            //obj.userId = this.props.userid;
-            this.setState({items: activityList.data});
-        }
+        obj.actType = "2";
+        obj.unitId = unitId;
         if (tab && tab.title === '我参与的') {
-            //obj.userId = this.props.userid;
-            this.setState({items: []});
+            obj.userId = this.props.userid;
         }
-        if (tab && tab.title === '我发布的') {
-            this.setState({items: []});
-            return
-        }
+        axios.post(`${test}/app/subAct/getActList.do`, obj)
+            .then(res => {
+                if (res.data.code === "success") {
+                    this.setState({items: res.data.data})
+                } else {
+
+                }
+            })
     };
 
     render() {
@@ -95,6 +97,7 @@ class zbactive extends Component {
     }
 }
 const mapStateToProps = (state, ownProps) => ({
+    unitId: state.userinfo.unitId,
     userid: state.userinfo.id
 });
 const mapdispatchToProps = (dispatch, ownProps) => {

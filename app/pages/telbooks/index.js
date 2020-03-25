@@ -22,6 +22,7 @@ class index extends Component {
     }
     componentWillMount() {
         const {personCategory,unitId}=this.props;
+        console.log('通讯录',unitId)
         Toast.loading('Loading...',0);
         axios.post(`${commonUrl}/app/qryMailList.do`,{personCategory,unitId}).then(
             res=>{

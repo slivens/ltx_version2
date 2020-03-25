@@ -181,15 +181,15 @@ export const actDetails = {
         "contactPerson": "11111",
         "contactNum": "1111111",
         "regPersons": [
-            {"time": 1583913966001, "userid": 502001, "username": "福建省管理员", "status": 1, "sex": "男"},
-            {"time": 1583913966002, "userid": 502002, "username": "张良", "status": 1, "sex": "男"},
-            {"time": 1583913966003, "userid": 502003, "username": "马良", "status": 1, "sex": "男"},
-            {"time": 1583913966004, "userid": 502004, "username": "黄晓明", "status": 1, "sex": "男"},
-            {"time": 1583913966001, "userid": 502001, "username": "福建省管理员", "status": 1, "sex": "男"},
-            {"time": 1583913966002, "userid": 502002, "username": "张良", "status": 1, "sex": "男"},
-            {"time": 1583913966003, "userid": 502003, "username": "马良", "status": 1, "sex": "男"},
-            {"time": 1583913966004, "userid": 502004, "username": "黄晓明", "status": 1, "sex": "男"},
-            {"time": 1583913966005, "userid": 502005, "username": "范冰冰", "status": 1, "sex": "女"}
+            {"rowno": 1, "userid": 502001, "username": "福建省管理员", "sex": "男"},
+            {"rowno": 2, "userid": 502002, "username": "张良", "sex": "男"},
+            {"rowno": 3, "userid": 502003, "username": "马良", "sex": "男"},
+            {"rowno": 4, "userid": 502004, "username": "黄晓明", "sex": "男"},
+            {"rowno": 5, "userid": 502001, "username": "福建省管理员", "sex": "男"},
+            {"rowno": 6, "userid": 502002, "username": "张良", "sex": "男"},
+            {"rowno": 7, "userid": 502003, "username": "马良", "sex": "男"},
+            {"rowno": 8, "userid": 502004, "username": "黄晓明", "sex": "男"},
+            {"rowno": 9, "userid": 502005, "username": "范冰冰", "sex": "女"}
         ],
         "actPoster": null
     },
@@ -199,7 +199,7 @@ export const actDetails = {
 export const judgePersonStatus = {
     "code": "success",
     "message": "查询成功！",
-    "data": {"actStatus": 4, "isLeave": 0, "isInvited": 0, "isReg": 0, "isSign": 0},
+    "data": {"actStatus": 1, "isReg":0},
     "properties": {}
 };
 
