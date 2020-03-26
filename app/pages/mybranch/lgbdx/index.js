@@ -71,19 +71,6 @@ class zbactive extends Component {
                         type="left"
                     />
                     老干部党校
-                    <Icon
-                        type="menu"
-                        style={{
-                            position: "absolute",
-                            right: ".1rem",
-                            top: "50%",
-                            color: "#F7F8F4",
-                            fontSize: ".18rem",
-                            transform: "translateY(-50%)"
-                        }}
-                        onClick={() => {
-                        }}
-                    />
                 </div>
                 <div className={prefix+"-box"}>
                     <PartyTab tabonChange={this.tabonChange} tabs={tabs}/>

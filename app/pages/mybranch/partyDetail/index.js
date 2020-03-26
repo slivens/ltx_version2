@@ -158,14 +158,10 @@ class index extends Component {
                     <div className="shuoming">
                         <div className="shuoming_title">{detail.title}</div>
                         <div className="shuoming_detail">
-                        <span>
-                            <Icon type="tags"/>
-                            &nbsp;{detail.actType}
-                            </span>
                             <span>
-                            <Icon style={{marginLeft: "10px"}} type="user"/>
+                                <Icon style={{marginLeft: "10px"}} type="user"/>
                                 &nbsp;已报名 {detail.regPersonNum} 人
-                                </span>
+                            </span>
                         </div>
                     </div>
                     <div className="active_detail">
@@ -184,7 +180,6 @@ class index extends Component {
                             <ul>
                                 <li><span>活动主题</span>&nbsp;&nbsp;<i>{detail.title}</i></li>
                                 <li><span>活动时间</span>&nbsp;&nbsp;<i>{detail.actTime}</i></li>
-                                <li><span>报名时间</span>&nbsp;&nbsp;<i>{detail.regTime}</i></li>
                                 <li><span>活动地点</span>&nbsp;&nbsp;<i>{detail.actAddress}</i></li>
                                 <li><span>活动流程</span>&nbsp;&nbsp;
                                     <i dangerouslySetInnerHTML={{__html: detail.actPlan}}></i>
