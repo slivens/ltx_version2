@@ -12,7 +12,8 @@ import Form from 'antd/es/form';
 import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
 import './style/index.less';
-import {caseData,detailInfoData} from "../components/data";
+import {caseData, detailInfoData} from "../components/data";
+import Topbar from "../components/topbar";
 import CommitFooterbar from "../components/commitFooterbar";
 import commonUrl from '../../../config';
 
@@ -88,23 +89,11 @@ class ZywwRegisterConn extends Component {
 
 
     render() {
-        const {files,detailData} = this.state;
+        const {files, detailData} = this.state;
         const {getFieldDecorator} = this.props.form;
         return (
             <div className={prefix}>
-                <div className="topbar">
-                    <Icon
-                        onClick={() => this.props.history.goBack()}
-                        style={{
-                            position: "absolute",
-                            left: ".1rem",
-                            top: "50%",
-                            color: "#F7F8F4",
-                            fontSize: ".24rem",
-                            transform: "translateY(-50%)"
-                        }} type="left"/>
-                    <div >住院慰问登记</div>
-                </div>
+                <Topbar title="重大节假日慰问登记" onClick={() => this.props.history.goBack()}/>
                 <Form className={prefix + "_dj"}>
                     <List>
                         <Form.Item>
@@ -189,7 +178,7 @@ class ZywwRegisterConn extends Component {
                             {getFieldDecorator('sbyy', {
                                 initialValue: detailData && detailData.sbyy,
                                 rules: [{required: true, message: '请输入生病原因'}],
-                            })(  <InputItem
+                            })(<InputItem
                                     placeholder="请输入生病原因"
                                     clear
                                 >生病原因</InputItem>
@@ -229,7 +218,6 @@ class ZywwRegisterConn extends Component {
                                 initialValue: detailData && detailData.kf,
                                 rules: [{required: true, message: '请选择是否康复'}],
                             })(
-
                                 <Picker
                                     /* value={this.state.activityType}
                                      onChange={v => this.setState({activityType: v})}*/

@@ -13,6 +13,7 @@ import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
 import './style/index.less';
 import {caseData,detailInfoData} from "../components/data";
+import Topbar from "../components/topbar";
 import CommitFooterbar from "../components/commitFooterbar";
 import commonUrl from '../../../config';
 
@@ -92,19 +93,7 @@ class ZywwRegisterConn extends Component {
         const {getFieldDecorator} = this.props.form;
         return (
             <div className={prefix}>
-                <div className="topbar">
-                    <Icon
-                        onClick={() => this.props.history.goBack()}
-                        style={{
-                            position: "absolute",
-                            left: ".1rem",
-                            top: "50%",
-                            color: "#F7F8F4",
-                            fontSize: ".24rem",
-                            transform: "translateY(-50%)"
-                        }} type="left"/>
-                    <div >住院慰问登记</div>
-                </div>
+                <Topbar title="灾后慰问登记" onClick={() => this.props.history.goBack()}/>
                 <Form className={prefix + "_dj"}>
                     <List>
                         <Form.Item>

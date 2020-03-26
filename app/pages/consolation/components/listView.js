@@ -35,15 +35,19 @@ class listView extends Component {
         //     });
         // }, 500);
     };
-    godetail = (id) => {
+
+    goDetail = (id) => {
         //this.props.history.push(`/zywwDetail/${id}`)
-        this.props.history.push(`/zywwDetail`)
-    }
+        const {detailPath} = this.props;
+        this.props.history.push(`/${detailPath}`);
+    };
+
     returnstr = (content) => {
         return content.replace(/\&nbsp;|\<br\/\>/g, "")
-    }
+    };
 
     render() {
+
         return (
             <div style={{...this.props.style}} className={prefix}>
                 <InfiniteScroll
@@ -62,7 +66,7 @@ class listView extends Component {
                     }
                 >
                     {this.state.items.map((item, index) => (
-                        <div onClick={() => this.godetail(item.id)} key={index} className={prefix + "_item"}>
+                        <div onClick={() => this.goDetail(item.id)} key={index} className={prefix + "_item"}>
                             <div className={prefix + "_item_top"}>
                                 <div className={prefix + "_item_top_title"}>
                                     {/*  <Icon

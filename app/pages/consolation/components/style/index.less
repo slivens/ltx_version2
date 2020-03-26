@@ -35,11 +35,21 @@
       }
     }
   }
-  &_topbar {
-    .topBar;
-  }
+
   .homeListView {
     height: auto;
+  }
+}
+
+.topbar {
+  .topBar;
+  &_right {
+    position: absolute;
+    right: .1rem;
+    top: 50%;
+    color: #F7F8F4;
+    fontSize: .3rem;
+    transform: translateY(-50%)
   }
 }
 

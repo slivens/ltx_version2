@@ -30,9 +30,9 @@ import {
     PartyDetail,PartyMember,
     Consolation,
     Zyww, ZywwDetail, ZywwRegister,
-    Zdjrww, ZdjrwwDetail, ZdjrwwRegister,
+    Zdjjrww, ZdjjrwwDetail, ZdjjrwwRegister,
     Zhww,ZhwwDetail,ZhwwRegister,
-    Tbknhww,TbknhwwDetail,TbknhwwRegister
+    Tsknhww,TsknhwwDetail,TsknhwwRegister
 } from './pages';
 const App = ({history, location}) => {
     const router = {
@@ -88,15 +88,15 @@ const App = ({history, location}) => {
         'zyww': <Zyww/>,
         'zywwDetail': <ZywwDetail/>,
         'zywwRegister': <ZywwRegister/>,
-        'zdjrww': <Zdjrww/>,
-        'zdjrwwDetail': <ZdjrwwDetail/>,
-        'zdjrwwRegister': <ZdjrwwRegister/>,
+        'zdjjrww': <Zdjjrww/>,
+        'zdjjrwwDetail': <ZdjjrwwDetail/>,
+        'zdjjrwwRegister': <ZdjjrwwRegister/>,
         'zhww': <Zhww/>,
         'zhwwDetail': <ZhwwDetail/>,
         'zhwwRegister': <ZhwwRegister/>,
-        'tbknhww': <Tbknhww/>,
-        'tbknhwwDetail': <TbknhwwDetail/>,
-        'tbknhwwRegister': <TbknhwwRegister/>,
+        'tsknhww': <Tsknhww/>,
+        'tsknhwwDetail': <TsknhwwDetail/>,
+        'tsknhwwRegister': <TsknhwwRegister/>,
     };
     const {pathname} = location;
     const path = pathname.split('/')[1];

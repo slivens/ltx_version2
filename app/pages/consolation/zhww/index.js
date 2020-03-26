@@ -11,6 +11,7 @@ import './style/index.less';
 import commonUrl from '../../../config';
 import {listViewData} from "../components/data";
 import ListView from "../components/listView";
+import Topbar from "../components/topbar";
 import AddFooterBar from "../components/addFooterbar";
 
 
@@ -59,22 +60,10 @@ class index extends Component {
         const {datasource} = this.state;
         return (
             <div className="zyww">
-                <div className="topbar">
-                    <Icon
-                        onClick={() => this.props.history.goBack()}
-                        style={{
-                            position: "absolute",
-                            left: ".1rem",
-                            top: "50%",
-                            color: "#F7F8F4",
-                            fontSize: ".24rem",
-                            transform: "translateY(-50%)"
-                        }} type="left"/>
-                    <div >住院慰问</div>
-                </div>
+                <Topbar title="灾后慰问" onClick={() => this.props.history.goBack()}/>
                 <SearchBar placeholder="搜索..." maxLength={20} onChange={this.SearchChange}/>
-                <ListView data={listViewData}/>
-                <AddFooterBar registerPath="zywwRegister"/>
+                <ListView data={listViewData} detailPath="zhwwDetail"/>
+                <AddFooterBar registerPath="zhwwRegister"/>
             </div>
         );
     }

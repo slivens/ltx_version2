@@ -13,6 +13,7 @@ import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
 import './style/index.less';
 import {caseData, detailInfoData} from "../components/data";
+import EditTopbar from "../components/editTopbar";
 import CommitFooterbar from "../components/commitFooterbar";
 import commonUrl from '../../../config';
 
@@ -92,21 +93,7 @@ class ZywwRegisterConn extends Component {
         const {getFieldDecorator} = this.props.form;
         return (
             <div className={prefix}>
-                <div className="topbar">
-                    <Icon
-                        onClick={() => this.props.history.goBack()}
-                        style={{
-                            position: "absolute",
-                            left: ".1rem",
-                            top: "50%",
-                            color: "#F7F8F4",
-                            fontSize: ".24rem",
-                            transform: "translateY(-50%)"
-                        }} type="left"/>
-                    <div >住院慰问登记</div>
-                    <div className="topbar_right" style={{fontSize: ".18rem"}}>编辑</div>
-
-                </div>
+                <EditTopbar title="住院慰问登记" onClick={() => this.props.history.goBack()}/>
                 <Form className={prefix + "_detail"}>
                     <List>
                         <List.Item extra={detailData.wwdx}>慰问对象</List.Item>

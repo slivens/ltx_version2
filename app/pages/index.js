@@ -50,13 +50,13 @@ export {default as Consolation} from './consolation'
 export {default as Zyww} from './consolation/zyww';
 export {default as ZywwDetail} from './consolation/zyww/detail';
 export {default as ZywwRegister} from './consolation/zyww/register';
-export {default as Zdjrww} from './consolation/zdjrww';
-export {default as ZdjrwwDetail} from './consolation/zdjrww/detail';
-export {default as ZdjrwwRegister} from './consolation/zdjrww/register';
+export {default as Zdjjrww} from './consolation/zdjjrww';
+export {default as ZdjjrwwDetail} from './consolation/zdjjrww/detail';
+export {default as ZdjjrwwRegister} from './consolation/zdjjrww/register';
 export {default as Zhww} from './consolation/zhww';
 export {default as ZhwwDetail} from './consolation/zhww/detail';
 export {default as ZhwwRegister} from './consolation/zhww/register';
-export {default as Tbknhww} from './consolation/tbknhww';
-export {default as TbknhwwDetail} from './consolation/tbknhww/detail';
-export {default as TbknhwwRegister} from './consolation/tbknhww/register';
+export {default as Tsknhww} from './consolation/tsknhww';
+export {default as TsknhwwDetail} from './consolation/tsknhww/detail';
+export {default as TsknhwwRegister} from './consolation/tsknhww/register';
 
