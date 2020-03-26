@@ -17,25 +17,23 @@ class PartyTab extends Component {
     }
 
     componentDidMount() {
-        let tab = localStorage.getItem('branch_tab');
+        let tab = localStorage.getItem('party_branch_tab');
         if (tab) {
             this.props.tabonChange(JSON.parse(tab))
         }
     }
 
     tabonChange = (tab, index) => {
-        localStorage.setItem('branch_tab', JSON.stringify(tab))
+        localStorage.setItem('party_branch_tab', JSON.stringify(tab));
         this.props.tabonChange(tab)
     };
 
     render() {
-        let tab = JSON.parse(localStorage.getItem('branch_tab'));
         const {tabs} = this.props;
         return (
             <div>
                 <StickyContainer>
                     <Tabs tabs={tabs}
-                          initialPage={tab ? tab.key : 't1'}
                           onChange={this.tabonChange}
                           tabBarUnderlineStyle={{borderColor: "#F83A2E"}}
                           tabBarActiveTextColor={"#F83A2E"}
