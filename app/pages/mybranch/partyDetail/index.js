@@ -159,7 +159,7 @@ class index extends Component {
                         <div className="shuoming_title">{detail.title}</div>
                         <div className="shuoming_detail">
                             <span>
-                                <Icon style={{marginLeft: "10px"}} type="user"/>
+                                <Icon type="user"/>
                                 &nbsp;已报名 {detail.regPersonNum} 人
                             </span>
                         </div>

@@ -29,7 +29,10 @@ import {
     Ldyzj, Lgbdx,
     PartyDetail,PartyMember,
     Consolation,
-    Zyww, ZywwDetail, ZywwRegister
+    Zyww, ZywwDetail, ZywwRegister,
+    Zdjrww, ZdjrwwDetail, ZdjrwwRegister,
+    Zhww,ZhwwDetail,ZhwwRegister,
+    Tbknhww,TbknhwwDetail,TbknhwwRegister
 } from './pages';
 const App = ({history, location}) => {
     const router = {
@@ -85,9 +88,15 @@ const App = ({history, location}) => {
         'zyww': <Zyww/>,
         'zywwDetail': <ZywwDetail/>,
         'zywwRegister': <ZywwRegister/>,
-        'zdjrww': <Consolation/>,
-        'tbknhww': <Consolation/>,
-        'zhww': <Consolation/>,
+        'zdjrww': <Zdjrww/>,
+        'zdjrwwDetail': <ZdjrwwDetail/>,
+        'zdjrwwRegister': <ZdjrwwRegister/>,
+        'zhww': <Zhww/>,
+        'zhwwDetail': <ZhwwDetail/>,
+        'zhwwRegister': <ZhwwRegister/>,
+        'tbknhww': <Tbknhww/>,
+        'tbknhwwDetail': <TbknhwwDetail/>,
+        'tbknhwwRegister': <TbknhwwRegister/>,
     };
     const {pathname} = location;
     const path = pathname.split('/')[1];
