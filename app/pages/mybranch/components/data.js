@@ -199,7 +199,7 @@ export const actDetails = {
 export const judgePersonStatus = {
     "code": "success",
     "message": "查询成功！",
-    "data": {"actStatus": 1, "isReg":0},
+    "data": {"actStatus": 1, "isReg": 0},
     "properties": {}
 };
 
@@ -207,11 +207,11 @@ export const allPerson = {
     "code": "success",
     "message": "查询成功！",
     "data": [
-        {"time": 1583913966000, "userid": 502001, "username": "福建省管理员", "status": 1, "sex": "男"},
-        {"time": 1583913966000, "userid": 502001, "username": "张良", "status": 1, "sex": "男"},
-        {"time": 1583913966000, "userid": 502001, "username": "马良", "status": 1, "sex": "男"},
-        {"time": 1583913966000, "userid": 502001, "username": "黄晓明", "status": 1, "sex": "男"},
-        {"time": 1583913966000, "userid": 502001, "username": "范冰冰", "status": 1, "sex": "男"}
+        {"time": 1583913966000, "userid": 502001, "username": "福建省管理员", "sex": "男"},
+        {"time": 1583913966000, "userid": 502001, "username": "张良", "sex": "男"},
+        {"time": 1583913966000, "userid": 502001, "username": "马良", "sex": "男"},
+        {"time": 1583913966000, "userid": 502001, "username": "黄晓明", "sex": "男"},
+        {"time": 1583913966000, "userid": 502001, "username": "范冰冰", "sex": "男"}
     ],
     "properties": {}
 };

@@ -7,9 +7,7 @@ import 'antd/es/icon/style';
 import PartyList from '../components/partyList';
 import PartyTab from '../components/partyTab';
 import commonUrl from '../../../config/index';
-import {activityList} from '../components/data';
 import './style/index.less';
-const test = "http://127.0.0.1:8088";
 
 const tabs = [
     {title: '全部活动', key: 't1'},
@@ -46,7 +44,7 @@ class zbactive extends Component {
         if (tab && tab.title === '我参与的') {
             obj.userId = this.props.userid;
         }
-        axios.post(`${test}/app/subAct/getActList.do`, obj)
+        axios.post(`${commonUrl}/app/subAct/getActList.do`, obj)
             .then(res => {
                 if (res.data.code === "success") {
                     this.setState({items: res.data.data})

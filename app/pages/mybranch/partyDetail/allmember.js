@@ -7,9 +7,7 @@ import {Flex} from 'antd-mobile';
 import axios from 'axios';
 import commonUrl from '../../../config/index';
 import {Badge} from 'antd-mobile';
-import {allPerson} from '../components/data';
 
-const test = "http://127.0.0.1:8088";
 
 class allmember extends Component {
     constructor(props) {
@@ -21,14 +19,13 @@ class allmember extends Component {
 
     componentDidMount() {
         const {actId} = this.props.location;
-        this.setState({items: allPerson.data})
-        /*axios.post(`${test}/app/subAct/getAllRegPerson.do`, {activityId: actId})
-         .then(res => {
-         if (res.data.code === "success") {
-         this.setState({items: res.data.data})
-         } else {
-         }
-         })*/
+        axios.post(`${commonUrl}/app/subAct/getAllRegPerson.do`, {activityId: actId})
+            .then(res => {
+                if (res.data.code === "success") {
+                    this.setState({items: res.data.data})
+                } else {
+                }
+            })
     }
 
     render() {

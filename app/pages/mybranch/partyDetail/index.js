@@ -9,7 +9,6 @@ import commonUrl from '../../../config';
 import DetailBox from './detailBox';
 import {connect} from 'react-redux';
 
-const test = "http://127.0.0.1:8088";
 
 class index extends Component {
     constructor(props) {
@@ -27,13 +26,13 @@ class index extends Component {
     fetchData = () => {
         const {pathname} = this.props.location;
         const actId = pathname.split('/')[2];
-        axios.post(`${test}/app/subAct/judgePersonStatus.do`, {activityId: actId, userId: this.props.userId})
+        axios.post(`${commonUrl}/app/subAct/judgePersonStatus.do`, {activityId: actId, userId: this.props.userId})
             .then(res => {
                 if (res.data.code === "success") {
                     this.setState({memberStatus: res.data.data})
                 }
             });
-        axios.post(`${test}/app/subAct/getActDetails.do`, {activityId: actId})
+        axios.post(`${commonUrl}/app/subAct/getActDetails.do`, {activityId: actId})
             .then(res => {
                 if (res.data.code === "success") {
                     this.setState({detail: res.data.data})
@@ -81,7 +80,7 @@ class index extends Component {
         let params = {activityId: actId, userId};
         if (status.actStatus === 0) {
             if (status.isReg === 0) {
-                axios.post(`${test}/app/subAct/personReg.do`, params)
+                axios.post(`${commonUrl}/app/subAct/personReg.do`, params)
                     .then(res => {
                         if (res.data.code === "success") {
                             Toast.success(res.data.message);
@@ -91,7 +90,7 @@ class index extends Component {
                         }
                     })
             } else {
-                axios.post(`${test}/app/subAct/cancelReg.do`, params)
+                axios.post(`${commonUrl}/app/subAct/cancelReg.do`, params)
                     .then(res => {
                         if (res.data.code === "success") {
                             Toast.success(res.data.message);
@@ -237,20 +236,10 @@ class index extends Component {
         );
     }
 }
-const
-    mapStateToProps = (state, ownProps) => ({
-        userId: state.userinfo.id
-    });
-const
-    mapdispatchToProps = (dispatch, ownProps) => {
-        return {}
-    };
-export
-default
-
-connect(mapStateToProps, mapdispatchToProps)
-
-(
-    withRouter(index)
-)
-;
+const mapStateToProps = (state, ownProps) => ({
+    userId: state.userinfo.id
+});
+const mapdispatchToProps = (dispatch, ownProps) => {
+    return {}
+};
+export default connect(mapStateToProps, mapdispatchToProps)(withRouter(index));
