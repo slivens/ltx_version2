@@ -12,7 +12,7 @@ import Form from 'antd/es/form';
 import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
 import './style/index.less';
-import {caseData,detailInfoData} from "../components/data";
+import {caseData,zywwDetailInfoData} from "../components/data";
 import Topbar from "../components/topbar";
 import CommitFooterbar from "../components/commitFooterbar";
 import commonUrl from '../../../config';
@@ -25,7 +25,7 @@ class ZywwRegisterConn extends Component {
         this.state = {
             datasource: "",
             files: [],
-            detailData: detailInfoData
+            detailData: zywwDetailInfoData
         }
     }
 

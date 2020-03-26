@@ -5,30 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c28124c-ca34-4444-9faf-5d5f235b77b7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/components/editTopbar.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/components/topbar.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.js" afterPath="$PROJECT_DIR$/app/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/components/listView.js" afterPath="$PROJECT_DIR$/app/pages/consolation/components/listView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/components/style/index.less" afterPath="$PROJECT_DIR$/app/pages/consolation/components/style/index.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/index.js" afterPath="$PROJECT_DIR$/app/pages/consolation/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/components/data.js" afterPath="$PROJECT_DIR$/app/pages/consolation/components/data.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/tsknhww/detail.js" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/detail.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/tsknhww/register.js" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/register.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/detail.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/detail.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/register.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/register.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zhww/detail.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zhww/detail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zhww/index.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zhww/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zhww/register.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zhww/register.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zhww/style/index.less" afterPath="$PROJECT_DIR$/app/pages/consolation/zhww/style/index.less" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zyww/detail.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zyww/detail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zyww/index.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zyww/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zyww/register.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zyww/register.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zyww/style/index.less" afterPath="$PROJECT_DIR$/app/pages/consolation/zyww/style/index.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/index.js" afterPath="$PROJECT_DIR$/app/pages/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/pages/consolation/tbknhww/detail.js" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/detail.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/pages/consolation/tbknhww/index.js" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/pages/consolation/tbknhww/register.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/register.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/pages/consolation/tbknhww/style/index.less" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/style/index.less" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/pages/consolation/zdjrww/detail.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/detail.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/pages/consolation/zdjrww/index.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/pages/consolation/zdjrww/register.js" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/register.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/pages/consolation/zdjrww/style/index.less" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/style/index.less" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -43,11 +29,38 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/pages/consolation/zyww/index.js">
+      <file leaf-file-name="register.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/pages/consolation/zdjjrww/register.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="63" column="69" lean-forward="false" selection-start-line="63" selection-start-column="46" selection-end-line="63" selection-end-column="69" />
+            <state relative-caret-position="211">
+              <caret line="96" column="89" lean-forward="false" selection-start-line="96" selection-start-column="89" selection-end-line="96" selection-end-column="89" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#3268#5134#0" expanded="false" />
+                <element signature="e#6145#7010#0" expanded="false" />
+                <element signature="e#7036#7525#0" expanded="false" />
+                <element signature="e#7551#8285#0" expanded="false" />
+                <element signature="e#8310#8909#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="register.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/pages/consolation/tsknhww/register.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="460">
+              <caret line="95" column="40" lean-forward="false" selection-start-line="95" selection-start-column="40" selection-end-line="95" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="register.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/pages/consolation/zhww/register.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="571">
+              <caret line="171" column="54" lean-forward="false" selection-start-line="171" selection-start-column="48" selection-end-line="171" selection-end-column="54" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -55,26 +68,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/pages/consolation/zhww/index.js">
+      <file leaf-file-name="data.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/pages/consolation/components/data.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="64" column="68" lean-forward="false" selection-start-line="64" selection-start-column="68" selection-end-line="64" selection-end-column="68" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="406">
+              <caret line="110" column="11" lean-forward="false" selection-start-line="110" selection-start-column="5" selection-end-line="110" selection-end-column="11" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/index.js">
+      <file leaf-file-name="detail.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/pages/consolation/zhww/detail.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="94" column="19" lean-forward="false" selection-start-line="94" selection-start-column="9" selection-end-line="94" selection-end-column="19" />
-              <folding>
-                <element signature="e#208#234#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="510">
+              <caret line="106" column="59" lean-forward="false" selection-start-line="106" selection-start-column="59" selection-end-line="106" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="detail.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/pages/consolation/tsknhww/detail.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="95" column="44" lean-forward="false" selection-start-line="95" selection-start-column="35" selection-end-line="95" selection-end-column="44" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -83,13 +102,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>localhos</find>
-      <find>localhost</find>
-      <find>a</find>
-      <find>api</find>
-      <find>getUploadImg</find>
-      <find>commonUrl</find>
-      <find>/</find>
       <find>/api</find>
       <find>leaveStatus</find>
       <find>Toast</find>
@@ -113,6 +125,13 @@
       <find>Zdjrww</find>
       <find>Topbar</find>
       <find>godetail</find>
+      <find>datasource</find>
+      <find>SearchChange</find>
+      <find>holidayData</find>
+      <find>Form</find>
+      <find>wwdx</find>
+      <find>ant</find>
+      <find>disasterData</find>
     </findStrings>
     <replaceStrings>
       <replace>party</replace>
@@ -134,10 +153,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/components/footerBar/footerbar.js" />
-        <option value="$PROJECT_DIR$/app/pages/consolation/components/commitFooterbar.js" />
-        <option value="$PROJECT_DIR$/app/pages/consolation/components/addFooterbar.js" />
-        <option value="$PROJECT_DIR$/app/pages/mybranch/ldyzj/zbtj.js" />
         <option value="$PROJECT_DIR$/app/pages/mybranch/components/zbTab.js" />
         <option value="$PROJECT_DIR$/app/pages/mybranch/components/zbList.js" />
         <option value="$PROJECT_DIR$/app/pages/mybranch/components/data.json" />
@@ -157,12 +172,10 @@
         <option value="$PROJECT_DIR$/app/components/conmonCard/index.js" />
         <option value="$PROJECT_DIR$/app/pages/home/index.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/zyww/data.js" />
-        <option value="$PROJECT_DIR$/app/pages/consolation/components/data.js" />
         <option value="$PROJECT_DIR$/app/pages/mybranch/components/partyTab.js" />
         <option value="$PROJECT_DIR$/app/pages/mybranch/partyDetail/index.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/components/addTopbar.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/components/editTopbar.js" />
-        <option value="$PROJECT_DIR$/app/pages/consolation/zhww/detail.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/zdjrww/detail.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/tbknhww/detail.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/tbknhww/style/index.less" />
@@ -172,19 +185,25 @@
         <option value="$PROJECT_DIR$/app/pages/consolation/tbknhww/index.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/tbknhww/register.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/zdjrww/register.js" />
-        <option value="$PROJECT_DIR$/app/pages/consolation/zyww/detail.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/components/style/index.less" />
-        <option value="$PROJECT_DIR$/app/pages/consolation/zyww/register.js" />
-        <option value="$PROJECT_DIR$/app/pages/consolation/zhww/register.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/zdjrww/index.js" />
         <option value="$PROJECT_DIR$/app/pages/index.js" />
         <option value="$PROJECT_DIR$/app/index.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/index.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/components/listView.js" />
-        <option value="$PROJECT_DIR$/app/pages/consolation/zyww/index.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/tsknhww/index.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/zdjjrww/index.js" />
         <option value="$PROJECT_DIR$/app/pages/consolation/zhww/index.js" />
+        <option value="$PROJECT_DIR$/app/pages/consolation/zyww/index.js" />
+        <option value="$PROJECT_DIR$/app/pages/consolation/zdjjrww/detail.js" />
+        <option value="$PROJECT_DIR$/app/pages/consolation/zyww/register.js" />
+        <option value="$PROJECT_DIR$/app/pages/consolation/zyww/detail.js" />
+        <option value="$PROJECT_DIR$/app/pages/consolation/zdjjrww/register.js" />
+        <option value="$PROJECT_DIR$/app/pages/consolation/tsknhww/detail.js" />
+        <option value="$PROJECT_DIR$/app/pages/consolation/tsknhww/register.js" />
+        <option value="$PROJECT_DIR$/app/pages/consolation/zhww/register.js" />
+        <option value="$PROJECT_DIR$/app/pages/consolation/components/data.js" />
+        <option value="$PROJECT_DIR$/app/pages/consolation/zhww/detail.js" />
       </list>
     </option>
   </component>
@@ -430,149 +449,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="zyww" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="style" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="consolation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="zhww" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="consolation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="zdjjrww" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="consolation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="zdjjrww" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="style" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="consolation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tsknhww" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="consolation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tsknhww" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="style" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -620,46 +497,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ltx" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="conmonCard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -676,11 +513,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\project\Git\ltx\app\pages\consolation\zhww" />
+      <recent name="D:\project\Git\ltx\app\pages\consolation\tsknhww" />
       <recent name="D:\project\Git\ltx\app\pages\consolation" />
       <recent name="D:\project\Git\ltx\app\pages\consolation\components" />
       <recent name="D:\project\Git\ltx\app\pages\consolation\tbknhww" />
-      <recent name="D:\project\Git\ltx\app\pages\consolation\zdjrww" />
-      <recent name="D:\project\Git\ltx\app\pages\consolation\zhww" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\project\Git\ltx\app\pages\consolation\components" />
@@ -1124,12 +961,12 @@
       <workItem from="1585013000371" duration="4855000" />
       <workItem from="1585101277592" duration="4253000" />
       <workItem from="1585118592239" duration="9639000" />
-      <workItem from="1585185773583" duration="10059000" />
+      <workItem from="1585185773583" duration="14262000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71664000" />
+    <option name="totallyTimeSpent" value="75867000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -1227,30 +1064,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/pages/my/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="27" column="114" lean-forward="false" selection-start-line="27" selection-start-column="95" selection-end-line="27" selection-end-column="114" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/telbooks/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2760">
-          <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="108" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/pages/mybranch/partyDetail/detailBox.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1353,14 +1166,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/consolation/components/data.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="32" column="5" lean-forward="true" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/pages/mybranch/components/partyTab.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -1418,7 +1223,7 @@
         <state relative-caret-position="210">
           <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1428,7 +1233,7 @@
         <state relative-caret-position="540">
           <caret line="18" column="15" lean-forward="false" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1481,22 +1286,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zhww/detail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2130">
-          <caret line="15" column="50" lean-forward="false" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zyww/detail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/pages/consolation/components/style/index.less">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
@@ -1505,26 +1294,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zyww/register.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="15" column="42" lean-forward="false" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/pages/consolation/zdjrww/register.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3690">
           <caret line="15" column="42" lean-forward="true" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zhww/register.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4230">
-          <caret line="15" column="42" lean-forward="false" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
           <folding />
         </state>
       </provider>
@@ -1577,32 +1350,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/consolation/tsknhww/register.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2520">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/consolation/tsknhww/detail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2520">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/pages/consolation/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1140">
           <caret line="38" column="6" lean-forward="false" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="6" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1612,7 +1365,7 @@
         <state relative-caret-position="420">
           <caret line="14" column="42" lean-forward="true" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="42" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1622,17 +1375,7 @@
         <state relative-caret-position="300">
           <caret line="40" column="25" lean-forward="false" selection-start-line="40" selection-start-column="15" selection-end-line="40" selection-end-column="25" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zyww/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="63" column="69" lean-forward="false" selection-start-line="63" selection-start-column="46" selection-end-line="63" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1642,7 +1385,7 @@
         <state relative-caret-position="286">
           <caret line="63" column="71" lean-forward="false" selection-start-line="63" selection-start-column="71" selection-end-line="63" selection-end-column="71" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1652,7 +1395,7 @@
         <state relative-caret-position="286">
           <caret line="64" column="71" lean-forward="false" selection-start-line="64" selection-start-column="71" selection-end-line="64" selection-end-column="71" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1674,6 +1417,111 @@
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zyww/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="19" column="21" lean-forward="true" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zdjjrww/detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="109" column="0" lean-forward="false" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zyww/register.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="796">
+          <caret line="27" column="42" lean-forward="false" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zyww/detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2130">
+          <caret line="27" column="42" lean-forward="false" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="26" column="8" lean-forward="false" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zdjjrww/register.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="96" column="89" lean-forward="false" selection-start-line="96" selection-start-column="89" selection-end-line="96" selection-end-column="89" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#3268#5134#0" expanded="false" />
+            <element signature="e#6145#7010#0" expanded="false" />
+            <element signature="e#7036#7525#0" expanded="false" />
+            <element signature="e#7551#8285#0" expanded="false" />
+            <element signature="e#8310#8909#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/consolation/tsknhww/register.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="95" column="40" lean-forward="false" selection-start-line="95" selection-start-column="40" selection-end-line="95" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zhww/register.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="571">
+          <caret line="171" column="54" lean-forward="false" selection-start-line="171" selection-start-column="48" selection-end-line="171" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/consolation/tsknhww/detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="95" column="44" lean-forward="false" selection-start-line="95" selection-start-column="35" selection-end-line="95" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/consolation/components/data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="110" column="11" lean-forward="false" selection-start-line="110" selection-start-column="5" selection-end-line="110" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/pages/consolation/zhww/detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="106" column="59" lean-forward="false" selection-start-line="106" selection-start-column="59" selection-end-line="106" selection-end-column="59" />
+          <folding />
         </state>
       </provider>
     </entry>

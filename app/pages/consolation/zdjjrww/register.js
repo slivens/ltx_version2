@@ -12,7 +12,7 @@ import Form from 'antd/es/form';
 import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
 import './style/index.less';
-import {caseData, detailInfoData} from "../components/data";
+import {holidayData, xbData,zdjjrwwDetailInfoData} from "../components/data";
 import Topbar from "../components/topbar";
 import CommitFooterbar from "../components/commitFooterbar";
 import commonUrl from '../../../config';
@@ -25,7 +25,7 @@ class ZywwRegisterConn extends Component {
         this.state = {
             datasource: "",
             files: [],
-            detailData: detailInfoData
+            detailData: zdjjrwwDetailInfoData
         }
     }
 
@@ -94,7 +94,8 @@ class ZywwRegisterConn extends Component {
         return (
             <div className={prefix}>
                 <Topbar title="重大节假日慰问登记" onClick={() => this.props.history.goBack()}/>
-                <Form className={prefix + "_dj"}>
+                <Form className={prefix + "_dj"} labelAlign="right"   labelCol={{ span: 6 }}
+                      wrapperCol={{ span: 24 }}>
                     <List>
                         <Form.Item>
                             {getFieldDecorator('wwdx', {
@@ -136,100 +137,78 @@ class ZywwRegisterConn extends Component {
                     </List>
                     <WhiteSpace size="lg"/>
                     <List>
-                        <Form.Item>
-                            {getFieldDecorator('jzyy', {
-                                initialValue: detailData && detailData.jzyy,
-                                rules: [{required: true, message: '请输入就诊医院'}],
-                            })(
-                                <InputItem
-                                    placeholder="请输入就诊医院"
-                                    clear
-                                >就诊医院</InputItem>
-                            )}
-                        </Form.Item>
-
-                        <Form.Item>
-                            {getFieldDecorator('sbsj', {
-                                initialValue: detailData && new Date(detailData.sbsj),
-                                rules: [{required: true, message: '请选择生病时间'}],
-                            })(
-                                <DatePicker
-                                    mode="date"
-                                    title="生病时间"
-                                    extra="请选择生病时间"
-                                >
-                                    <List.Item className={prefix + "_dj_date"} arrow="horizontal">生病时间</List.Item>
-                                </DatePicker>
-                            )}
-                        </Form.Item>
-
-                        <Form.Item>
-                            {getFieldDecorator('sblx', {
-                                initialValue: detailData && detailData.sblx,
-                                rules: [{required: true, message: '请输入生病类型'}],
-                            })(
-                                <InputItem
-                                    placeholder="请输入生病类型"
-                                    clear
-                                >生病类型</InputItem>
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('sbyy', {
-                                initialValue: detailData && detailData.sbyy,
-                                rules: [{required: true, message: '请输入生病原因'}],
-                            })(<InputItem
-                                    placeholder="请输入生病原因"
-                                    clear
-                                >生病原因</InputItem>
-                            )}
-                        </Form.Item>
-
-                        <Form.Item>
-                            {getFieldDecorator('zysj', {
-                                initialValue: detailData && new Date(detailData.zysj),
-                                rules: [{required: true, message: '请选择住院时间'}],
-                            })(
-                                <DatePicker
-                                    mode="date"
-                                    title="住院时间"
-                                    extra="请选择住院时间"
-                                    className={prefix + "_dj_date"}
-                                >
-                                    <List.Item className={prefix + "_dj_date"} arrow="horizontal">住院时间</List.Item>
-                                </DatePicker>
-                            )}
-                        </Form.Item>
-
-                        <Form.Item>
-                            {getFieldDecorator('zyjl', {
-                                initialValue: detailData && detailData.zyjl,
-                                rules: [{required: true, message: '请输入住院记录'}],
-                            })(
-                                <InputItem
-                                    placeholder="请输入住院记录"
-                                    clear
-                                >住院记录</InputItem>
-                            )}
-                        </Form.Item>
-
-                        <Form.Item>
-                            {getFieldDecorator('sfkf', {
-                                initialValue: detailData && detailData.kf,
-                                rules: [{required: true, message: '请选择是否康复'}],
+                        <Form.Item >
+                            {getFieldDecorator('jjrlx', {
+                                initialValue: detailData && detailData.jjrlx,
+                                rules: [{required: true, message: '请选择节假日类型'}],
                             })(
                                 <Picker
                                     /* value={this.state.activityType}
                                      onChange={v => this.setState({activityType: v})}*/
-                                    title="是否康复"
-                                    extra="请选择是否康复"
-                                    data={caseData}
+                                    title="节假日类型"
+                                    extra="请选择节假日类型"
+                                    data={holidayData}
                                     cols={1}>
-                                    <List.Item className={prefix + "_dj_date"} arrow="horizontal">是否康复</List.Item>
+                                    <List.Item className={prefix + "_dj_date"} arrow="horizontal">节假日类型</List.Item>
                                 </Picker>
                             )}
                         </Form.Item>
 
+                        <Form.Item>
+                            {getFieldDecorator('xb', {
+                                initialValue: detailData && detailData.xb,
+                                rules: [{required: true, message: '请选择性别'}],
+                            })(
+                                <Picker
+                                    /* value={this.state.activityType}
+                                     onChange={v => this.setState({activityType: v})}*/
+                                    title="性别"
+                                    extra="请选择性别"
+                                    data={xbData}
+                                    cols={1}>
+                                    <List.Item className={prefix + "_dj_date"} arrow="horizontal">性别</List.Item>
+                                </Picker>
+                            )}
+                        </Form.Item>
+
+                        <Form.Item>
+                            {getFieldDecorator('ygzdw', {
+                                initialValue: detailData && detailData.ygzdw,
+                                rules: [{required: true, message: '请输入原工作单位'}],
+                            })(<InputItem
+                                    placeholder="请输入原工作单位"
+                                    clear
+                                >原工作单位</InputItem>
+                            )}
+                        </Form.Item>
+
+                        <Form.Item>
+                            {getFieldDecorator('cjgzsj', {
+                                initialValue: detailData && new Date(detailData.cjgzsj),
+                                rules: [{required: true, message: '请选择参加工作时间'}],
+                            })(
+                                <DatePicker
+                                    mode="date"
+                                    title="参加工作时间"
+                                    extra="请选择参加工作时间"
+                                >
+                                    <List.Item className={prefix + "_dj_date"} arrow="horizontal">参加工作时间</List.Item>
+                                </DatePicker>
+                            )}
+                        </Form.Item>
+                        <Form.Item>
+                            {getFieldDecorator('jtzz', {
+                                initialValue: detailData && detailData.jtzz,
+                                rules: [{required: true, message: '请输入家庭住址'}],
+                            })(
+                                <TextareaItem
+                                    title="家庭住址"
+                                    placeholder="请输入家庭住址"
+                                    clear
+                                    rows={3}
+                                />
+                            )}
+                        </Form.Item>
 
                         <Form.Item>
                             {getFieldDecorator('bz', {

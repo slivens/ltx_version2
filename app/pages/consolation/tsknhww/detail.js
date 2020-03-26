@@ -12,7 +12,7 @@ import Form from 'antd/es/form';
 import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
 import './style/index.less';
-import {caseData, detailInfoData} from "../components/data";
+import {caseData, zdjjrwwDetailInfoData} from "../components/data";
 import EditTopbar from "../components/editTopbar";
 import CommitFooterbar from "../components/commitFooterbar";
 import commonUrl from '../../../config';
@@ -25,7 +25,7 @@ class ZywwRegisterConn extends Component {
         this.state = {
             datasource: "",
             files: [],
-            detailData: detailInfoData
+            detailData: zdjjrwwDetailInfoData
         }
     }
 
@@ -102,13 +102,10 @@ class ZywwRegisterConn extends Component {
                     </List>
                     <WhiteSpace size="lg"/>
                     <List>
-                        <List.Item extra={detailData.jzyy}>就诊医院</List.Item>
-                        <List.Item extra={detailData.sbsj}>生病时间</List.Item>
-                        <List.Item extra={detailData.sblx}>生病类型</List.Item>
-                        <List.Item extra={detailData.sbyy}>生病原因</List.Item>
-                        <List.Item extra={detailData.zysj}>住院时间</List.Item>
-                        <List.Item extra={detailData.zyjl}>住院记录</List.Item>
-                        <List.Item extra={detailData.sfkf}>是否康复</List.Item>
+                        <List.Item extra={detailData.xbText}>性别</List.Item>
+                        <List.Item extra={detailData.ygzdw}>原工作单位</List.Item>
+                        <List.Item extra={detailData.cjgzsj}>参加工作时间</List.Item>
+                        <List.Item extra={detailData.jtzz}>家庭住址</List.Item>
                         <TextareaItem
                             title="备注"
                             rows={3}
