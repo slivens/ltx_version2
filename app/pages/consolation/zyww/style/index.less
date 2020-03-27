@@ -5,7 +5,7 @@
   background: #F4F4F4;;
 
   &_dj {
-    margin-bottom:.5rem;
+    margin-bottom: .5rem;
     &_date {
       padding-left: .12rem;
     }
@@ -40,29 +40,34 @@
       }
     }
 
-
     .am-list-item .am-list-line .am-list-content {
       flex: 0.4;
       color: #666666;
     }
-    .am-list-item .am-list-line .am-list-extra {
+    div[class ~= has-success] .am-list-item .am-list-line .am-list-extra {
       flex: 1;
       color: #333;
       font-size: 17px;
+      text-align: left;
+    }
+    div:not(has-success).am-list-item .am-list-line .am-list-extra{
+      flex: 1;
+      color: #bbb;
+      font-size: 16px;
       text-align: left;
     }
     .am-textarea-label {
       color: #666666;
       width: .962rem;
     }
-    .ant-form-explain{
+    .ant-form-explain {
       position: relative;
       /* top: -30px; */
       left: 29%;
     }
 
   }
-  &_detail{
+  &_detail {
     margin-bottom: .5rem;
     .am-list-item .am-list-line .am-list-content {
       flex: 0.35;
@@ -74,11 +79,11 @@
       text-align: left;
       font-size: 17px;
     }
-    .am-textarea-disabled .am-textarea-label{
+    .am-textarea-disabled .am-textarea-label {
       color: #666666;
       width: .962rem;
     }
-    .am-textarea-control textarea:disabled{
+    .am-textarea-control textarea:disabled {
       color: #333;
       line-height: 1.5;
     }
@@ -87,11 +92,10 @@
   .am-list-body {
     padding: 0 .05rem;
   }
-  .am-list-item{
+  .am-list-item {
     position: static;
     border-bottom: 1px solid #e1e1e1 !important;
   }
-
 
   /* .am-list-item .am-list-line .am-list-arrow{
      background-image:url("../../../../../assets/images/nodata.png");
