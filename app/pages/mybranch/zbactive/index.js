@@ -78,7 +78,7 @@ class zbactive extends Component {
                         fontSize: ".18rem",
                         transform: "translateY(-50%)"
                     }} 
-                    onClick={()=>{}}
+                    onClick={()=>{this.props.history.push('/pushActivity')}}
                     />
                     </div>
                     <div className="zbactive-box">

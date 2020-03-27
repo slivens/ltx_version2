@@ -37,9 +37,10 @@ const caseData = [
 class index extends Component {
     constructor(props){
         super(props)
+     
         this.state = {
             adress: "",
-            sex: this.props.addressData[0].gender||undefined
+            sex: this.props.addressData[0]?this.props.addressData[0].gender:undefined
         }
     }
    
@@ -48,7 +49,7 @@ class index extends Component {
         this.props.form.validateFields((error, value) => {
             console.log(error, value);
             console.log('@value', value)
-            const obj = { ...value, gender: sex, userId: this.props.userinfo.id,address:"福州",addressId:""}
+            const obj = { ...value, gender: sex, userId: this.props.userinfo.id,address:"福州"}
             if (!obj.contactPerson) {
                 Toast.info('请输入联系人')
                 return
@@ -65,11 +66,14 @@ class index extends Component {
                 Toast.info('请输入详细地址')
                 return
             }
+            console.log(this.props.addressData[0])
             if(this.props.addressData[0]){
                 Axios.post(`${commonUrl}/app/homeService/saveAddress.do`, {...obj,addressId:this.props.addressData[0].id})
                     .then(res => {
                         if (res.data.code === 'success') {
                             Toast.success('修改成功')
+                        }else{
+                            Toast.fail(`失败${res.message}`)
                         }
                     })
             }else{
@@ -78,6 +82,8 @@ class index extends Component {
                     .then(res => {
                         if (res.data.code === 'success') {
                             Toast.success('保存成功')
+                        }else{
+                            Toast.fail(`失败${res.message}`)
                         }
                     })
             }
@@ -87,7 +93,21 @@ class index extends Component {
         const { sex } = this.state;
         const { getFieldProps } = this.props.form;
         const {addressData}=this.props;
-        console.log('@@@@@@@@@@',sex,addressData)
+        let addressObj
+        if(!this.props.addressData[0]){
+             addressObj={
+                contactPerson:"",
+                contactNum:"",
+                addressDetail:"" 
+            }
+        }else{
+            addressObj={
+                contactPerson:addressData[0].contactPerson,
+                contactNum:addressData[0].contactNum,
+                addressDetail:addressData[0].addressDetail 
+            } 
+        }
+        
         return (
             <div className={prefix}>
                 <div className={prefix + "_topbar"}>
@@ -113,7 +133,7 @@ class index extends Component {
                             <Sex checked={sex === undefined ?parseInt(sex):!parseInt(sex)} onChange={() => this.setState({ sex: 0 })} name="女士" /></div>}
                         >
                             <TextareaItem
-                                {...getFieldProps('contactPerson',{initialValue:addressData[0].contactPerson})}
+                                {...getFieldProps('contactPerson',{initialValue:addressObj.contactPerson})}
                                 arrow="horizontal"
                                 title="联系人"
                                 placeholder="请输入联系人"
@@ -121,7 +141,7 @@ class index extends Component {
                             />
                         </Item>
                         <TextareaItem
-                            {...getFieldProps('contactNum',{initialValue:addressData[0].contactNum})}
+                            {...getFieldProps('contactNum',{initialValue:addressObj.contactNum+""})}
                             title="联系电话"
                             placeholder="请输入联系人电话"
                             clear
@@ -136,7 +156,7 @@ class index extends Component {
                             </Picker>
                         */}
                         <TextareaItem
-                            {...getFieldProps('addressDetail',{initialValue:addressData[0].addressDetail})}
+                            {...getFieldProps('addressDetail',{initialValue:addressObj.addressDetail})}
                             title="详细地址"
                             placeholder="请输入详细地址"
                             clear

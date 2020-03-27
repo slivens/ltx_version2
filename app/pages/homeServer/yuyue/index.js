@@ -50,6 +50,10 @@ class index extends Component {
                 Toast.info("请选择服务时间")
                 return
             }
+            if (!value.orderRemark) {
+                Toast.info("请输入订单备注")
+                return
+            }
             const obj = {
                 ...value,
                 companyId: homeCompany.id,
