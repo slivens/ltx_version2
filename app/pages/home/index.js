@@ -82,6 +82,7 @@ class Home extends Component {
                                     path: "/eduTrain"
                                 }
                             case "志愿者":
+                                //volunteer
                                 return {
                                     ...item,
                                     path: "/volunteer"

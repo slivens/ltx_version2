@@ -71,7 +71,8 @@ class index extends Component {
                 </div>
                 <div className={prefix + "_box"}>
                     <div className={prefix + "_pic"}>
-                        <img src={`http://192.168.111.132:8080/app/getUploadImg.do?fn=default.jpg`}
+                        <img onError={(e) => {e.target.onerror = null;e.target.src=`${commonUrl}/app/getUploadImg.do?fn=default.jpg`}}
+                         src={homeCompany.companyLogo}
                         />
                     </div>
                     <WhiteSpace />
@@ -80,8 +81,9 @@ class index extends Component {
                         selectList?
                         selectList.map((item,index)=>
                         <Item
+                            key={index}
                             extra={<Checkbox checked={item.checked}  onChange={(e)=>this.checkBoxChange(e,item)}/>}
-                            thumb="http://192.168.111.132:8080/app/getUploadImg.do?fn=default.jpg"
+                            thumb={item.serviceLogo}
                             multipleLine
                         >
                             {item.serviceName} <div style={{color:"#888",fontSize:".15rem"}}>{item.serviceDescription}</div>

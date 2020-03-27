@@ -5,7 +5,7 @@ import './style/index.less';
 import commonUrl from '../../../config/index';
 const ServerItem= ({item,onClick})=>{
     return(
-                        <WingBlank size="lg" >
+    <WingBlank size="lg" >
                             <WhiteSpace size="lg" />
                             <div className="zzfw_card" onClick={onClick}>
                                 <img onError={(e) => {e.target.onerror = null;e.target.src=`${commonUrl}/app/getUploadImg.do?fn=default.jpg`}} src={item.companyLogo}/>
@@ -14,7 +14,7 @@ const ServerItem= ({item,onClick})=>{
                                     <div className="zzfw_card_content">{item.description}</div>
                                 </div>
                             </div>
-                        <WhiteSpace size="lg" />
+                    <WhiteSpace size="lg" />
                         </WingBlank>
     )
 }

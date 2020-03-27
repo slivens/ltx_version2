@@ -50,7 +50,7 @@ class index extends Component {
                     {
                         this.state.jzfwData.map((item, index) =>
                             <ConmonCard
-                                key={item.id||index}
+                                key={index}
                                 item={item}
                                 onClick={()=>this.homeServerFunc(item)}
                             />

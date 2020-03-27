@@ -87,7 +87,7 @@ class index extends Component {
         const { sex } = this.state;
         const { getFieldProps } = this.props.form;
         const {addressData}=this.props;
-        console.log(sex,addressData)
+        console.log('@@@@@@@@@@',sex,addressData)
         return (
             <div className={prefix}>
                 <div className={prefix + "_topbar"}>

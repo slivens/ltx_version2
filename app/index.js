@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import './less/index.less';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import NotFound from './components/NotFound';
 import {
     Home, Login, Server,
@@ -16,20 +16,27 @@ import {
     Mybranch, Telbooks,
     Zbinfo, Volunteer, Lndx,
     Zbactive, Zbdetail, Myactive,
-    EduTrain, Ztjs,Apply,
-    SchoolDate,Volunteerbaodao,Lnb,
-    Yszd,Ycjp,Dzfwt,
-    Shgc,ComonList,
-    Resetpwd,Suggest,
-    About,Help,
-    Tbkt,MesgsDetail,
-    Hdzx,Search,
-    Allmember,HomeServer,
+    EduTrain, Ztjs, Apply,
+    SchoolDate, Volunteerbaodao, Lnb,
+    Yszd, Ycjp, Dzfwt,
+    Shgc, ComonList,
+    Resetpwd, Suggest,
+    About, Help,
+    Tbkt, MesgsDetail,
+    Hdzx, Search,
+    Allmember, HomeServer,
     PushActivity,JinTaiYang,
     Yuyue,EditAdress,
-    Myorder,OrderDetail
+    Myorder,OrderDetail,
+    Ldyzj, Lgbdx,
+    PartyDetail,PartyMember,
+    Consolation,
+    Zyww, ZywwDetail, ZywwRegister,
+    Zdjjrww, ZdjjrwwDetail, ZdjjrwwRegister,
+    Zhww,ZhwwDetail,ZhwwRegister,
+    Tsknhww,TsknhwwDetail,TsknhwwRegister
 } from './pages';
-const App = ({ history, location }) => {
+const App = ({history, location}) => {
     const router = {
         '': <Login />,
         'home': <Home />,
@@ -48,44 +55,58 @@ const App = ({ history, location }) => {
         'myactive': <Myactive />,
         'eduTrain': <EduTrain />,
         'ztjs': <Ztjs/>,
-        'iwapply':<Apply path="Reg" title="报名"/>,
-        'iwleave':<Apply path="leave" title="请假"/>,
-        'iwsearch':<Apply path="sech" title="查询"/>,
-        'schooldate':<SchoolDate/>,
+        'iwapply': <Apply path="Reg" title="报名"/>,
+        'iwleave': <Apply path="leave" title="请假"/>,
+        'iwsearch': <Apply path="sech" title="查询"/>,
+        'schooldate': <SchoolDate/>,
         // 'zyzbd':<Volunteerbaodao/>,
-        'zyzbd':<ComonList title="志愿者报道" branchtype="zyzbd"/>,
-        'lnb':<Lnb/>,
-        'yszd':<ComonList title="养生之道" branchtype="yszd"/>,
-        'ycjp':<ComonList title="原创精品" branchtype="ycjp"/>,
-        'dzfwt':<ComonList title="读者服务平台" branchtype="dzfwt"/>,
-        'shgc':<ComonList title="史海钩沉" branchtype="shgc"/>,
-        'ldyzj':<ComonList title="老党员之家" branchtype="ldyzj"/>,
-        'lgbdx':<ComonList title="老干部党校" branchtype="lgbdx"/>,
-        'hsjd':<ComonList title="红色基地" branchtype="hsjd"/>,
-        'hdzx':<Hdzx/>,
-        'hdkx':<ComonList title="活动快讯" branchtype="hdkx"/>,
-        'hdgg':<ComonList title="活动公告" branchtype="hdgg"/>,
-        'hdzs':<ComonList title="活动展示" branchtype="hdzs"/>,
-        'lgbfc':<ComonList title="老干部风采" branchtype="lgbfc"/>,
-        'resetpwd':<Resetpwd/>,
-        'suggest':<Suggest/>,
-        'about':<About/>,
-        'help':<Help/>,
-        'tbkt':<Tbkt/>,
-        'search':<Search/>,
-        'allmember':<Allmember/>,
-        'mesgsDetail':<MesgsDetail/>,
-        'homeServer':<HomeServer/>,
-        'pushActivity':<PushActivity/>,
+        'zyzbd': <ComonList title="志愿者报道" branchtype="zyzbd"/>,
+        'lnb': <Lnb/>,
+        'yszd': <ComonList title="养生之道" branchtype="yszd"/>,
+        'ycjp': <ComonList title="原创精品" branchtype="ycjp"/>,
+        'dzfwt': <ComonList title="读者服务平台" branchtype="dzfwt"/>,
+        'shgc': <ComonList title="史海钩沉" branchtype="shgc"/>,
+        'ldyzj': <Ldyzj/>,
+        'lgbdx': <Lgbdx/>,
+        'hsjd': <ComonList title="红色基地" branchtype="hsjd"/>,
+        'hdzx': <Hdzx/>,
+        'hdkx': <ComonList title="活动快讯" branchtype="hdkx"/>,
+        'hdgg': <ComonList title="活动公告" branchtype="hdgg"/>,
+        'hdzs': <ComonList title="活动展示" branchtype="hdzs"/>,
+        'lgbfc': <ComonList title="老干部风采" branchtype="lgbfc"/>,
+        'resetpwd': <Resetpwd/>,
+        'suggest': <Suggest/>,
+        'about': <About/>,
+        'help': <Help/>,
+        'tbkt': <Tbkt/>,
+        'search': <Search/>,
+        'allmember': <Allmember/>,
+        'mesgsDetail': <MesgsDetail/>,
+        'homeServer': <HomeServer/>,
+        'pushActivity': <PushActivity/>,
+        'partyDetail': <PartyDetail/>,
+        'partyMember': <PartyMember/>,
+        'consolation': <Consolation/>,
+        'zyww': <Zyww/>,
+        'zywwDetail': <ZywwDetail/>,
+        'zywwRegister': <ZywwRegister/>,
+        'zdjjrww': <Zdjjrww/>,
+        'zdjjrwwDetail': <ZdjjrwwDetail/>,
+        'zdjjrwwRegister': <ZdjjrwwRegister/>,
+        'zhww': <Zhww/>,
+        'zhwwDetail': <ZhwwDetail/>,
+        'zhwwRegister': <ZhwwRegister/>,
+        'tsknhww': <Tsknhww/>,
+        'tsknhwwDetail': <TsknhwwDetail/>,
+        'tsknhwwRegister': <TsknhwwRegister/>,
         'homeServerCompany':<JinTaiYang/>,
         'yuyue':<Yuyue/>,
         'editAdress':<EditAdress/>,
         'myorder':<Myorder/>,
         'orderDetail':<OrderDetail/>
-        
-    }
-    const { pathname } = location;
+    };
+    const {pathname} = location;
     const path = pathname.split('/')[1];
     return router[path] || <NotFound />
-}
+};
 export default withRouter(App);
