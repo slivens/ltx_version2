@@ -25,7 +25,7 @@ class ZywwRegisterConn extends Component {
         this.state = {
             datasource: "",
             files: [],
-            detailData: zywwDetailInfoData
+            detailData: undefined
         }
     }
 
