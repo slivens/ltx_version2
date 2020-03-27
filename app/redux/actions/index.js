@@ -24,8 +24,29 @@ const changeSearchValue= value=>{
         value
     }
 }
+const AddHomeServer= company=>{
+    return {
+        type:"Add_HomeServer",
+        company
+    }
+}
+const SelectHomeServer= (select=[])=>{
+    return {
+        type:"Select_HomeServer",
+        select
+    }
+}
+const Address= (address=[])=>{
+    return {
+        type:"ADD_ADDRESS",
+        address
+    }
+}
 export {
     AddUserInfo,
     changeMenu,
-    changeSearchValue
+    changeSearchValue,
+    AddHomeServer,
+    SelectHomeServer,
+    Address
 }

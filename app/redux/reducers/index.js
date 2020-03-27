@@ -7,8 +7,8 @@
  * @FilePath: \ltx\app\redux\reducers\index.js
  */
 
-import {combineReducers} from "redux";
- const userinfo = (state = {}, action) => {
+import { combineReducers } from "redux";
+const userinfo = (state = {}, action) => {
     switch (action.type) {
         case 'ADD_USER_INFO':
             return {
@@ -19,20 +19,43 @@ import {combineReducers} from "redux";
             return state
     }
 }
-const menuData = (state=[],action)=>{
-    switch(action.type){
+const menuData = (state = [], action) => {
+    switch (action.type) {
         case 'CHANGE_MENU':
             return [...action.data]
         default:
             return state
     }
 }
-const searchValue=(state="",action)=>{
-    switch(action.type){
+const searchValue = (state = "", action) => {
+    switch (action.type) {
         case 'CHANGE_SEARCH_VALUE':
             return action.value
         default:
             return state
     }
 }
-export default combineReducers({userinfo,menuData,searchValue});
+const serverCompany = (state = {}, action) => {
+    switch (action.type) {
+        case 'Add_HomeServer':
+            return {
+                ...action.company
+            }
+        case 'Select_HomeServer':
+            return {
+                ...state,
+                selectList:action.select
+            }
+        default:
+            return state
+    }
+}
+const address = (state = [], action) => {
+    switch (action.type) {
+        case 'ADD_ADDRESS':
+            return action.address
+        default:
+            return state
+    }
+}
+export default combineReducers({ userinfo, menuData, searchValue, serverCompany,address });

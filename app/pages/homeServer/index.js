@@ -7,9 +7,31 @@ import { withRouter } from 'react-router-dom';
 import ConmonCard from './conmonCard';
 import axios from 'axios';
 import commonUrl from '../../config';
+ import {connect} from 'react-redux';
+ import {AddHomeServer} from '../../redux/actions';
 class index extends Component {
+    state={
+        jzfwData:[]
+    }
+    gowhere = (path) => {
+        this.props.history.push(path)
+    }
+    componentWillMount(){
+      
+        axios.post(`${commonUrl}/app/homeService/getCompanyList.do`, {})
+        .then(res=>{
+            if(res.data.code==='success'){
+                this.setState({jzfwData:res.data.data})
+            }
+        })
+    }
+    homeServerFunc=(item)=>{
+         this.props.addHomeServer(item,
+            ()=>this.props.history.push('/homeServerCompany')
+            )
+    }
     render() {
-        const obj={title:"金太阳",content:"fasdfadsfdfasdfadsfasdfasdf"} //测试数据
+
         return (
             <div className="homeServer">
                 <div className="homeServer_topbar">
@@ -24,15 +46,34 @@ class index extends Component {
                             transform: "translateY(-50%)"
                         }} type="left" />
                     家政服务</div>
-                    <div className="homeServer_entry">
-                    <ConmonCard
-                        item={obj}
-                        onClick={() => this.gowhere(item.path)}
-                    />
-                    </div>
+                <div className="homeServer_entry">
+                    {
+                        this.state.jzfwData.map((item, index) =>
+                            <ConmonCard
+                                key={index}
+                                item={item}
+                                onClick={()=>this.homeServerFunc(item)}
+                            />
+                        )
+                    }
+                </div>
             </div>
         );
     }
 }
-
-export default index;
+const mapStateToProps=(state,ownprops)=>{
+    return {
+        homeCompany:state.serverCompany,
+        userinfo:state.userinfo
+    }
+}
+const mapDispatchToProps=(dispatch,ownprops)=>{
+    return {
+        addHomeServer:(company,func)=>{
+            dispatch(AddHomeServer(company))
+            func()
+        }
+    }
+}
+const reduxComp=connect(mapStateToProps,mapDispatchToProps)(index);
+export default withRouter(reduxComp);

@@ -25,7 +25,9 @@ import {
     Tbkt, MesgsDetail,
     Hdzx, Search,
     Allmember, HomeServer,
-    PushActivity,
+    PushActivity,JinTaiYang,
+    Yuyue,EditAdress,
+    Myorder,OrderDetail,
     Ldyzj, Lgbdx,
     PartyDetail,PartyMember,
     Consolation,
@@ -97,6 +99,11 @@ const App = ({history, location}) => {
         'tsknhww': <Tsknhww/>,
         'tsknhwwDetail': <TsknhwwDetail/>,
         'tsknhwwRegister': <TsknhwwRegister/>,
+        'homeServerCompany':<JinTaiYang/>,
+        'yuyue':<Yuyue/>,
+        'editAdress':<EditAdress/>,
+        'myorder':<Myorder/>,
+        'orderDetail':<OrderDetail/>
     };
     const {pathname} = location;
     const path = pathname.split('/')[1];
