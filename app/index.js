@@ -25,7 +25,9 @@ import {
     Tbkt,MesgsDetail,
     Hdzx,Search,
     Allmember,HomeServer,
-    PushActivity
+    PushActivity,JinTaiYang,
+    Yuyue,EditAdress,
+    Myorder,OrderDetail
 } from './pages';
 const App = ({ history, location }) => {
     const router = {
@@ -74,7 +76,13 @@ const App = ({ history, location }) => {
         'allmember':<Allmember/>,
         'mesgsDetail':<MesgsDetail/>,
         'homeServer':<HomeServer/>,
-        'pushActivity':<PushActivity/>
+        'pushActivity':<PushActivity/>,
+        'homeServerCompany':<JinTaiYang/>,
+        'yuyue':<Yuyue/>,
+        'editAdress':<EditAdress/>,
+        'myorder':<Myorder/>,
+        'orderDetail':<OrderDetail/>
+        
     }
     const { pathname } = location;
     const path = pathname.split('/')[1];

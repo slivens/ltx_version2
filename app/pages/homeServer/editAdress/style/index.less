@@ -1,0 +1,94 @@
+@import '../../../../less/common.less';
+
+.editadress {
+    height: 100%;
+    background: #F4F4F4;
+
+    &_topbar {
+        .topBar;
+    }
+
+    &_box {
+        height: calc(100% - .5rem - .8rem);
+        overflow: scroll;
+    }
+
+   
+    &_activebtn{
+        width: 100%;
+        background: #fff;
+        height: .8rem;
+        position: fixed;
+        bottom: 0;
+        
+        .am-button{
+            color: #fff;
+        }
+    }
+    .am-textarea-label{
+        text-align: right;
+        margin-right: 10px;
+    }
+    .pushTime{
+        .am-list-content{
+            width: 85px !important;
+            flex: none !important;
+            margin-right: 10px;
+            text-align: right !important;
+        }
+        .am-list-extra{
+            flex:1;
+            text-align: left !important;
+            
+        }
+    }
+    .sex-tag {
+        display: inline-block;
+        position: relative;
+        font-size: 14px;
+        text-align: center;
+        padding: 0 15px;
+        height: 25px;
+        line-height: 25px;
+        box-sizing: border-box;
+        &-normal{
+            background-color: #fff;
+            color: #888;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            &:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 200%;
+                height: 200%;
+                border-radius: 6px;
+                transform-origin: 0 0;
+                transform: scale(.5);
+                box-sizing: border-box;
+                pointer-events: none;
+            }
+        }
+        &-active {
+            background-color: #fff;
+            color: #108ee9;
+            border: 1px solid #108ee9;
+            border-radius: 3px;
+            &:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 200%;
+                height: 200%;
+                border-radius: 6px;
+                transform-origin: 0 0;
+                transform: scale(.5);
+                box-sizing: border-box;
+                pointer-events: none;
+            }
+        }
+    }
+}
+

@@ -42,3 +42,8 @@ export {default as Search} from './search';
 export {default as Allmember} from './mybranch/zbdetail/allmember';
 export {default as PushActivity} from './mybranch/pushActivity';
 export {default as HomeServer} from './homeServer';
+export {default as JinTaiYang} from './homeServer/JinTaiYang';
+export {default as Yuyue} from './homeServer/yuyue';
+export {default as EditAdress} from './homeServer/editAdress';
+export {default as Myorder} from './homeServer/myorder';
+export {default as OrderDetail} from './homeServer/orderDetail';

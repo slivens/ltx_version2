@@ -14,7 +14,8 @@ import Col from 'antd/es/col';
 import 'antd/es/row/style';
 import 'antd/es/col/style';
 import 'antd/es/empty/style';
-
+import Skeleton from 'antd/es/skeleton';
+import 'antd/es/skeleton/style';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 import commonUrl from '../../config';

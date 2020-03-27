@@ -47,6 +47,19 @@ class PushActivity extends Component {
     componentDidMount() {
 
     }
+    validateDatePicker = (rule, date, callback) => {
+        if (date && date.getMinutes() !== 15) {
+          callback();
+        } else {
+          callback(new Error('15 is invalid'));
+        }
+      }
+    pushHandle=()=>{
+        this.props.form.validateFields((error, value) => {
+            console.log(error, value);
+            console.log('@value',value)
+          });
+    }
     render() {
         const { getFieldProps } = this.props.form;
         const { files } = this.state;
@@ -72,7 +85,7 @@ class PushActivity extends Component {
                     <WhiteSpace />
                     <List>
                         <TextareaItem
-                            {...getFieldProps('note3')}
+                            
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;活动海报</div>}
                             autoHeight
                             editable={false}
@@ -90,18 +103,23 @@ class PushActivity extends Component {
                     <WhiteSpace />
                     <List>
                         <TextareaItem
+                        {...getFieldProps('title')}
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;活动名称</div>}
                             placeholder="输入活动名称"
                             clear
 
                         />
                         <TextareaItem
+                        {...getFieldProps('actAddress')}
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;活动地点</div>}
                             placeholder="输入活动地点"
                             clear
                         />
                         <DatePicker
-                            mode="date"
+                        {...getFieldProps('actStartTime', {
+                            initialValue: this.state.startDate
+                          })}
+                            mode="datetime"
                             title="开始时间"
                             extra="请选择"
                             value={this.state.startDate}
@@ -110,7 +128,8 @@ class PushActivity extends Component {
                             <List.Item className="pushTime" arrow="horizontal"><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;开始时间</List.Item>
                         </DatePicker>
                         <DatePicker
-                            mode="date"
+                        {...getFieldProps('actEndTime')}
+                            mode="datetime"
                             title="结束时间"
                             extra="请选择"
                             value={this.state.endDate}
@@ -124,6 +143,7 @@ class PushActivity extends Component {
 
                     <List>
                         <Picker
+                        {...getFieldProps('actType')}
                             value={this.state.activityType}
                             onChange={v => this.setState({ activityType: v })}
                             data={caseData}
@@ -131,7 +151,7 @@ class PushActivity extends Component {
                             <List.Item className="pushTime" arrow="horizontal"><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;活动类型</List.Item>
                         </Picker>
                         <TextareaItem
-                            {...getFieldProps('note4')}
+                            {...getFieldProps('actPlan')}
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;活动方案</div>}
                             placeholder="输入活动内容"
                             rows={5}
@@ -142,7 +162,8 @@ class PushActivity extends Component {
                     <WhiteSpace />
                     <List>
                         <DatePicker
-                            mode="date"
+                        {...getFieldProps('regStartTime')}
+                            mode="datetime"
                             title="报名开始"
                             extra="请选择"
                             value={this.state.playtime}
@@ -151,7 +172,8 @@ class PushActivity extends Component {
                             <List.Item className="pushTime" arrow="horizontal"><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;报名开始</List.Item>
                         </DatePicker>
                         <DatePicker
-                            mode="date"
+                        {...getFieldProps('regEndTime')}
+                            mode="datetime"
                             title="报名结束"
                             extra="请选择"
                             value={this.state.endplaytime}
@@ -164,20 +186,23 @@ class PushActivity extends Component {
                             editable={false}
                         />
                         <TextareaItem
+                            {...getFieldProps('regEndTime')}
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;主办方</div>}
                             placeholder="输入活动名称"
                             clear
 
                         />
                         <TextareaItem
+                        {...getFieldProps('contactPerson')}
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;联系人</div>}
-                            placeholder="输入活动名称"
+                            placeholder="输入联系人"
                             clear
 
                         />
                         <TextareaItem
+                        {...getFieldProps('contactNumber')}
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;联系电话</div>}
-                            placeholder="输入活动名称"
+                            placeholder="输入联系电话"
                             clear
 
                         />
@@ -187,6 +212,7 @@ class PushActivity extends Component {
                 <div className="activebtn">
                     <Flex style={{ height: "100%" }} align="center" justify="center">
                         <Button
+                            onClick={this.pushHandle}
                             style={{
                                 display: "inline-block",
                                 verticalAlign: "middle",
