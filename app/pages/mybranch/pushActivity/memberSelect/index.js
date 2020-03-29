@@ -37,7 +37,7 @@ class MemberSelect extends React.Component {
     fechData=(username)=>{
         
             Axios.post(`${commonUrl}/app/activity/findMemberByBranchId.do`, 
-            { branchId: "896197f0-168b-478e-97a6-fd9f7034f809"||this.props.userinfo.partyBranchId,username })
+            { branchId: this.props.userinfo.partyBranchId,username })
                 .then(res => {
                     if (res.data.code === 'success') {
                         this.setState({ memberData: res.data.data })
