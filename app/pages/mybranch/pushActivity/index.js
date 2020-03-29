@@ -83,7 +83,9 @@ class PushActivity extends Component {
                 ...value,
                 actType: value.actType.toString(),
                 userIds: showMemberName.join(),
-                unitId: userinfo.partyBranchId
+                unitId: userinfo.partyBranchId,
+                operUserId:userinfo.id
+
             }
             for (let item in newobj) {
                 switch (item) {
