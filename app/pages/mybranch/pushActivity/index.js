@@ -3,40 +3,53 @@ import { withRouter } from 'react-router-dom';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
 import './style/index.less';
-import { List, TextareaItem, WhiteSpace, ImagePicker, DatePicker, Picker, Button, Flex } from 'antd-mobile';
+import { List, TextareaItem, WhiteSpace, ImagePicker, DatePicker, Picker, Button, Flex, Modal, Badge, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
+import { connect } from 'react-redux';
+import Axios from 'axios';
+import commonUrl from '../../../config';
+import MemberSelect from './memberSelect';
 const caseData = [
 
     {
-        label: '方案A',
-        value: '方案A',
+        label: '支部党员大会',
+        value: '1',
     },
     {
-        label: '方案B',
-        value: '方案B',
+        label: '支委会',
+        value: '2',
     },
     {
-        label: '方案C',
-        value: '方案C',
+        label: '主题党课',
+        value: '3',
     },
-    {
-        label: '方案D',
-        value: '方案D',
-    },
-
-
-
 ]
-
+function closest(el, selector) {
+    const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+    while (el) {
+        if (matchesSelector.call(el, selector)) {
+            return el;
+        }
+        el = el.parentElement;
+    }
+    return null;
+}
 class PushActivity extends Component {
     state = {
         files: [],
         multiple: false,
-        startDate: "",
-        endDate: "",
+        actStartTime: "",
+        actEndTime: "",
         activityType: "",
-        playtime: "",
-        endplaytime: ""
+        regStartTime: "",
+        regEndTime: "",
+        modal1: false,
+        modal2: false,
+    }
+    onClose = key => () => {
+        this.setState({
+            [key]: false,
+        });
     }
     onChange = (files, type, index) => {
         console.log(files, type, index);
@@ -49,20 +62,93 @@ class PushActivity extends Component {
     }
     validateDatePicker = (rule, date, callback) => {
         if (date && date.getMinutes() !== 15) {
-          callback();
+            callback();
         } else {
-          callback(new Error('15 is invalid'));
+            callback(new Error('15 is invalid'));
         }
-      }
-    pushHandle=()=>{
+    }
+    pushHandle = () => {
+        const { allmember, userinfo } = this.props;
+        const showMember = allmember.filter(item => item.checked)
+        let showMemberName = []
+        if (showMember.length) {
+            showMember.forEach(item => {
+                showMemberName.push(item.value)
+            })
+        }
         this.props.form.validateFields((error, value) => {
             console.log(error, value);
-            console.log('@value',value)
-          });
+            console.log('@value', value)
+            const newobj = {
+                ...value,
+                actType: value.actType.toString(),
+                userIds: showMemberName.join(),
+                unitId: userinfo.partyBranchId
+            }
+            for (let item in newobj) {
+                switch (item) {
+                    case 'actPlan':
+                        if (!newobj['actPlan']) return Toast.info('请输入活动方案')
+                    case 'title':
+                        if (!newobj['title']) return Toast.info('请输入活动名称')
+                    case 'actType':
+                        if (!newobj['actType']) return Toast.info('请输入活动类型')
+                    case 'actStartTime':
+                        if (!newobj['actStartTime']) return Toast.info('请选择开始时间')
+                    case 'actEndTime':
+                        if (!newobj['actEndTime']) return Toast.info('请选择结束时间')
+                    case 'actAddress':
+                        if (!newobj['actAddress']) return Toast.info('请输入活动地点')
+                    case 'regStartTime':
+                        if (!newobj['regStartTime']) return Toast.info('请选择报名时间')
+                    case 'regEndTime':
+                        if (!newobj['regEndTime']) return Toast.info('请选择报名结束时间')
+                    case 'hostUnit':
+                        if (!newobj['hostUnit']) return Toast.info('请输入主办方')
+                    case 'contactNumber':
+                        if (!newobj['contactNumber']) return Toast.info('请输入联系电话')
+                    case 'contactPerson':
+                        if (!newobj['contactPerson']) return Toast.info('请输入联系人')
+                        case 'userIds':
+                        if (!newobj['userIds']) return Toast.info('请选择邀请人员')
+                    default:
+                        break;
+                }
+            }
+            Axios.post(`${commonUrl}/app/activity/saveActivity.do`, newobj)
+                .then(res => {
+                    if (res.data.code === 'success') {
+                        Toast.success('发布成功')
+                    } else {
+                        Toast.fail(`发布失败：${res.message}`)
+                    }
+                })
+        });
     }
+    onWrapTouchStart = (e) => {
+        // fix touch to scroll background page on iOS
+        if (!/iPhone|iPod|iPad/i.test(navigator.userAgent)) {
+            return;
+        }
+        const pNode = closest(e.target, '.am-modal-content');
+        if (!pNode) {
+            e.preventDefault();
+        }
+    }
+
     render() {
         const { getFieldProps } = this.props.form;
+        const { allmember } = this.props;
+        console.log('@@@@@@@allmember', allmember)
+        const showMember = allmember.filter(item => item.checked)
+        let showMemberName = []
+        if (showMember.length) {
+            showMember.forEach(item => {
+                showMemberName.push(item.label)
+            })
+        }
         const { files } = this.state;
+        const { userinfo } = this.props;
         return (
             <div className="pushactive">
                 <div className="pushactive_topbar">
@@ -85,7 +171,7 @@ class PushActivity extends Component {
                     <WhiteSpace />
                     <List>
                         <TextareaItem
-                            
+
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;活动海报</div>}
                             autoHeight
                             editable={false}
@@ -103,37 +189,39 @@ class PushActivity extends Component {
                     <WhiteSpace />
                     <List>
                         <TextareaItem
-                        {...getFieldProps('title')}
+                            {...getFieldProps('title')}
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;活动名称</div>}
                             placeholder="输入活动名称"
                             clear
 
                         />
                         <TextareaItem
-                        {...getFieldProps('actAddress')}
+                            {...getFieldProps('actAddress')}
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;活动地点</div>}
                             placeholder="输入活动地点"
                             clear
                         />
                         <DatePicker
-                        {...getFieldProps('actStartTime', {
-                            initialValue: this.state.startDate
-                          })}
+                            {...getFieldProps('actStartTime', {
+                                initialValue: this.state.actStartTime
+                            })}
                             mode="datetime"
                             title="开始时间"
                             extra="请选择"
-                            value={this.state.startDate}
-                            onChange={startDate => this.setState({ startDate })}
+                            value={this.state.actStartTime}
+                            onChange={actStartTime => this.setState({ actStartTime })}
                         >
                             <List.Item className="pushTime" arrow="horizontal"><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;开始时间</List.Item>
                         </DatePicker>
                         <DatePicker
-                        {...getFieldProps('actEndTime')}
+                            {...getFieldProps('actEndTime', {
+                                initialValue: this.state.actEndTime
+                            })}
                             mode="datetime"
                             title="结束时间"
                             extra="请选择"
-                            value={this.state.endDate}
-                            onChange={endDate => this.setState({ endDate })}
+                            value={this.state.actEndTime}
+                            onChange={actEndTime => this.setState({ actEndTime })}
                         >
                             <List.Item className="pushTime" arrow="horizontal"><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;结束时间</List.Item>
                         </DatePicker>
@@ -143,7 +231,10 @@ class PushActivity extends Component {
 
                     <List>
                         <Picker
-                        {...getFieldProps('actType')}
+                            {...getFieldProps('actType', {
+                                initialValue: this.state.activityType
+                            })}
+                            title="活动类型"
                             value={this.state.activityType}
                             onChange={v => this.setState({ activityType: v })}
                             data={caseData}
@@ -162,45 +253,68 @@ class PushActivity extends Component {
                     <WhiteSpace />
                     <List>
                         <DatePicker
-                        {...getFieldProps('regStartTime')}
+                            {...getFieldProps('regStartTime', {
+                                initialValue: this.state.regStartTime
+                            })}
                             mode="datetime"
                             title="报名开始"
                             extra="请选择"
-                            value={this.state.playtime}
-                            onChange={playtime => this.setState({ playtime })}
+                            value={this.state.regStartTime}
+                            onChange={regStartTime => this.setState({ regStartTime })}
                         >
                             <List.Item className="pushTime" arrow="horizontal"><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;报名开始</List.Item>
                         </DatePicker>
                         <DatePicker
-                        {...getFieldProps('regEndTime')}
+                            {...getFieldProps('regEndTime', {
+                                initialValue: this.state.regEndTime
+                            })}
                             mode="datetime"
                             title="报名结束"
                             extra="请选择"
-                            value={this.state.endplaytime}
-                            onChange={endplaytime => this.setState({ endplaytime })}
+                            value={this.state.regEndTime}
+                            onChange={regEndTime => this.setState({ regEndTime })}
                         >
                             <List.Item className="pushTime" arrow="horizontal"><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;报名结束</List.Item>
                         </DatePicker>
-                        <TextareaItem
-                            title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;邀请人员</div>}
+                        {/*<TextareaItem
+                            title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>
+                            &nbsp;邀请人员</div>}
                             editable={false}
-                        />
+                        />*/}
+                        <List.Item
+                            className="select_member"
+                            extra={
+                                <div
+                                    className="select_member_box"
+                                    onClick={() => { this.setState({ modal2: true }) }}
+                                >
+                                    {showMemberName.length ? showMemberName.join('、') : ""}
+                                </div>}
+                            arrow="horizontal">
+                            <span style={{ color: "red", verticalAlign: "middle" }}>*</span>
+                            &nbsp;<span onClick={() => { this.setState({ modal1: true }) }}>邀请人员</span></List.Item>
                         <TextareaItem
-                            {...getFieldProps('regEndTime')}
+                            {...getFieldProps('hostUnit', {
+                                initialValue: userinfo.partyBranchName
+                            })}
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;主办方</div>}
                             placeholder="输入活动名称"
                             clear
 
                         />
                         <TextareaItem
-                        {...getFieldProps('contactPerson')}
+                            {...getFieldProps('contactPerson', {
+                                initialValue: userinfo.realName
+                            })}
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;联系人</div>}
                             placeholder="输入联系人"
                             clear
 
                         />
                         <TextareaItem
-                        {...getFieldProps('contactNumber')}
+                            {...getFieldProps('contactNumber', {
+                                initialValue: userinfo.phoneNum
+                            })}
                             title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;联系电话</div>}
                             placeholder="输入联系电话"
                             clear
@@ -224,9 +338,58 @@ class PushActivity extends Component {
                         >发布</Button>
                     </Flex>
                 </div>
+                <Modal
+                    visible={this.state.modal1}
+                    transparent
+                    maskClosable={false}
+                    onClose={this.onClose('modal1')}
+                    title="全部邀请人员"
+                    footer={[{ text: '确定', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
+                    wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+                >
+                    <div style={{ height: 100, overflow: 'scroll' }}>
+                        {showMemberName.length
+                            ?
+                            showMemberName.map((item, index) => {
+                                return (
+                                    <Badge
+                                        key={index}
+                                        text={item}
+                                        style={{ marginLeft: 12, padding: '0 3px', backgroundColor: '#21b68a', borderRadius: 2 }} />
+                                )
+                            }
+                            ) :
+                            "未选择"}
+
+                    </div>
+                </Modal>
+                <Modal
+                    className="memberClassName"
+                    visible={this.state.modal2}
+                    transparent
+                    maskClosable={false}
+                    onClose={this.onClose('modal2')}
+                    title={null}
+                    footer={[{ text: '确定', onPress: () => { console.log('ok'); this.onClose('modal2')(); } }]}
+                    wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+                >
+                    <div style={{ height: '100%', overflow: 'scroll' }}>
+
+                        <MemberSelect onClose={() => this.setState({ modal2: false })} />
+                    </div>
+                </Modal>
             </div>
         );
     }
 }
-const PushActivitycomp = createForm()(PushActivity);
-export default withRouter(PushActivitycomp);
+const mapStateToProps = (state, ownprops) => ({
+    allmember: state.allMemberData,
+    userinfo: state.userinfo
+})
+const mapDispatchToProps = (dispatch, ownprops) => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(createForm()(PushActivity)))

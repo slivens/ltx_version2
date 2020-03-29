@@ -71,7 +71,8 @@ class index extends Component {
                 Axios.post(`${commonUrl}/app/homeService/saveAddress.do`, {...obj,addressId:this.props.addressData[0].id})
                     .then(res => {
                         if (res.data.code === 'success') {
-                            Toast.success('修改成功')
+                            Toast.success('修改成功',2,()=>this.props.history.goBack())
+                            
                         }else{
                             Toast.fail(`失败${res.message}`)
                         }
@@ -81,7 +82,7 @@ class index extends Component {
                 Axios.post(`${commonUrl}/app/homeService/saveAddress.do`, obj)
                     .then(res => {
                         if (res.data.code === 'success') {
-                            Toast.success('保存成功')
+                            Toast.success('修改成功',2,()=>this.props.history.goBack())
                         }else{
                             Toast.fail(`失败${res.message}`)
                         }

@@ -8,10 +8,12 @@
         .topBar;
     }
 }
-.pushactive_box{
+
+.pushactive_box {
     height: calc(100% - .5rem - .8rem);
     overflow: scroll;
 }
+
 .am-image-picker-list {
     // height: 1.5rem;
     padding: 0 !important;
@@ -19,16 +21,19 @@
 
     .am-flexbox {
         margin: 0 !important;
+
         .am-flexbox-item {
             flex: 0;
             margin: 20px auto !important;
             justify-content: center;
             min-width: 2.6rem;
             height: 1.3rem;
-            .am-image-picker-item-content{
+
+            .am-image-picker-item-content {
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
             }
+
             input {
                 height: 100%;
                 width: 100%;
@@ -36,25 +41,61 @@
         }
     }
 }
-.pushTime{
-    .am-list-content{
+
+.pushTime {
+    .am-list-content {
         flex: none !important;
         margin-right: 10px;
     }
-    .am-list-extra{
-        flex:1;
+
+    .am-list-extra {
+        flex: 1;
         text-align: left !important;
-        
+
     }
 }
-.activebtn{
+
+.activebtn {
     width: 100%;
     background: #fff;
     height: .8rem;
     position: fixed;
     bottom: 0;
-    
-    .am-button{
+
+    .am-button {
         color: #fff;
+    }
+
+}
+
+.select_member {
+    .am-list-extra {
+        flex-basis: 50% !important;
+        height: 100% !important;
+    }
+
+    &_box {
+        height: 100%;
+        line-height: 1.5;
+        width: auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+}
+
+.memberClassName {
+    width: 100% !important;
+    height: 100%;
+
+    .am-modal-content {
+        border-radius: 0 !important;
+        padding-top: 0 !important;
+    }
+     .am-modal-body{
+        padding:0 !important;
+
     }
 }

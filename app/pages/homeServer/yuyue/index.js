@@ -69,7 +69,8 @@ class index extends Component {
             Axios.post(`${commonUrl}/app/homeService/saveOrder.do`, obj)
                 .then(res => {
                     if (res.data.code === 'success') {
-                        Toast.success('保存成功')
+                        Toast.success('保存成功',2,()=>this.props.history.push('/my'))
+                        
                     } else {
                         Toast.fail(`保存失败:${res.message}`)
                     }
