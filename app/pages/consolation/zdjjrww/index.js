@@ -14,6 +14,7 @@ import ListView from "../components/listView";
 import Topbar from "../components/topbar";
 import AddFooterBar from "../components/addFooterbar";
 
+const prefix ="zdjjrww";
 
 
 class index extends Component {
@@ -59,7 +60,7 @@ class index extends Component {
     render() {
         const {datasource} = this.state;
         return (
-            <div className="zyww">
+            <div className={prefix}>
                 <Topbar title="重大节假日慰问" onClick={() => this.props.history.goBack()}/>
                 <SearchBar placeholder="搜索..." maxLength={20} onChange={this.SearchChange}/>
                 <ListView data={listViewData} detailPath="zdjjrwwDetail"/>

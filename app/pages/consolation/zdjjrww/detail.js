@@ -17,7 +17,7 @@ import EditTopbar from "../components/editTopbar";
 import CommitFooterbar from "../components/commitFooterbar";
 import commonUrl from '../../../config';
 
-const prefix = "zyww";
+const prefix = "zdjjrww";
 
 class ZywwRegisterConn extends Component {
     constructor(props) {

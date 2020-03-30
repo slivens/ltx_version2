@@ -11,13 +11,12 @@ import Icon from 'antd/es/icon';
 import Form from 'antd/es/form';
 import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
-import './style/index.less';
 import {disasterData, xbData,zdjjrwwDetailInfoData} from "../components/data";
 import Topbar from "../components/topbar";
 import CommitFooterbar from "../components/commitFooterbar";
 import commonUrl from '../../../config';
 
-const prefix = "zyww";
+const prefix = "zhww";
 
 class ZywwRegisterConn extends Component {
     constructor(props) {
@@ -318,8 +317,6 @@ class ZywwRegisterConn extends Component {
                                 </ImagePicker>
                             )}
                         </Form.Item>
-
-
                     </List>
                     <CommitFooterbar commit={this.handleCommit}/>
                 </Form>

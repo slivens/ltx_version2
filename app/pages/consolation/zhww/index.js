@@ -14,7 +14,7 @@ import ListView from "../components/listView";
 import Topbar from "../components/topbar";
 import AddFooterBar from "../components/addFooterbar";
 
-
+const prefix = "zhww";
 
 class index extends Component {
     constructor(props) {
@@ -27,39 +27,39 @@ class index extends Component {
     componentWillMount() {
         const {personCategory, unitId} = this.props;
         /* Toast.loading('Loading...', 0);
-       axios.post(`${commonUrl}/app/qryMailList.do`, {personCategory, unitId}).then(
-            res => {
-                if (res.data.code === 'success') {
-                    this.setState({datasource: res.data.data})
-                    Toast.hide();
-                } else {
-                    Toast.hide();
-                    Toast.fail(res.data.message)
-                }
-            }
-        )*/
+         axios.post(`${commonUrl}/app/qryMailList.do`, {personCategory, unitId}).then(
+         res => {
+         if (res.data.code === 'success') {
+         this.setState({datasource: res.data.data})
+         Toast.hide();
+         } else {
+         Toast.hide();
+         Toast.fail(res.data.message)
+         }
+         }
+         )*/
     }
 
     SearchChange = (searchContent) => {
         const {personCategory, unitId} = this.props;
         // Toast.loading('Loading...',0);
         /*axios.post(`${commonUrl}/app/qryMailList.do`, {personCategory, unitId, searchContent}).then(
-            res => {
-                if (res.data.code === 'success') {
-                    this.setState({datasource: res.data.data})
-                    //    Toast.hide();
-                } else {
-                    // Toast.hide();
-                    Toast.fail(res.data.message)
-                }
-            }
-        )*/
+         res => {
+         if (res.data.code === 'success') {
+         this.setState({datasource: res.data.data})
+         //    Toast.hide();
+         } else {
+         // Toast.hide();
+         Toast.fail(res.data.message)
+         }
+         }
+         )*/
     }
 
     render() {
         const {datasource} = this.state;
         return (
-            <div className="zyww">
+            <div className={prefix}>
                 <Topbar title="灾后慰问" onClick={() => this.props.history.goBack()}/>
                 <SearchBar placeholder="搜索..." maxLength={20} onChange={this.SearchChange}/>
                 <ListView data={listViewData} detailPath="zhwwDetail"/>

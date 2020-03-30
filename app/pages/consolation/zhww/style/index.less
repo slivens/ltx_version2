@@ -1,9 +1,8 @@
 @import '../../../../less/common.less';
 
-.zyww {
+.zhww {
   height: 100%;
   background: #F4F4F4;;
-
   &_dj {
     margin-bottom: .5rem;
     &_date {
@@ -11,7 +10,7 @@
     }
     &_image {
       .am-input-label.am-input-label-5 {
-        width: 100% !important;
+        flex: auto !important;
       }
       &_tip {
         color: #fe870e;
@@ -24,6 +23,7 @@
     }
     .am-list-item .am-input-label {
       color: #666666;
+      flex: 0.52;
     }
     .am-list-item .am-input-control input {
       color: #333;
@@ -41,7 +41,7 @@
     }
 
     .am-list-item .am-list-line .am-list-content {
-      flex: 0.4;
+      flex: 0.6;
       color: #666666;
     }
     div[class ~= has-success] .am-list-item .am-list-line .am-list-extra {
@@ -50,7 +50,7 @@
       font-size: 17px;
       text-align: left;
     }
-    div:not(has-success).am-list-item .am-list-line .am-list-extra{
+    div:not(has-success).am-list-item .am-list-line .am-list-extra {
       flex: 1;
       color: #bbb;
       font-size: 16px;
@@ -58,12 +58,12 @@
     }
     .am-textarea-label {
       color: #666666;
-      width: .962rem;
+      flex: 0.52;
     }
     .ant-form-explain {
       position: relative;
       /* top: -30px; */
-      left: 29%;
+      left: 1.48rem;
     }
 
   }

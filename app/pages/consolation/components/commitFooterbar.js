@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import './style/index.less';
-import {Flex} from 'antd-mobile';
 import {withRouter} from 'react-router-dom';
-import {List, TextareaItem, Button, Toast} from 'antd-mobile';
+import {Button, Flex} from 'antd-mobile';
 const prefix = "ww_footerbar";
 
 class CommitFooterbar extends Component {
@@ -10,7 +9,17 @@ class CommitFooterbar extends Component {
         const {commit} = this.props;
         return (
             <div className={prefix} onClick={commit}>
-                <Button className={prefix + "_commit_button"} >提交</Button>
+                <Flex style={{height: "100%"}} align="center" justify="center">
+                    <Button style={{
+                        display: "inline-block",
+                        verticalAlign: "middle",
+                        width: "2.8rem",
+                        margin: "0 auto",
+                        color: "#fff",
+                        background: "#F5432F",
+                        // marginLeft:".1rem"
+                    }}>提交</Button>
+                </Flex>
             </div>
 
         );
