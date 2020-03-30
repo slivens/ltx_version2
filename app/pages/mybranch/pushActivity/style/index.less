@@ -70,19 +70,24 @@
 
 .select_member {
     .am-list-extra {
-        flex-basis: 50% !important;
+        // flex-basis: 50% !important;
         height: 100% !important;
     }
+    
 
     &_box {
+        &::before{
+            content: "";
+            display: inline-block;
+            height: 100%;
+            width: 0;
+            vertical-align: middle;
+        }
         height: 100%;
-        line-height: 1.5;
         width: auto;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        padding-top: 7px;
-        padding-bottom: 7px;
     }
 }
 

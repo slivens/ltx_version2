@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import Axios from 'axios';
 import commonUrl from '../../../config';
 import MemberSelect from './memberSelect';
+import classnames from 'classnames'
 const caseData = [
 
     {
@@ -304,7 +305,8 @@ class PushActivity extends Component {
                             editable={false}
                         />*/}
                         <List.Item
-                            className="select_member"
+
+                            className={classnames("select_member",'pushTime')}
                             extra={
                                 <div
                                     className="select_member_box"

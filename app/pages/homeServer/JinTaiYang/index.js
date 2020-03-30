@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Checkbox, Flex, WhiteSpace,TextareaItem,Button} from 'antd-mobile';
+import { List, Checkbox, Flex, WhiteSpace,TextareaItem,Button, Toast} from 'antd-mobile';
 import Icon from 'antd/es/icon';
 import {withRouter} from "react-router-dom";
 import 'antd/es/icon/style';
@@ -47,6 +47,16 @@ class index extends Component {
                 }else return item  
             })
             this.props.changeSelect(newArr)
+        }
+    }
+    goToYuyue=()=>{
+        const {homeCompany}=this.props;
+        const selectData=homeCompany.selectList.filter(item=>item.checked)
+        if(selectData.length){
+
+            this.props.history.push('/yuyue')
+        }else{
+            Toast.info('请选择服务')
         }
     }
     render() {
@@ -105,7 +115,7 @@ class index extends Component {
                     <div className={prefix + "_activebtn"}>
                     <Flex style={{ height: "100%" }} align="center" justify="center">
                         <Button
-                            onClick={()=>this.props.history.push('/yuyue')}
+                            onClick={this.goToYuyue}
                             style={{
                                 display: "inline-block",
                                 verticalAlign: "middle",
