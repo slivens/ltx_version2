@@ -58,4 +58,12 @@ const address = (state = [], action) => {
             return state
     }
 }
-export default combineReducers({ userinfo, menuData, searchValue, serverCompany,address });
+const allMemberData=(state=[],action)=>{
+    switch (action.type) {
+        case 'Add_AllMemberData':
+            return action.memberData
+        default:
+            return state
+    }
+}
+export default combineReducers({ userinfo, menuData, searchValue, serverCompany,address,allMemberData });

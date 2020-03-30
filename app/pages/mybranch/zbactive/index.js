@@ -16,6 +16,7 @@ import List from './list';
 import axios from 'axios';
 import commonUrl from '../../../config/index';
 import {connect} from 'react-redux';
+import { Toast } from 'antd-mobile';
 const test="http://192.168.111.132:8080";
 class zbactive extends Component {
     state={items:[]}
@@ -38,8 +39,7 @@ class zbactive extends Component {
             obj.userId=this.props.userid;
         }
         if(tab&&tab.title==='我发布的'){
-            this.setState({items:[]})
-            return
+            obj.operUserId=this.props.userid;
         }
         console.log('@@@@@obj',obj)
         axios.post(`${commonUrl}/app/activity/findActivityList.do`,obj
@@ -78,7 +78,7 @@ class zbactive extends Component {
                         fontSize: ".18rem",
                         transform: "translateY(-50%)"
                     }} 
-                    onClick={()=>{}}
+                    onClick={()=>this.props.partyBranchId?this.props.history.push('/pushActivity'):Toast.info('未获得发布权限，请联系管理员！')}
                     />
                     </div>
                     <div className="zbactive-box">
@@ -91,7 +91,8 @@ class zbactive extends Component {
     }
 }
 const mapStateToProps = (state, ownProps) => ({
-    userid: state.userinfo.id
+    userid: state.userinfo.id,
+    partyBranchId:state.userinfo.partyBranchId
 })
 const mapdispatchToProps=(dispatch, ownProps)=>{
     return {

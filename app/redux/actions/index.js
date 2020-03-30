@@ -42,11 +42,18 @@ const Address= (address=[])=>{
         address
     }
 }
+const AddAllMemberData=(memberData=[])=>{
+    return {
+        type:"Add_AllMemberData",
+        memberData
+    }
+}
 export {
     AddUserInfo,
     changeMenu,
     changeSearchValue,
     AddHomeServer,
     SelectHomeServer,
-    Address
+    Address,
+    AddAllMemberData
 }

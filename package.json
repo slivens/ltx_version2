@@ -12,6 +12,7 @@
   "author": "sliven",
   "license": "ISC",
   "devDependencies": {
+    "antd-mobile-demo-data": "^0.3.0",
     "webpack-dev-server": "^3.4.1"
   },
   "dependencies": {

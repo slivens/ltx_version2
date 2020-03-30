@@ -47,6 +47,9 @@ export {default as Yuyue} from './homeServer/yuyue';
 export {default as EditAdress} from './homeServer/editAdress';
 export {default as Myorder} from './homeServer/myorder';
 export {default as OrderDetail} from './homeServer/orderDetail';
+export {default as MemberSelect} from './mybranch/pushActivity/memberSelect';
+
+//Belong to ：美玉
 export {default as Ldyzj} from './mybranch/ldyzj';
 export {default as Lgbdx} from './mybranch/lgbdx';
 export {default as PartyDetail} from './mybranch/partyDetail';
