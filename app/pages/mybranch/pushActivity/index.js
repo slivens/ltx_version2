@@ -46,16 +46,33 @@ class PushActivity extends Component {
         modal1: false,
         modal2: false,
     }
+    resImgName=""
     onClose = key => () => {
         this.setState({
             [key]: false,
         });
     }
-    onChange = (files, type, index) => {
+    imgUpload = (files, type, index) => {
         console.log(files, type, index);
         this.setState({
             files,
         });
+        if (files.length) {
+            let formData = new FormData()
+            formData.append('imgFile',files[0].url);
+            let config = { headers: { 'Content-Type': 'multipart/form-data' } }
+            Axios.post(`${commonUrl}/app/img/uploadActPoster.do`, formData, config)
+                .then(res => {
+                    if (res.data.code === 'success') {
+                        this.resImgName=res.data.data
+                        Toast.success('图片上传成功')
+                    } else {
+                        Toast.fail(`图片上传失败：${res.message}`)
+                    }
+                })
+            
+            
+        }
     }
     componentDidMount() {
 
@@ -84,7 +101,8 @@ class PushActivity extends Component {
                 actType: value.actType.toString(),
                 userIds: showMemberName.join(),
                 unitId: userinfo.partyBranchId,
-                operUserId:userinfo.id
+                operUser: userinfo.id,
+                actPoster:this.resImgName
 
             }
             for (let item in newobj) {
@@ -111,7 +129,7 @@ class PushActivity extends Component {
                         if (!newobj['contactNumber']) return Toast.info('请输入联系电话')
                     case 'contactPerson':
                         if (!newobj['contactPerson']) return Toast.info('请输入联系人')
-                        case 'userIds':
+                    case 'userIds':
                         if (!newobj['userIds']) return Toast.info('请选择邀请人员')
                     default:
                         break;
@@ -174,14 +192,16 @@ class PushActivity extends Component {
                     <List>
                         <TextareaItem
 
-                            title={<div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;活动海报</div>}
+                            title={
+                                <div><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;活动海报</div>
+                            }
                             autoHeight
                             editable={false}
                             labelNumber={5}
                         />
                         <ImagePicker
                             files={files}
-                            onChange={this.onChange}
+                            onChange={this.imgUpload}
                             onImageClick={(index, fs) => console.log(index, fs)}
                             selectable={files.length < 1}
                             multiple={false}
