@@ -39,6 +39,7 @@ class Logincomp extends Component {
     handleLogin = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
+            
             if (!err) {
                 axios.post(`${commonUrl}/app/appLogin.do`, { username: values.username, password: values.password })
                     .then(res => {
@@ -58,10 +59,26 @@ class Logincomp extends Component {
                             } catch (error) {
                                 console.log(err)
                             }
-                            Toast.success('登录成功', 1, () => this.timer = setTimeout(this.props.history.push('/home'), 2000));
+                            let errCount=localStorage.getItem('ErrPwdCount');
+                            if(errCount>=1){
+                                this.props.history.push('/verify')
+                                return
+                            }
+                            Toast.success('登录成功', 1, () => {this.props.history.push('/home')});
+                            localStorage.setItem('ErrPwdCount',0);
 
                         } else {
-                            Toast.fail(`登录失败：${res.data.message}`, 2)
+                            Toast.fail(`登录失败：${res.data.message}`, 2,()=>{
+                                if(res.data.message&&res.data.message==='密码错误'){
+                                    let errCount=localStorage.getItem('ErrPwdCount');
+                                    if(errCount>=1){
+                                        this.props.history.push('/verify')
+                                }
+                                    errCount++;
+                                    localStorage.setItem('ErrPwdCount',errCount);
+                        
+                                }
+                            })
                         }
                     }).catch((err)=>{
                         Toast.fail(`登录失败：${err}`, 2)
@@ -70,6 +87,7 @@ class Logincomp extends Component {
         });
     }
     componentWillMount() {
+        localStorage.setItem('ErrPwdCount',0);
         if(localStorage.getItem('loginState')==='loginout'){
             return
         }

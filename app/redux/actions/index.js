@@ -48,6 +48,12 @@ const AddAllMemberData=(memberData=[])=>{
         memberData
     }
 }
+const AddOtherServer=(val="")=>{
+    return {
+        type:"Add_OtherServer",
+        val
+    }
+}
 export {
     AddUserInfo,
     changeMenu,
@@ -55,5 +61,6 @@ export {
     AddHomeServer,
     SelectHomeServer,
     Address,
-    AddAllMemberData
+    AddAllMemberData,
+    AddOtherServer
 }

@@ -31,7 +31,6 @@ class index extends Component {
             )
     }
     render() {
-
         return (
             <div className="homeServer">
                 <div className="homeServer_topbar">

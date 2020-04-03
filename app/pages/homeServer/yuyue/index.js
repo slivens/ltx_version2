@@ -54,6 +54,9 @@ class index extends Component {
                 Toast.info("请输入订单备注")
                 return
             }
+            if(homeCompany.otherserver){
+                serverID.push('0');
+            }
             const obj = {
                 ...value,
                 companyId: homeCompany.id,
@@ -65,6 +68,7 @@ class index extends Component {
                 orderServiceIds: serverID.join(),
                 contactGender:addressData[0].gender,
                 detailAdd:addressData[0].addressDetail,
+                otherService:homeCompany.otherserver||undefined
             }
             Axios.post(`${commonUrl}/app/homeService/saveOrder.do`, obj)
                 .then(res => {

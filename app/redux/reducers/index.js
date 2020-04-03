@@ -44,7 +44,12 @@ const serverCompany = (state = {}, action) => {
         case 'Select_HomeServer':
             return {
                 ...state,
-                selectList:action.select
+                selectList: action.select
+            }
+        case 'Add_OtherServer':
+            return {
+                ...state,
+                otherserver: action.val
             }
         default:
             return state
@@ -58,7 +63,7 @@ const address = (state = [], action) => {
             return state
     }
 }
-const allMemberData=(state=[],action)=>{
+const allMemberData = (state = [], action) => {
     switch (action.type) {
         case 'Add_AllMemberData':
             return action.memberData
@@ -66,4 +71,4 @@ const allMemberData=(state=[],action)=>{
             return state
     }
 }
-export default combineReducers({ userinfo, menuData, searchValue, serverCompany,address,allMemberData });
+export default combineReducers({ userinfo, menuData, searchValue, serverCompany, address, allMemberData });

@@ -28,7 +28,7 @@ import {
     PushActivity,JinTaiYang,
     Yuyue,EditAdress,
     Myorder,OrderDetail,
-    MemberSelect,
+    MemberSelect,VerifyCode,
     Ldyzj, Lgbdx,   //belong to :美玉
     PartyDetail,PartyMember,
     Consolation,
@@ -105,7 +105,8 @@ const App = ({history, location}) => {
         'editAdress':<EditAdress/>,
         'myorder':<Myorder/>,
         'orderDetail':<OrderDetail/>,
-        'member':<MemberSelect/>
+        'member':<MemberSelect/>,
+        'verify':<VerifyCode/>
     };
     const {pathname} = location;
     const path = pathname.split('/')[1];
