@@ -13,6 +13,7 @@ import { Toast } from 'antd-mobile';
 import { AddUserInfo } from '../../redux/actions';
 import { connect } from 'react-redux';
 import commonUrl from '../../config';
+import noAuth from '../../util/noAuth';
 
 class Logincomp extends Component {
     constructor(props) {
@@ -33,6 +34,7 @@ class Logincomp extends Component {
                 if(res.data.code==='success'){
                     console.log('******绑定设备成功******')
                 }
+                noAuth.noAuthCode(res.data)
             })
         }
     }
@@ -43,6 +45,7 @@ class Logincomp extends Component {
             if (!err) {
                 axios.post(`${commonUrl}/app/appLogin.do`, { username: values.username, password: values.password })
                     .then(res => {
+                        noAuth.noAuthCode(res.data)
                         if (res.data.code === "success") {
                             clearTimeout(this.timer)
                             this.props.handleUserinfo(res.data.data);
@@ -94,6 +97,7 @@ class Logincomp extends Component {
         if(localStorage.getItem('username')){
             axios.post(`${commonUrl}/app/appLogin.do`, { username: localStorage.getItem('username'), password: localStorage.getItem('password') })
                         .then(res => {
+                            noAuth.noAuthCode(res.data)
                             if (res.data.code === "success") {
                                 this.props.handleUserinfo(res.data.data);
                                 this.props.history.push('/home');

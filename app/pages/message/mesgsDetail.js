@@ -15,6 +15,7 @@ import axios from 'axios';
 import commonUrl from '../../config';
 import { WhiteSpace } from 'antd-mobile';
 import {connect} from 'react-redux';
+import noAuth from '../../util/noAuth';
 class mesgsDetail extends Component {
     state={
         mesgsList:[]
@@ -24,6 +25,7 @@ class mesgsDetail extends Component {
         const {params:{title,id,params}}=location;
         axios.post(`${commonUrl}/app/qryMsgRecordList.do`,{userId:9984,recordId:id,params})
         .then(res=>{
+            noAuth.noAuthCode(res.data)
             if(res.data.code==='success'){
                 this.setState({mesgsList:res.data.data})
             }
@@ -32,6 +34,7 @@ class mesgsDetail extends Component {
     readinfo=({id,params})=>{
         axios.post(`${commonUrl}/app/readMsgRecord.do`,{userId:9984,recordId:id,params})
         .then(res=>{
+            noAuth.noAuthCode(res.data)
             if(res.data.code==='success'){
             }
         })

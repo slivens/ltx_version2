@@ -21,6 +21,7 @@ import axios from 'axios';
 import commonUrl from '../../config';
 import {connect} from 'react-redux';
 import {changeMenu} from '../../redux/actions';
+import noAuth from '../../util/noAuth';
 class NoticeBar extends Component{
     componentWillMount(){
        
@@ -37,6 +38,7 @@ class NoticeBar extends Component{
                 this.props.history.push(item.path)
 
             }
+            noAuth.noAuthCode(res.data)
         })
     }
     render(){

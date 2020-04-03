@@ -14,6 +14,7 @@ const Brief = Item.Brief;
 import commonUrl from '../../../config';
 import { Address } from '../../../redux/actions';
 import { createForm } from 'rc-form';
+import noAuth from '../../../util/noAuth';
 class index extends Component {
     state = {
         serverTime: "",
@@ -27,6 +28,7 @@ class index extends Component {
                     this.setState({ adressinfo: res.data.data })
                     this.props.ADD_address(res.data.data)
                 }
+                noAuth.noAuthCode(res.data)
             })
     }
     saveOrder = () => {
@@ -72,6 +74,7 @@ class index extends Component {
             }
             Axios.post(`${commonUrl}/app/homeService/saveOrder.do`, obj)
                 .then(res => {
+                    noAuth.noAuthCode(res.data)
                     if (res.data.code === 'success') {
                         Toast.success('保存成功',2,()=>this.props.history.push('/my'))
                         

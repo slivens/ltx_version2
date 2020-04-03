@@ -10,6 +10,7 @@ import Axios from 'axios';
 import commonUrl from '../../../config';
 import MemberSelect from './memberSelect';
 import classnames from 'classnames'
+import noAuth from '../../../util/noAuth';
 const caseData = [
 
     {
@@ -64,6 +65,7 @@ class PushActivity extends Component {
             let config = { headers: { 'Content-Type': 'multipart/form-data' } }
             Axios.post(`${commonUrl}/app/img/uploadActPoster.do`, formData, config)
                 .then(res => {
+                    noAuth.noAuthCode(res.data)
                     if (res.data.code === 'success') {
                         this.resImgName=res.data.data
                         Toast.success('图片上传成功')
@@ -138,6 +140,7 @@ class PushActivity extends Component {
             }
             Axios.post(`${commonUrl}/app/activity/saveActivity.do`, newobj)
                 .then(res => {
+                    noAuth.noAuthCode(res.data)
                     if (res.data.code === 'success') {
                         Toast.success('发布成功')
                     } else {

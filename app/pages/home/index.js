@@ -11,10 +11,11 @@ import Banner from '../../components/banner';
 import ListView from '../../components/homeListView';
 import axios from 'axios';
 import commonUrl from '../../config';
-import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
+import { Tabs, WhiteSpace, Badge,Modal } from 'antd-mobile';
 import { connect } from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {changeSearchValue} from '../../redux/actions';
+import noAuth from '../../util/noAuth';
 const { Search } = Input;
 const notice_data = [
     {
@@ -49,6 +50,9 @@ const tabs = [
     { title: "文史精粹", key: "tab3",columnCode:"countyNews" },
     { title: "养生乐游", key: "tab4",columnCode:"health" },
 ];
+const alert = Modal.alert;
+
+
 class Home extends Component {
     state = {
         data: [],
@@ -61,8 +65,20 @@ class Home extends Component {
                 if (res.data.code === 'success') {
                     this.setState({ data: res.data.data })
                 }
+                noAuth.noAuthCode(res.data)
 
             })
+    }
+    showAlert = () => {
+        const alertInstance = alert('提示', '当前为初始密码 , 是否前往重置密码', [
+          { text: '否', onPress: () => console.log('cancel'), style: 'default' },
+          { text: '是', onPress: () => this.props.history.push('/resetpwd') },
+        ]);
+      };
+    componentDidMount(){
+        if(this.props.isFirstPwd){
+            this.showAlert()
+        }
     }
     componentWillMount() {
         axios.post(`${commonUrl}/app/qryAppMenuList.do`, { userId: this.props.userid })
@@ -106,6 +122,7 @@ class Home extends Component {
                     })
                     this.setState({ notice_data: newdata })
                 }
+                noAuth.noAuthCode(res.data)
             })
             if(localStorage.getItem("tabs")){
                 const tab= JSON.parse(localStorage.getItem("tabs"));
@@ -199,7 +216,8 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    userid: state.userinfo.id
+    userid: state.userinfo.id,
+    isFirstPwd:state.userinfo.isFirstPwd
 })
 const mapdispatchToProps=(dispatch, ownProps)=>{
     return {

@@ -12,6 +12,7 @@ const CheckboxItem = Checkbox.CheckboxItem;
 import Axios from 'axios';
 import commonUrl from '../../../config';
 import {SelectHomeServer,AddOtherServer} from '../../../redux/actions';
+import noAuth from '../../../util/noAuth';
 const Item = List.Item;
 const Brief = Item.Brief;
 class index extends Component {
@@ -28,6 +29,7 @@ class index extends Component {
                 this.setState({serverList:res.data.data})
                 if (!selectList) this.props.changeSelect(res.data.data)
             }
+            noAuth.noAuthCode(res.data)
         })
     }
     componentWillReceiveProps(){

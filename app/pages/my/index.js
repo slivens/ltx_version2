@@ -17,6 +17,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import commonUrl from '../../config';
 import axios from 'axios';
+import noAuth from '../../util/noAuth';
 class Mycomp extends Component {
     forgetpwd = () => {
         this.props.history.push('/resetpwd');
@@ -27,6 +28,7 @@ class Mycomp extends Component {
         if (window.deviceId) {
             axios.post(`${commonUrl}/app/unBindDeviceInfo.do`, { deviceId: window.deviceId, userId: this.props.userinfo.id })
                 .then(res => {
+                    noAuth.noAuthCode(res.data)
                     if (res.data.code === 'success') {
                         console.log('******解绑设备成功******')
                     }

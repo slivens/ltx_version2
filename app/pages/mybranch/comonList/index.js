@@ -15,6 +15,7 @@ import Listview from '../../../components/homeListView';
 import axios from 'axios';
 import commonUrl from '../../../config';
 import Nodata from '../../../components/nodata';
+import noAuth from '../../../util/noAuth';
 class index extends Component {
     state={
         listdata:[]
@@ -61,6 +62,7 @@ class index extends Component {
     fetchdadta=(type)=>{
         axios.post(`${commonUrl}/app/qryNewsListByCode.do`,{columnCode:type})
         .then(res=>{
+            noAuth.noAuthCode(res.data)
             if(res.data.code==='success'){
                 this.setState({listdata:res.data.data})
             }

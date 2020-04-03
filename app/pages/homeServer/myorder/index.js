@@ -8,6 +8,7 @@ import OrderItem from '../../../components/orderList';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import commonUrl from '../../../config';
+import noAuth from '../../../util/noAuth';
 const prefix = "myorder"
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -22,6 +23,7 @@ class index extends Component {
             if(res.data.code==='success'){
                 this.setState({orderListData:res.data.data})
             }
+            noAuth.noAuthCode(res.data)
         })
     }
     render() {
