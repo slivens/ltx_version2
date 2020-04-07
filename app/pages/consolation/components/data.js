@@ -25,15 +25,15 @@ export const caseData = [
 
     {
         label: '是',
-        value: '1',
+        value: 1,
     },
     {
         label: '否',
-        value: '0',
+        value: 0,
     }
 ];
 
-export const xbData = [
+export const sexData = [
 
     {
         label: '男',
@@ -45,7 +45,7 @@ export const xbData = [
     }
 ];
 
-export const holidayData= [
+export const holidayData = [
 
     {
         label: '春节',
@@ -92,30 +92,44 @@ export const zywwDetailInfoData = {
     "zysj": "2019-12-05",
     "zyjl": "普通门诊",
     "sfkf": "是",
-    "kf":"1",
+    "kf": "1",
     "bz": "已出院",
-    "wwry":"黄小明",
-    "wwqk":"老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院",
-    "yjjy":"多宣传党的政策动向，多宣传党的政策动向，多宣传党的政策动向，多宣传党的政策动向",
+    "wwry": "黄小明",
+    "wwqk": "老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院",
+    "yjjy": "多宣传党的政策动向，多宣传党的政策动向，多宣传党的政策动向，多宣传党的政策动向",
 };
 
 export const zdjjrwwDetailInfoData = {
     "wwdx": "张成",
     "wwdw": "福建省老干局",
     "wwsj": "2019-12-13",
-    "zhfssj":"2020-02-13",
+    "zhfssj": "2020-02-13",
     "jjrlx": "1",
     "jjrlxText": "春节",
     "zhlx": "1",
     "zhlxText": "地震",
-    "zhyxqk":"很严重",
+    "zhyxqk": "很严重",
     "cjgzsj": "2019-11-26",
     "ygzdw": "福建省离休干部休养所",
     "xb": "1",
     "xbText": "男",
     "jtzz": "福建省福州市鼓楼区五凤街道96省直屏西机关小区1号楼606室",
     "bz": "已出院",
-    "wwry":"黄小明",
-    "wwqk":"老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院",
-    "yjjy":"多宣传党的政策动向，多宣传党的政策动向，多宣传党的政策动向，多宣传党的政策动向",
+    "wwry": "黄小明",
+    "wwqk": "老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院,老同志已康复出院",
+    "yjjy": "多宣传党的政策动向，多宣传党的政策动向，多宣传党的政策动向，多宣传党的政策动向",
+};
+
+export const person = {
+    "code": "success",
+    "message": "查询成功",
+    "data": [{"label": "ceshi2", "value": "507000"}, {"label": "ceshi3", "value": "507001"}],
+    "properties": {}
+};
+
+export const person1 = {
+    "code": "success",
+    "message": "查询成功",
+    "data": [{"label": "张三", "value": "507000"}, {"label": "李四", "value": "507001"}],
+    "properties": {}
 };

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Icon from 'antd/es/icon';
 import './style/index.less';
-export default ({title, onClick}) => {
+export default ({title, onClick,onClickEdit}) => {
     return (
         <div className="topbar">
             <Icon
@@ -15,7 +15,7 @@ export default ({title, onClick}) => {
                     transform: "translateY(-50%)"
                 }} type="left"/>
             <div >{title}</div>
-            <div className="topbar_right" style={{fontSize: ".18rem"}}>编辑</div>
+            <div className="topbar_right" style={{fontSize: ".18rem"}} onClick={onClickEdit}>编辑</div>
         </div>
     )
 }

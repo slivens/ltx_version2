@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
-import './style/index.less';
+import {Flex} from 'antd-mobile';
 import 'antd/es/row/style';
 import 'antd/es/col/style';
+import "antd/es/empty/style";
+import Empty from 'antd/es/empty';
 import {withRouter} from 'react-router-dom';
 import Icon from '../../../components/icon';
-import Empty from 'antd/es/empty';
-import "antd/es/empty/style";
+import './style/index.less';
+
 
 const prefix = "zyListView";
 
@@ -37,9 +39,8 @@ class listView extends Component {
     };
 
     goDetail = (id) => {
-        //this.props.history.push(`/zywwDetail/${id}`)
         const {detailPath} = this.props;
-        this.props.history.push(`/${detailPath}`);
+        this.props.history.push(`/${detailPath}/${id}`);
     };
 
     returnstr = (content) => {
@@ -66,6 +67,7 @@ class listView extends Component {
                     }
                 >
                     {this.state.items.map((item, index) => (
+
                         <div onClick={() => this.goDetail(item.id)} key={index} className={prefix + "_item"}>
                             <div className={prefix + "_item_top"}>
                                 <div className={prefix + "_item_top_title"}>
@@ -88,8 +90,13 @@ class listView extends Component {
                                 </div>
                             </div>
                             <div className={prefix + "_item_bottom"}>
-                                <span className={prefix + "_item_bottom_left"}>慰问单位：{item.unit}</span>
-                                <span className={prefix + "_item_bottom_right"}>慰问时间：{item.wwDate}</span>
+                                <Flex>
+                                    <Flex.Item>慰问单位：{item.condolencesUnit}</Flex.Item>
+                                    <Flex.Item>慰问时间：{item.condolencesTime}</Flex.Item>
+                                </Flex>
+
+                               {/* <span className={prefix + "_item_bottom_left"}>慰问单位：{item.condolencesUnit}</span>
+                                <span className={prefix + "_item_bottom_right"}>慰问时间：{item.condolencesTime}</span>*/}
                             </div>
                         </div>
                     ))}
