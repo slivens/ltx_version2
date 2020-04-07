@@ -112,6 +112,9 @@ class Logincomp extends Component {
                             if (res.data.code === "success") {
                                 this.props.handleUserinfo(res.data.data);
                                 this.props.history.push('/home');
+                                    if(this.props.isFirstPwd){
+                                        this.showAlert()
+                                    }
                             } else {
                                 this.props.history.push('/login');
                                 Toast.fail(`登录失败：${res.data.message}`, 2)
