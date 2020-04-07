@@ -74,11 +74,9 @@ class Home extends Component {
           { text: '否', onPress: () => console.log('cancel'), style: 'default' },
           { text: '是', onPress: () => this.props.history.push('/resetpwd') },
         ]);
-      };
+      }
     componentDidMount(){
-        if(this.props.isFirstPwd){
-            this.showAlert()
-        }
+       
     }
     componentWillMount() {
         axios.post(`${commonUrl}/app/qryAppMenuList.do`, { userId: this.props.userid })
