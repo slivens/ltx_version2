@@ -1,6 +1,6 @@
-@import '../../../../less/common.less';
+@import '../../../less/common.less';
 
-.zyww {
+.consolation {
   height: 100%;
   background: #F4F4F4;
   /*114*/
@@ -20,7 +20,7 @@
     .am-list-item {
       padding-left: 0;
     }
-    .am-list-body:after{
+    .am-list-body:after {
       content: none !important;
     }
     .am-list-body div:not(:last-child) .am-list-line:after {
@@ -102,6 +102,9 @@
     }
 
     &_image {
+      .am-list-line {
+        padding-left: 15px;
+      }
       .am-input-label {
         width: 100% !important;
       }
@@ -119,8 +122,8 @@
     }
   }
   &_detail {
-    .am-list .am-list-item.am-textarea-item:after{
-      transform: scaleY(.5) !important;
+    .am-list-item{
+      border-bottom: 1px solid #ddd;
     }
   }
 

@@ -6,48 +6,65 @@
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\redux\actions\index.js
  */
-const AddUserInfo =  info =>{
-    return{
-        type:"ADD_USER_INFO",
+const AddUserInfo = info => {
+    return {
+        type: "ADD_USER_INFO",
         info
     }
 }
-const changeMenu = data=>{
+const changeMenu = data => {
     return {
-        type:"CHANGE_MENU",
+        type: "CHANGE_MENU",
         data
     }
 }
-const changeSearchValue= value=>{
+const changeSearchValue = value => {
     return {
-        type:"CHANGE_SEARCH_VALUE",
+        type: "CHANGE_SEARCH_VALUE",
         value
     }
 }
-const AddHomeServer= company=>{
+const AddHomeServer = company => {
     return {
-        type:"Add_HomeServer",
+        type: "Add_HomeServer",
         company
     }
 }
-const SelectHomeServer= (select=[])=>{
+const SelectHomeServer = (select = []) => {
     return {
-        type:"Select_HomeServer",
+        type: "Select_HomeServer",
         select
     }
 }
-const Address= (address=[])=>{
+const Address = (address = []) => {
     return {
-        type:"ADD_ADDRESS",
+        type: "ADD_ADDRESS",
         address
     }
-}
-const AddAllMemberData=(memberData=[])=>{
+};
+const AddAllMemberData = (memberData = []) => {
     return {
-        type:"Add_AllMemberData",
+        type: "Add_AllMemberData",
         memberData
     }
-}
+};
+
+const CondolationObjectData = (condolationObjectData = []) => {
+    return {
+        type: "Condolation_ObjectData",
+        condolationObjectData
+    }
+};
+
+const CondolationUnitData = (condolationUnitData = []) => {
+    return {
+        type: "Condolation_UnitData",
+        condolationUnitData
+    }
+};
+
+
+
 export {
     AddUserInfo,
     changeMenu,
@@ -55,5 +72,7 @@ export {
     AddHomeServer,
     SelectHomeServer,
     Address,
-    AddAllMemberData
+    AddAllMemberData,
+    CondolationObjectData,
+    CondolationUnitData
 }

@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "2237857",
+      "name": "添加-01",
+      "font_class": "tianjia-",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "7286729",
+      "name": "专题优化",
+      "font_class": "icon_special",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "10516609",
+      "name": "日期",
+      "font_class": "riqi1",
+      "unicode": "e6a8",
+      "unicode_decimal": 59048
+    },
+    {
+      "icon_id": "12545526",
+      "name": "已上报待接收-01",
+      "font_class": "yishangbaodaijieshou-",
+      "unicode": "e6a4",
+      "unicode_decimal": 59044
+    },
+    {
+      "icon_id": "12545527",
+      "name": "已完成上报-01",
+      "font_class": "yiwanchengshangbao-",
+      "unicode": "e6a5",
+      "unicode_decimal": 59045
+    },
+    {
+      "icon_id": "12545528",
+      "name": "未上报-01",
+      "font_class": "weishangbao-",
+      "unicode": "e6a6",
+      "unicode_decimal": 59046
+    },
+    {
       "icon_id": "10910159",
       "name": "信息",
       "font_class": "xinxi",

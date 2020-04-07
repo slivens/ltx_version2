@@ -7,7 +7,7 @@
  * @FilePath: \ltx\app\redux\reducers\index.js
  */
 
-import { combineReducers } from "redux";
+import {combineReducers} from "redux";
 const userinfo = (state = {}, action) => {
     switch (action.type) {
         case 'ADD_USER_INFO':
@@ -44,7 +44,7 @@ const serverCompany = (state = {}, action) => {
         case 'Select_HomeServer':
             return {
                 ...state,
-                selectList:action.select
+                selectList: action.select
             }
         default:
             return state
@@ -58,7 +58,7 @@ const address = (state = [], action) => {
             return state
     }
 }
-const allMemberData=(state=[],action)=>{
+const allMemberData = (state = [], action) => {
     switch (action.type) {
         case 'Add_AllMemberData':
             return action.memberData
@@ -66,4 +66,22 @@ const allMemberData=(state=[],action)=>{
             return state
     }
 }
-export default combineReducers({ userinfo, menuData, searchValue, serverCompany,address,allMemberData });
+const condolationObject = (state = [], action) => {
+    switch (action.type) {
+        case 'Condolation_ObjectData':
+            return action.condolationObjectData;
+        default:
+            return state
+    }
+};const condolationUnit = (state = [], action) => {
+    switch (action.type) {
+        case 'Condolation_UnitData':
+            return action.condolationUnitData;
+        default:
+            return state
+    }
+};
+export default combineReducers({
+    userinfo, menuData, searchValue, serverCompany, address, allMemberData,
+    condolationObject,condolationUnit
+});

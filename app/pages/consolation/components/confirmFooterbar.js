@@ -4,11 +4,11 @@ import {Button, Flex} from 'antd-mobile';
 import './style/index.less';
 const prefix = "ww_footerbar";
 
-class CommitFooterbar extends Component {
+class ConfirmFooterbar extends Component {
     render() {
-        const {commit} = this.props;
+        const {confirm} = this.props;
         return (
-            <div className={prefix} onClick={commit}>
+            <div className={prefix} onClick={confirm}>
                 <Flex style={{height: "100%"}} align="center" justify="center">
                     <Button style={{
                         display: "inline-block",
@@ -18,11 +18,11 @@ class CommitFooterbar extends Component {
                         color: "#fff",
                         background: "#F5432F",
                         // marginLeft:".1rem"
-                    }}>提交</Button>
+                    }}>确定</Button>
                 </Flex>
             </div>
 
         );
     }
 }
-export default withRouter(CommitFooterbar);
+export default withRouter(ConfirmFooterbar);
