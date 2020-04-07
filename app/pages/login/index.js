@@ -9,12 +9,12 @@ import Form from 'antd/es/form';
 import 'antd/es/form/style';
 const prefix = "ltx_login";
 import axios from 'axios';
-import { Toast } from 'antd-mobile';
+import { Toast,Modal} from 'antd-mobile';
 import { AddUserInfo } from '../../redux/actions';
 import { connect } from 'react-redux';
 import commonUrl from '../../config';
 import noAuth from '../../util/noAuth';
-
+const alert = Modal.alert;
 class Logincomp extends Component {
     constructor(props) {
         super(props)
@@ -24,6 +24,12 @@ class Logincomp extends Component {
     componentWillUnmount() {
         clearInterval(this.timer);
     }
+    showAlert = () => {
+        const alertInstance = alert('提示', '当前为初始密码 , 是否前往重置密码', [
+          { text: '否', onPress: () => console.log('cancel'), style: 'default' },
+          { text: '是', onPress: () => this.props.history.push('/resetpwd') },
+        ]);
+      }
     bindPhone=(id="")=>{
         if(window.deviceId&&window.deviceType){
             axios.post(`${commonUrl}/app/bindDeviceInfo.do`,{
@@ -67,7 +73,12 @@ class Logincomp extends Component {
                                 this.props.history.push('/verify')
                                 return
                             }
-                            Toast.success('登录成功', 1, () => {this.props.history.push('/home')});
+                            Toast.success('登录成功', 1, () => {
+                                this.props.history.push('/home') 
+                                if(this.props.isFirstPwd){
+                                    this.showAlert()
+                                }
+                            });
                             localStorage.setItem('ErrPwdCount',0);
 
                         } else {
@@ -159,7 +170,7 @@ class Logincomp extends Component {
 }
 const mapStateToProps = (state, ownprops) => {
     return {
-
+        isFirstPwd:state.userinfo.isFirstPwd
     }
 }
 const mapDispatchToProps = (dispatch, ownprops) => {
