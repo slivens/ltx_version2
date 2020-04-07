@@ -11,7 +11,8 @@ import { connect } from 'react-redux';
 const CheckboxItem = Checkbox.CheckboxItem;
 import Axios from 'axios';
 import commonUrl from '../../../config';
-import {SelectHomeServer} from '../../../redux/actions';
+import {SelectHomeServer,AddOtherServer} from '../../../redux/actions';
+import noAuth from '../../../util/noAuth';
 const Item = List.Item;
 const Brief = Item.Brief;
 class index extends Component {
@@ -28,6 +29,7 @@ class index extends Component {
                 this.setState({serverList:res.data.data})
                 if (!selectList) this.props.changeSelect(res.data.data)
             }
+            noAuth.noAuthCode(res.data)
         })
     }
     componentWillReceiveProps(){
@@ -58,6 +60,10 @@ class index extends Component {
         }else{
             Toast.info('请选择服务')
         }
+    }
+    otherServer=(val)=>{
+        console.log('@@@@@val',val)
+        this.props.changeOtherServer(val)
     }
     render() {
         const {history,location,homeCompany}=this.props;
@@ -105,6 +111,8 @@ class index extends Component {
                     <WhiteSpace />
                     <List>
                     <TextareaItem
+                    defaultValue={this.props.homeCompany.otherserver||""}
+                    onBlur={this.otherServer}
                     title="其他"
                     placeholder="若有其他相关家政服务需求，建议提前和家政公司商定后，在此处填写。"
                     rows={5}
@@ -139,7 +147,8 @@ const mapStateToProps=(state,ownprops)=>{
 }
 const mapDispatchToProps=(dispatch,ownprops)=>{
     return {
-        changeSelect:(select)=>dispatch(SelectHomeServer(select)) 
+        changeSelect:(select)=>dispatch(SelectHomeServer(select)),
+        changeOtherServer:(val)=>dispatch(AddOtherServer(val))
 
     }
 }

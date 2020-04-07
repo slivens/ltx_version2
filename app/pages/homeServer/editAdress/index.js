@@ -12,6 +12,7 @@ const Item = List.Item;
 const Brief = Item.Brief;
 import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
+import noAuth from '../../../util/noAuth';
 const caseData = [
 
     {
@@ -70,6 +71,7 @@ class index extends Component {
             if(this.props.addressData[0]){
                 Axios.post(`${commonUrl}/app/homeService/saveAddress.do`, {...obj,addressId:this.props.addressData[0].id})
                     .then(res => {
+                        noAuth.noAuthCode(res.data)
                         if (res.data.code === 'success') {
                             Toast.success('修改成功',2,()=>this.props.history.goBack())
                             
@@ -81,6 +83,7 @@ class index extends Component {
 
                 Axios.post(`${commonUrl}/app/homeService/saveAddress.do`, obj)
                     .then(res => {
+                        noAuth.noAuthCode(res.data)
                         if (res.data.code === 'success') {
                             Toast.success('修改成功',2,()=>this.props.history.goBack())
                         }else{

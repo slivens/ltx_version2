@@ -15,6 +15,7 @@ import {connect} from 'react-redux';
 import ListView from '../../components/homeListView';
 import './style/index.less';
 import {changeSearchValue} from '../../redux/actions';
+import noAuth from '../../util/noAuth';
 class index extends Component {
     state={
         textvalue:[],
@@ -44,6 +45,7 @@ class index extends Component {
           const value=this.autoFocusInst.state.value;
         axios.post(`${commonUrl}/app/qryNewsListByTitle.do`,{title:value})
         .then(res => {
+            noAuth.noAuthCode(res.data)
             if (res.data.code === 'success') {
                 localStorage.setItem('searchValue',value)
                 this.props.changeSearchValue(value)

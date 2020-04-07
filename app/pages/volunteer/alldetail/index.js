@@ -5,6 +5,7 @@ import './style/index.less';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 import commonUrl from '../../../config';
+import noAuth from '../../../util/noAuth';
 class index extends Component {
     state={
         findOne:{}
@@ -12,6 +13,7 @@ class index extends Component {
     componentWillMount() {
         axios.post(`${commonUrl}/app/qryNewsDetail.do`,{newsId:"general"})
         .then(res=>{
+            noAuth.noAuthCode(res.data)
             if(res.data.code==='success'){
                 this.setState({findOne:res.data.data})
             }

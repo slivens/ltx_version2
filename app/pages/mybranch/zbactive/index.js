@@ -17,6 +17,7 @@ import axios from 'axios';
 import commonUrl from '../../../config/index';
 import {connect} from 'react-redux';
 import { Toast } from 'antd-mobile';
+import noAuth from '../../../util/noAuth';
 const test="http://192.168.111.132:8080";
 class zbactive extends Component {
     state={items:[]}
@@ -45,6 +46,7 @@ class zbactive extends Component {
         axios.post(`${commonUrl}/app/activity/findActivityList.do`,obj
          )
         .then(res => {
+            noAuth.noAuthCode(res.data)
             if(res.data.code==="success"){
                 this.setState({items:res.data.data})
             }else{

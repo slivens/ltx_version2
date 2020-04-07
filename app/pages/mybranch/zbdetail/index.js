@@ -16,6 +16,7 @@ import axios from 'axios';
 import commonUrl from '../../../config';
 import DetailBox from './detailBox';
 import {connect} from 'react-redux';
+import noAuth from '../../../util/noAuth';
 
 class index extends Component {
     constructor(props){
@@ -37,6 +38,7 @@ class index extends Component {
         {activityId:actId,userId:this.props.userId}
          )
         .then(res => {
+            noAuth.noAuthCode(res.data)
             if(res.data.code==="success"){
                 this.setState({memberStatus:res.data.data})
             }
@@ -45,6 +47,7 @@ class index extends Component {
         {activityId:actId}
          )
         .then(res => {
+            noAuth.noAuthCode(res.data)
             if(res.data.code==="success"){
                 this.setState({detail:res.data.data})
             }
@@ -129,6 +132,7 @@ class index extends Component {
         {activityId:actId,userId,operateType:type.code}
          )
         .then(res => {
+            noAuth.noAuthCode(res.data)
             if(res.data.code==="success"){
                 Toast.success(res.data.message)
                 this.fetchData();

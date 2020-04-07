@@ -49,6 +49,15 @@ const AddAllMemberData = (memberData = []) => {
     }
 };
 
+
+
+const AddOtherServer=(val="")=>{
+    return {
+        type:"Add_OtherServer",
+        val
+    }
+};
+
 const CondolationObjectData = (condolationObjectData = []) => {
     return {
         type: "Condolation_ObjectData",
@@ -62,9 +71,6 @@ const CondolationUnitData = (condolationUnitData = []) => {
         condolationUnitData
     }
 };
-
-
-
 export {
     AddUserInfo,
     changeMenu,
@@ -73,6 +79,7 @@ export {
     SelectHomeServer,
     Address,
     AddAllMemberData,
+    AddOtherServer,
     CondolationObjectData,
-    CondolationUnitData
+    CondolationUnitData,
 }

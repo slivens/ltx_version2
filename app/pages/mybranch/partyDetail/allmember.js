@@ -7,6 +7,7 @@ import {Flex} from 'antd-mobile';
 import axios from 'axios';
 import commonUrl from '../../../config/index';
 import {Badge} from 'antd-mobile';
+import noAuth from '../../../util/noAuth';
 
 
 class allmember extends Component {
@@ -21,6 +22,7 @@ class allmember extends Component {
         const {actId} = this.props.location;
         axios.post(`${commonUrl}/app/subAct/getAllRegPerson.do`, {activityId: actId})
             .then(res => {
+                noAuth.noAuthCode(res.data)
                 if (res.data.code === "success") {
                     this.setState({items: res.data.data})
                 } else {

@@ -8,6 +8,7 @@ import axios from 'axios';
 import commonUrl from '../../../config';
 import DetailBox from './detailBox';
 import {connect} from 'react-redux';
+import noAuth from '../../../util/noAuth';
 
 
 class index extends Component {
@@ -28,12 +29,14 @@ class index extends Component {
         const actId = pathname.split('/')[2];
         axios.post(`${commonUrl}/app/subAct/judgePersonStatus.do`, {activityId: actId, userId: this.props.userId})
             .then(res => {
+                noAuth.noAuthCode(res.data)
                 if (res.data.code === "success") {
                     this.setState({memberStatus: res.data.data})
                 }
             });
         axios.post(`${commonUrl}/app/subAct/getActDetails.do`, {activityId: actId})
             .then(res => {
+                noAuth.noAuthCode(res.data)
                 if (res.data.code === "success") {
                     this.setState({detail: res.data.data})
                 }
@@ -82,6 +85,7 @@ class index extends Component {
             if (status.isReg === 0) {
                 axios.post(`${commonUrl}/app/subAct/personReg.do`, params)
                     .then(res => {
+                        noAuth.noAuthCode(res.data)
                         if (res.data.code === "success") {
                             Toast.success(res.data.message);
                             this.fetchData();
@@ -92,6 +96,7 @@ class index extends Component {
             } else {
                 axios.post(`${commonUrl}/app/subAct/cancelReg.do`, params)
                     .then(res => {
+                        noAuth.noAuthCode(res.data)
                         if (res.data.code === "success") {
                             Toast.success(res.data.message);
                             this.fetchData();

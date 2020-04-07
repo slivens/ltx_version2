@@ -46,6 +46,11 @@ const serverCompany = (state = {}, action) => {
                 ...state,
                 selectList: action.select
             }
+        case 'Add_OtherServer':
+            return {
+                ...state,
+                otherserver: action.val
+            }
         default:
             return state
     }
@@ -66,6 +71,7 @@ const allMemberData = (state = [], action) => {
             return state
     }
 }
+
 const condolationObject = (state = [], action) => {
     switch (action.type) {
         case 'Condolation_ObjectData':

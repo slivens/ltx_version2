@@ -9,6 +9,7 @@ import axios from 'axios';
 import commonUrl from '../../config';
 import ListView from '../../components/homeListView';
 import {connect} from 'react-redux';
+import noAuth from '../../util/noAuth';
 const datasource=[
     {
       title:"我要报名",
@@ -47,6 +48,7 @@ class Edutrain extends Component {
             if(res.data.code==='success'){
                 this.setState({data:res.data.data})
             }
+            noAuth.noAuthCode(res.data)
             
         })
     }

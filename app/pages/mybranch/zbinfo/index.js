@@ -8,6 +8,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import commonUrl from '../../../config';
 import NoData from '../../../components/nodata';
+import noAuth from '../../../util/noAuth';
 class Zbinfo extends Component {
     state={
         infodata:{}
@@ -15,6 +16,7 @@ class Zbinfo extends Component {
     componentWillMount() {
         axios.post(`${commonUrl}/app/findPartyBranchInfo.do`,{partyBranchId:this.props.partyBranchId})
         .then(res=>{
+            noAuth.noAuthCode(res.data)
             this.setState({infodata:res.data.data})
         })
     }

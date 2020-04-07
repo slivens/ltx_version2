@@ -9,6 +9,7 @@ import axios from 'axios';
 import commonUrl from '../../config';
  import {connect} from 'react-redux';
  import {AddHomeServer} from '../../redux/actions';
+import noAuth from '../../util/noAuth';
 class index extends Component {
     state={
         jzfwData:[]
@@ -23,6 +24,7 @@ class index extends Component {
             if(res.data.code==='success'){
                 this.setState({jzfwData:res.data.data})
             }
+            noAuth.noAuthCode(res.data)
         })
     }
     homeServerFunc=(item)=>{
@@ -31,7 +33,6 @@ class index extends Component {
             )
     }
     render() {
-
         return (
             <div className="homeServer">
                 <div className="homeServer_topbar">

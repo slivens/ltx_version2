@@ -10,6 +10,7 @@ import { Button,Toast } from 'antd-mobile';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import commonUrl from '../../config';
+import noAuth from '../../util/noAuth';
 class ResetPwdComp extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +27,7 @@ class ResetPwdComp extends Component {
                     oldPwd:values.oldPwd,
                     newPwd:values.newPwd
                 }).then(res=>{
+                    noAuth.noAuthCode(res.data)
                     if(res.data.code==='success'){
                         Toast.success('密码修改成功！')
                     }else{

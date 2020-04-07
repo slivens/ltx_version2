@@ -17,6 +17,7 @@ import commonUrl from '../../config';
 import { ActionSheet, WingBlank, WhiteSpace, Button, Toast,Modal ,Steps} from 'antd-mobile';
 import WordComp from '../../components/changeWord';
 import classnames from 'classnames';
+import noAuth from '../../util/noAuth';
 var shares=null;
 var sweixin=null;
 var sqq=null;
@@ -214,13 +215,14 @@ const dataList = [
                     if(res.data.code==='success'){
                         this.setState({count:res.data.data})
                     }
+                    noAuth.noAuthCode(res.data)
                 })
                 axios.post(`${commonUrl}/app/qryNewsDetail.do`,{newsId:detid})
                 .then(res=>{
                     if(res.data.code==='success'){
                         this.setState({findOne:res.data.data})
                     }
-                    
+                    noAuth.noAuthCode(res.data)
                 })
                
         } 

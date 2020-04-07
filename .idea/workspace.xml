@@ -4,60 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/app/pages/mybranch/lgbdx/index.js" description="&#10;const prefix =&quot;party&quot;;" line="15" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c28124c-ca34-4444-9faf-5d5f235b77b7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/components/confirmFooterbar.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/components/personModal.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/components/personSelect.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/components/unitModal.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/components/unitSelect.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/prefix.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/style/consolation.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/path.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/style/index-bak.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/utils/utils.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/path.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/style/index-bak.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/zhww/path.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/zhww/style/index-bak.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/pages/consolation/zyww/path.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/iconfot/iconfont.eot" afterPath="$PROJECT_DIR$/assets/iconfot/iconfont.eot" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/iconfot/iconfont.ttf" afterPath="$PROJECT_DIR$/assets/iconfot/iconfont.ttf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/iconfot/iconfont.woff" afterPath="$PROJECT_DIR$/assets/iconfot/iconfont.woff" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/iconfot/iconfont.woff2" afterPath="$PROJECT_DIR$/assets/iconfot/iconfont.woff2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/components/footerBar/style/index.less" afterPath="$PROJECT_DIR$/app/components/footerBar/style/index.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/components/addFooterbar.js" afterPath="$PROJECT_DIR$/app/pages/consolation/components/addFooterbar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/components/commitFooterbar.js" afterPath="$PROJECT_DIR$/app/pages/consolation/components/commitFooterbar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/components/data.js" afterPath="$PROJECT_DIR$/app/pages/consolation/components/data.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/components/editTopbar.js" afterPath="$PROJECT_DIR$/app/pages/consolation/components/editTopbar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/components/listView.js" afterPath="$PROJECT_DIR$/app/pages/consolation/components/listView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/components/style/index.less" afterPath="$PROJECT_DIR$/app/pages/consolation/components/style/index.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/tsknhww/detail.js" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/detail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/tsknhww/index.js" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/tsknhww/register.js" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/register.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/tsknhww/style/index.less" afterPath="$PROJECT_DIR$/app/pages/consolation/tsknhww/style/index.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/detail.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/detail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/index.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/register.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/register.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/style/index.less" afterPath="$PROJECT_DIR$/app/pages/consolation/zdjjrww/style/index.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zhww/detail.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zhww/detail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zhww/index.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zhww/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zhww/register.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zhww/register.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zhww/style/index.less" afterPath="$PROJECT_DIR$/app/pages/consolation/zhww/style/index.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zyww/detail.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zyww/detail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zyww/index.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zyww/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zyww/register.js" afterPath="$PROJECT_DIR$/app/pages/consolation/zyww/register.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/pages/consolation/zyww/style/index.less" afterPath="$PROJECT_DIR$/app/pages/consolation/zyww/style/index.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/redux/actions/index.js" afterPath="$PROJECT_DIR$/app/redux/actions/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/redux/reducers/index.js" afterPath="$PROJECT_DIR$/app/redux/reducers/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/iconfot/demo.css" afterPath="$PROJECT_DIR$/assets/iconfot/demo.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/iconfot/demo_index.html" afterPath="$PROJECT_DIR$/assets/iconfot/demo_index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/iconfot/iconfont.css" afterPath="$PROJECT_DIR$/assets/iconfot/iconfont.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/iconfot/iconfont.js" afterPath="$PROJECT_DIR$/assets/iconfot/iconfont.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/iconfot/iconfont.json" afterPath="$PROJECT_DIR$/assets/iconfot/iconfont.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/iconfot/iconfont.svg" afterPath="$PROJECT_DIR$/assets/iconfot/iconfont.svg" />
-    </list>
+    <list default="true" id="2c28124c-ca34-4444-9faf-5d5f235b77b7" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -1138,21 +1085,20 @@
       <workItem from="1585791941600" duration="17934000" />
       <workItem from="1585879243733" duration="26441000" />
       <workItem from="1585973106072" duration="23414000" />
-      <workItem from="1586221054687" duration="318000" />
+      <workItem from="1586221054687" duration="434000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="173038000" />
+    <option name="totallyTimeSpent" value="173154000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
-    <editor active="true" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299435" sideWeight="0.50428724" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="JRebel Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3638418" sideWeight="0.5192926" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="JRebel Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3299435" sideWeight="0.5128617" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="JRebel Executor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1167,9 +1113,9 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299435" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3638418" sideWeight="0.4807074" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299435" sideWeight="0.4914255" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6384181" sideWeight="0.6221865" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3638418" sideWeight="0.4807074" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3299435" sideWeight="0.48713827" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26205787" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="JRebel" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1224,6 +1170,24 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />

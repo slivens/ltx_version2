@@ -12,6 +12,7 @@ import './style/index.less';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import commonUrl from '../../config';
+import noAuth from '../../util/noAuth';
 class Banner extends React.Component {
   state = {
     data: [
@@ -33,6 +34,7 @@ class Banner extends React.Component {
       if(res.data.code==='success'){
         this.setState({data:res.data.data})
       }
+      noAuth.noAuthCode(res.data)
     })
   }
   render() {

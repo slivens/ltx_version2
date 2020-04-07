@@ -8,6 +8,7 @@ import PartyTab from '../components/partyTab';
 import PartyList from '../components/partyList';
 import commonUrl from '../../../config/index';
 import './style/index.less';
+import noAuth from '../../../util/noAuth';
 
 
 const tabs = [
@@ -48,6 +49,7 @@ class zbactive extends Component {
         }
         axios.post(`${commonUrl}/app/subAct/getActList.do`, obj)
             .then(res => {
+                noAuth.noAuthCode(res.data)
                 if (res.data.code === "success") {
                     this.setState({items: res.data.data})
                 } else {

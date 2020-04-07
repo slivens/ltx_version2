@@ -16,6 +16,7 @@ import List from './list';
 import axios from 'axios';
 import commonUrl from '../../config';
 import {connect} from 'react-redux';
+import noAuth from '../../util/noAuth';
 const data=[
     {   
         title:"系统通知",
@@ -43,6 +44,7 @@ class index extends Component {
     componentWillMount(){
         axios.post(`${commonUrl}/app/queryMsgList.do`,{userId:9984})
         .then(res=>{
+            noAuth.noAuthCode(res.data)
             if(res.data.code==="success"){
                 this.setState({mesgs:res.data.data})
             }

@@ -12,6 +12,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import commonUrl from '../../config';
 import {Toast} from 'antd-mobile';
+import noAuth from '../../util/noAuth';
 
 class index extends Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class index extends Component {
         Toast.loading('Loading...',0);
         axios.post(`${commonUrl}/app/qryMailList.do`,{personCategory,unitId}).then(
             res=>{
+                noAuth.noAuthCode(res.data)
                 if(res.data.code==='success'){
                    this.setState({datasource:res.data.data})
                    Toast.hide(); 
@@ -41,6 +43,7 @@ class index extends Component {
         // Toast.loading('Loading...',0);
         axios.post(`${commonUrl}/app/qryMailList.do`,{personCategory,unitId,searchContent}).then(
             res=>{
+                noAuth.noAuthCode(res.data)
                 if(res.data.code==='success'){
                    this.setState({datasource:res.data.data})
                 //    Toast.hide(); 

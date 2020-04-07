@@ -15,6 +15,7 @@ import { Flex } from 'antd-mobile';
 import axios from 'axios';
 import commonUrl from '../../../config/index';
 import {Badge} from 'antd-mobile';
+import noAuth from '../../../util/noAuth';
 class allmember extends Component {
     constructor(props){
         super(props)
@@ -30,6 +31,7 @@ class allmember extends Component {
         }
          )
         .then(res => {
+            noAuth.noAuthCode(res.data)
             if(res.data.code==="success"){
                 this.setState({items:res.data.data})
             }else{

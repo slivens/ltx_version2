@@ -8,6 +8,7 @@ import Axios from 'axios';
 import commonUrl from '../../../../config';
 import { connect } from 'react-redux';
 import {AddAllMemberData} from '../../../../redux/actions';
+import noAuth from '../../../../util/noAuth';
 const CheckboxItem = Checkbox.CheckboxItem;
 
 
@@ -39,6 +40,7 @@ class MemberSelect extends React.Component {
             Axios.post(`${commonUrl}/app/activity/findMemberByBranchId.do`, 
             { branchId: this.props.userinfo.partyBranchId,username })
                 .then(res => {
+                    noAuth.noAuthCode(res.data)
                     if (res.data.code === 'success') {
                         this.setState({ memberData: res.data.data })
                         if(!username){
