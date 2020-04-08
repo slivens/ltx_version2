@@ -5,6 +5,7 @@ import {withRouter} from 'react-router-dom';
 import {SearchBar, Toast} from 'antd-mobile';
 
 import commonUrl from '../../../config';
+import {requestByPost} from '../../../util/request';
 import {ConsolationRegister} from "../../../redux/actions";
 
 import {listViewData} from "../components/data";
@@ -35,20 +36,22 @@ class index extends Component {
 
     getListViewData = (searchContent) => {
         const {unitId} = this.props;
-        let params = {condolencesType: "1", registUnit: unitId,condolencesObject:searchContent};
+        let params = {condolencesType: "1", registUnit: unitId, condolencesObject: searchContent};
         Toast.loading('Loading...', 0);
-        axios.post(`${commonUrl}/app/condolences/findCondolencesList.do`, params)
-            .then(res => {
-                    if (res.data.code === 'success') {
-                        console.log(res)
-                        this.setState({listViewData: res.data.data});
-                        Toast.hide();
-                    } else {
-                        Toast.hide();
-                        Toast.fail(res.data.message)
-                    }
-                }
-            )
+        requestByPost('app/condolences/findCondolencesList.do', params, (res) => {
+            if (res.data.code === 'success') {
+                this.setState({listViewData: res.data.data});
+                Toast.hide();
+            } else {
+                Toast.hide();
+                Toast.fail(res.message)
+            }
+        })
+        /*  axios.post(`${commonUrl}/app/condolences/findCondolencesList.do`, params)
+         .then(res => {
+
+         }
+         )*/
     };
 
     render() {
@@ -57,7 +60,7 @@ class index extends Component {
             <div className={prefix}>
                 <Topbar title="住院慰问" onClick={() => this.props.history.goBack()}/>
                 <SearchBar placeholder="搜索..." maxLength={20} onChange={this.SearchChange}/>
-                <div className={prefix+"-list-box"}>
+                <div className={prefix + "-list-box"}>
                     <ListView data={listViewData} registerPath={registerPath} detailPath={detailPath}/>
                 </div>
                 <AddFooterBar registerPath={registerPath}/>
