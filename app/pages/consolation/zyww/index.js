@@ -35,12 +35,13 @@ class index extends Component {
 
     getListViewData = (searchContent) => {
         const {unitId} = this.props;
-        let params = {condolencesType: "1", unitId: unitId};
+        let params = {condolencesType: "1", registUnit: unitId,condolencesObject:searchContent};
         Toast.loading('Loading...', 0);
         axios.post(`${commonUrl}/app/condolences/findCondolencesList.do`, params)
             .then(res => {
                     if (res.data.code === 'success') {
-                        this.setState({listViewData: res.data.data.result});
+                        console.log(res)
+                        this.setState({listViewData: res.data.data});
                         Toast.hide();
                     } else {
                         Toast.hide();
