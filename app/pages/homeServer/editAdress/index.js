@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Checkbox, Flex, WhiteSpace, TextareaItem, Button, Picker, Tag, Toast } from 'antd-mobile';
+import { List, Checkbox, Flex, WhiteSpace, TextareaItem, Button, Picker, Tag, Toast, InputItem } from 'antd-mobile';
 import { withRouter } from 'react-router-dom';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
@@ -36,21 +36,42 @@ const caseData = [
 
 ]
 class index extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-     
+
         this.state = {
+            value: '',
+            hasError: false,
             adress: "",
-            sex: this.props.addressData[0]?this.props.addressData[0].gender:undefined
+            sex: this.props.addressData[0] ? this.props.addressData[0].gender : undefined
         }
     }
-   
+    onErrorClick = () => {
+        if (this.state.hasError) {
+            Toast.info('请输入11位手机号码');
+        }
+    }
+    phoneonChange = (value) => {
+        console.log('@@@@@@@value',value)
+        if (value.replace(/\s/g, '').length < 11) {
+            this.setState({
+                hasError: true,
+            });
+        } else {
+            this.setState({
+                hasError: false,
+            });
+        }
+        this.setState({
+            value,
+          });
+    }
     saveAddress = () => {
         const { sex } = this.state;
         this.props.form.validateFields((error, value) => {
             console.log(error, value);
             console.log('@value', value)
-            const obj = { ...value, gender: sex, userId: this.props.userinfo.id,address:"福州"}
+            const obj = { ...value, gender: sex, userId: this.props.userinfo.id, address: "福州" }
             if (!obj.contactPerson) {
                 Toast.info('请输入联系人')
                 return
@@ -63,31 +84,35 @@ class index extends Component {
                 Toast.info("请输入联系电话")
                 return
             }
+            if (obj.contactNum&&obj.contactNum.replace(/\s/g, '').length < 11) {
+                Toast.info('请输入11位手机号码');
+                return
+            }
             if (!obj.addressDetail) {
                 Toast.info('请输入详细地址')
                 return
             }
             console.log(this.props.addressData[0])
-            if(this.props.addressData[0]){
-                Axios.post(`${commonUrl}/app/homeService/saveAddress.do`, {...obj,addressId:this.props.addressData[0].id})
+            if (this.props.addressData[0]) {
+                Axios.post(`${commonUrl}/app/homeService/saveAddress.do`, { ...obj, addressId: this.props.addressData[0].id })
                     .then(res => {
-                        noAuth.noAuthCode(res.data)
+                        noAuth(res.data,()=>this.props.history.push('/login'))
                         if (res.data.code === 'success') {
-                            Toast.success('修改成功',2,()=>this.props.history.goBack())
-                            
-                        }else{
-                            Toast.fail(`失败${res.message}`)
+                            Toast.success('修改成功', 2, () => this.props.history.goBack())
+
+                        } else {
+                            Toast.fail(`失败${res.data.message}`)
                         }
                     })
-            }else{
+            } else {
 
                 Axios.post(`${commonUrl}/app/homeService/saveAddress.do`, obj)
                     .then(res => {
-                        noAuth.noAuthCode(res.data)
+                        noAuth(res.data,()=>this.props.history.push('/login'))
                         if (res.data.code === 'success') {
-                            Toast.success('修改成功',2,()=>this.props.history.goBack())
-                        }else{
-                            Toast.fail(`失败${res.message}`)
+                            Toast.success('修改成功', 2, () => this.props.history.goBack())
+                        } else {
+                            Toast.fail(`失败${res.data.message}`)
                         }
                     })
             }
@@ -96,22 +121,22 @@ class index extends Component {
     render() {
         const { sex } = this.state;
         const { getFieldProps } = this.props.form;
-        const {addressData}=this.props;
+        const { addressData } = this.props;
         let addressObj
-        if(!this.props.addressData[0]){
-             addressObj={
-                contactPerson:"",
-                contactNum:"",
-                addressDetail:"" 
+        if (!this.props.addressData[0]) {
+            addressObj = {
+                contactPerson: "",
+                contactNum: "",
+                addressDetail: ""
             }
-        }else{
-            addressObj={
-                contactPerson:addressData[0].contactPerson,
-                contactNum:addressData[0].contactNum,
-                addressDetail:addressData[0].addressDetail 
-            } 
+        } else {
+            addressObj = {
+                contactPerson: addressData[0].contactPerson,
+                contactNum: addressData[0].contactNum,
+                addressDetail: addressData[0].addressDetail
+            }
         }
-        
+
         return (
             <div className={prefix}>
                 <div className={prefix + "_topbar"}>
@@ -134,22 +159,32 @@ class index extends Component {
                     <List>
                         <Item style={{ paddingLeft: 0 }}
                             extra={<div><Sex checked={parseInt(sex)} onChange={() => this.setState({ sex: 1 })} name="先生" />&nbsp;
-                            <Sex checked={sex === undefined ?parseInt(sex):!parseInt(sex)} onChange={() => this.setState({ sex: 0 })} name="女士" /></div>}
+                            <Sex checked={sex === undefined ? parseInt(sex) : !parseInt(sex)} onChange={() => this.setState({ sex: 0 })} name="女士" /></div>}
                         >
                             <TextareaItem
-                                {...getFieldProps('contactPerson',{initialValue:addressObj.contactPerson})}
+                                {...getFieldProps('contactPerson', { initialValue: addressObj.contactPerson })}
                                 arrow="horizontal"
                                 title="联系人"
                                 placeholder="请输入联系人"
                                 clear
                             />
                         </Item>
-                        <TextareaItem
+                        <InputItem
+                            {...getFieldProps('contactNum',{initialValue:addressObj.contactNum+""})}
+                            className="pushTime"
+                            type="phone"
+                            placeholder="请输入手机号码"
+                            // error={this.state.hasError}
+                            // onErrorClick={this.onErrorClick}
+                            // onChange={this.phoneonChange}
+                            // value={this.state.value}
+                        >手机号码</InputItem>
+                        {/*<TextareaItem
                             {...getFieldProps('contactNum',{initialValue:addressObj.contactNum+""})}
                             title="联系电话"
                             placeholder="请输入联系人电话"
                             clear
-                        />
+                        />*/}
                         {/*
                             <Picker
                                 value={this.state.adress}
@@ -160,7 +195,7 @@ class index extends Component {
                             </Picker>
                         */}
                         <TextareaItem
-                            {...getFieldProps('addressDetail',{initialValue:addressObj.addressDetail})}
+                            {...getFieldProps('addressDetail', { initialValue: addressObj.addressDetail })}
                             title="详细地址"
                             placeholder="请输入详细地址"
                             clear
@@ -189,7 +224,7 @@ class index extends Component {
 const mapStateToProps = (state, ownprops) => {
     return {
         userinfo: state.userinfo,
-        addressData:state.address
+        addressData: state.address
     }
 }
 const mapDispatchToProps = (dispatch, ownprops) => {

@@ -29,7 +29,7 @@ class index extends Component {
                 this.setState({serverList:res.data.data})
                 if (!selectList) this.props.changeSelect(res.data.data)
             }
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
         })
     }
     componentWillReceiveProps(){

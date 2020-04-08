@@ -65,7 +65,7 @@ class Home extends Component {
                 if (res.data.code === 'success') {
                     this.setState({ data: res.data.data })
                 }
-                noAuth.noAuthCode(res.data)
+                noAuth(res.data,()=>this.props.history.push('/login'))
 
             })
     }
@@ -120,7 +120,7 @@ class Home extends Component {
                     })
                     this.setState({ notice_data: newdata })
                 }
-                noAuth.noAuthCode(res.data)
+                noAuth(res.data,()=>this.props.history.push('/login'))
             })
             if(localStorage.getItem("tabs")){
                 const tab= JSON.parse(localStorage.getItem("tabs"));

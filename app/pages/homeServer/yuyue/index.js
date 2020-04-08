@@ -28,7 +28,7 @@ class index extends Component {
                     this.setState({ adressinfo: res.data.data })
                     this.props.ADD_address(res.data.data)
                 }
-                noAuth.noAuthCode(res.data)
+                noAuth(res.data,()=>this.props.history.push('/login'))
             })
     }
     saveOrder = () => {
@@ -52,10 +52,10 @@ class index extends Component {
                 Toast.info("请选择服务时间")
                 return
             }
-            if (!value.orderRemark) {
-                Toast.info("请输入订单备注")
-                return
-            }
+            // if (!value.orderRemark) {
+            //     Toast.info("请输入订单备注")
+            //     return
+            // }
             if(homeCompany.otherserver){
                 serverID.push('0');
             }
@@ -74,7 +74,7 @@ class index extends Component {
             }
             Axios.post(`${commonUrl}/app/homeService/saveOrder.do`, obj)
                 .then(res => {
-                    noAuth.noAuthCode(res.data)
+                    noAuth(res.data,()=>this.props.history.push('/login'))
                     if (res.data.code === 'success') {
                         Toast.success('保存成功',2,()=>this.props.history.push('/my'))
                         

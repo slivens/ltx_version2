@@ -46,7 +46,7 @@ class zbactive extends Component {
         axios.post(`${commonUrl}/app/activity/findActivityList.do`,obj
          )
         .then(res => {
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
             if(res.data.code==="success"){
                 this.setState({items:res.data.data})
             }else{

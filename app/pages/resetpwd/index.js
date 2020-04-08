@@ -27,7 +27,7 @@ class ResetPwdComp extends Component {
                     oldPwd:values.oldPwd,
                     newPwd:values.newPwd
                 }).then(res=>{
-                    noAuth.noAuthCode(res.data)
+                    noAuth(res.data,()=>this.props.history.push('/login'))
                     if(res.data.code==='success'){
                         Toast.success('密码修改成功！')
                     }else{

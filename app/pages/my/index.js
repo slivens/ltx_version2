@@ -28,12 +28,17 @@ class Mycomp extends Component {
         if (window.deviceId) {
             axios.post(`${commonUrl}/app/unBindDeviceInfo.do`, { deviceId: window.deviceId, userId: this.props.userinfo.id })
                 .then(res => {
-                    noAuth.noAuthCode(res.data)
+                    noAuth(res.data,()=>this.props.history.push('/login'))
                     if (res.data.code === 'success') {
                         console.log('******解绑设备成功******')
                     }
                 })
         }
+        axios.post(`${commonUrl}/app/appLogout.do`, {})
+            .then(res => {
+                if (res.data.code === 'success') {
+                }
+            })
         this.props.history.push('/login');
     }
     render() {

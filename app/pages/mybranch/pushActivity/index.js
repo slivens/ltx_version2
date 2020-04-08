@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
 import './style/index.less';
-import { List, TextareaItem, WhiteSpace, ImagePicker, DatePicker, Picker, Button, Flex, Modal, Badge, Toast } from 'antd-mobile';
+import { List, TextareaItem, WhiteSpace, ImagePicker, DatePicker, Picker, Button, Flex, Modal, Badge, Toast,InputItem } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import { connect } from 'react-redux';
 import Axios from 'axios';
@@ -65,12 +65,12 @@ class PushActivity extends Component {
             let config = { headers: { 'Content-Type': 'multipart/form-data' } }
             Axios.post(`${commonUrl}/app/img/uploadActPoster.do`, formData, config)
                 .then(res => {
-                    noAuth.noAuthCode(res.data)
+                    noAuth(res.data,()=>this.props.history.push('/login'))
                     if (res.data.code === 'success') {
                         this.resImgName=res.data.data
                         Toast.success('图片上传成功')
                     } else {
-                        Toast.fail(`图片上传失败：${res.message}`)
+                        Toast.fail(`图片上传失败：${res.data.message}`)
                     }
                 })
             
@@ -138,13 +138,17 @@ class PushActivity extends Component {
                         break;
                 }
             }
+            if (newobj.contactNumber&&newobj.contactNumber.replace(/\s/g, '').length < 11) {
+                Toast.info('请输入11位手机号码');
+                return
+            }
             Axios.post(`${commonUrl}/app/activity/saveActivity.do`, newobj)
                 .then(res => {
-                    noAuth.noAuthCode(res.data)
+                    noAuth(res.data,()=>this.props.history.push('/login'))
                     if (res.data.code === 'success') {
-                        Toast.success('发布成功')
+                        Toast.success('发布成功',2,()=>this.props.history.push('/zbactive'))
                     } else {
-                        Toast.fail(`发布失败：${res.message}`)
+                        Toast.fail(`发布失败：${res.data.message}`)
                     }
                 })
         });
@@ -163,7 +167,6 @@ class PushActivity extends Component {
     render() {
         const { getFieldProps } = this.props.form;
         const { allmember } = this.props;
-        console.log('@@@@@@@allmember', allmember)
         const showMember = allmember.filter(item => item.checked)
         let showMemberName = []
         if (showMember.length) {
@@ -338,7 +341,17 @@ class PushActivity extends Component {
                             clear
 
                         />
-                        <TextareaItem
+                        <InputItem
+                            {...getFieldProps('contactNumber',{initialValue:userinfo.phoneNum})}
+                            className="pushTime"
+                            type="phone"
+                            placeholder="请输入手机号码"
+                            // error={this.state.hasError}
+                            // onErrorClick={this.onErrorClick}
+                            // onChange={this.phoneonChange}
+                            // value={this.state.value}
+                        ><span style={{ color: "red", verticalAlign: "middle" }}>*</span>&nbsp;联系电话</InputItem>
+                       {/* <TextareaItem
                             {...getFieldProps('contactNumber', {
                                 initialValue: userinfo.phoneNum
                             })}
@@ -346,7 +359,7 @@ class PushActivity extends Component {
                             placeholder="输入联系电话"
                             clear
 
-                        />
+                        />*/}
                     </List>
                     <WhiteSpace />
                 </div>

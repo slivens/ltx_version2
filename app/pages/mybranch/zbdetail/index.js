@@ -38,7 +38,7 @@ class index extends Component {
         {activityId:actId,userId:this.props.userId}
          )
         .then(res => {
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
             if(res.data.code==="success"){
                 this.setState({memberStatus:res.data.data})
             }
@@ -47,7 +47,7 @@ class index extends Component {
         {activityId:actId}
          )
         .then(res => {
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
             if(res.data.code==="success"){
                 this.setState({detail:res.data.data})
             }
@@ -132,7 +132,7 @@ class index extends Component {
         {activityId:actId,userId,operateType:type.code}
          )
         .then(res => {
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
             if(res.data.code==="success"){
                 Toast.success(res.data.message)
                 this.fetchData();
