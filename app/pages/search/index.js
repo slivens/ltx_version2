@@ -45,7 +45,7 @@ class index extends Component {
           const value=this.autoFocusInst.state.value;
         axios.post(`${commonUrl}/app/qryNewsListByTitle.do`,{title:value})
         .then(res => {
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
             if (res.data.code === 'success') {
                 localStorage.setItem('searchValue',value)
                 this.props.changeSearchValue(value)

@@ -34,7 +34,7 @@ class Banner extends React.Component {
       if(res.data.code==='success'){
         this.setState({data:res.data.data})
       }
-      noAuth.noAuthCode(res.data)
+      noAuth(res.data,()=>this.props.history.push('/login'))
     })
   }
   render() {

@@ -16,7 +16,7 @@ class Zbinfo extends Component {
     componentWillMount() {
         axios.post(`${commonUrl}/app/findPartyBranchInfo.do`,{partyBranchId:this.props.partyBranchId})
         .then(res=>{
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
             this.setState({infodata:res.data.data})
         })
     }

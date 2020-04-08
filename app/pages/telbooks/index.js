@@ -27,7 +27,7 @@ class index extends Component {
         Toast.loading('Loading...',0);
         axios.post(`${commonUrl}/app/qryMailList.do`,{personCategory,unitId}).then(
             res=>{
-                noAuth.noAuthCode(res.data)
+                noAuth(res.data,()=>this.props.history.push('/login'))
                 if(res.data.code==='success'){
                    this.setState({datasource:res.data.data})
                    Toast.hide(); 
@@ -43,7 +43,7 @@ class index extends Component {
         // Toast.loading('Loading...',0);
         axios.post(`${commonUrl}/app/qryMailList.do`,{personCategory,unitId,searchContent}).then(
             res=>{
-                noAuth.noAuthCode(res.data)
+                noAuth(res.data,()=>this.props.history.push('/login'))
                 if(res.data.code==='success'){
                    this.setState({datasource:res.data.data})
                 //    Toast.hide(); 

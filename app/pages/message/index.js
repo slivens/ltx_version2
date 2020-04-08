@@ -44,7 +44,7 @@ class index extends Component {
     componentWillMount(){
         axios.post(`${commonUrl}/app/queryMsgList.do`,{userId:9984})
         .then(res=>{
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
             if(res.data.code==="success"){
                 this.setState({mesgs:res.data.data})
             }

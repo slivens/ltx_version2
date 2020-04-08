@@ -13,7 +13,7 @@ class index extends Component {
     componentWillMount() {
         axios.post(`${commonUrl}/app/qryNewsDetail.do`,{newsId:"general"})
         .then(res=>{
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
             if(res.data.code==='success'){
                 this.setState({findOne:res.data.data})
             }

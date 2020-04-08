@@ -38,7 +38,7 @@ class NoticeBar extends Component{
                 this.props.history.push(item.path)
 
             }
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
         })
     }
     render(){

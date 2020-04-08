@@ -62,7 +62,7 @@ class index extends Component {
     fetchdadta=(type)=>{
         axios.post(`${commonUrl}/app/qryNewsListByCode.do`,{columnCode:type})
         .then(res=>{
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
             if(res.data.code==='success'){
                 this.setState({listdata:res.data.data})
             }

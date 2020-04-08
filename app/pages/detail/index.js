@@ -215,14 +215,14 @@ const dataList = [
                     if(res.data.code==='success'){
                         this.setState({count:res.data.data})
                     }
-                    noAuth.noAuthCode(res.data)
+                    noAuth(res.data,()=>this.props.history.push('/login'))
                 })
                 axios.post(`${commonUrl}/app/qryNewsDetail.do`,{newsId:detid})
                 .then(res=>{
                     if(res.data.code==='success'){
                         this.setState({findOne:res.data.data})
                     }
-                    noAuth.noAuthCode(res.data)
+                    noAuth(res.data,()=>this.props.history.push('/login'))
                 })
                
         } 

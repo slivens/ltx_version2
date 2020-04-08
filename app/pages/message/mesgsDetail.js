@@ -25,7 +25,7 @@ class mesgsDetail extends Component {
         const {params:{title,id,params}}=location;
         axios.post(`${commonUrl}/app/qryMsgRecordList.do`,{userId:9984,recordId:id,params})
         .then(res=>{
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
             if(res.data.code==='success'){
                 this.setState({mesgsList:res.data.data})
             }
@@ -34,7 +34,7 @@ class mesgsDetail extends Component {
     readinfo=({id,params})=>{
         axios.post(`${commonUrl}/app/readMsgRecord.do`,{userId:9984,recordId:id,params})
         .then(res=>{
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
             if(res.data.code==='success'){
             }
         })

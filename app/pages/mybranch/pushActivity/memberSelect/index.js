@@ -40,7 +40,7 @@ class MemberSelect extends React.Component {
             Axios.post(`${commonUrl}/app/activity/findMemberByBranchId.do`, 
             { branchId: this.props.userinfo.partyBranchId,username })
                 .then(res => {
-                    noAuth.noAuthCode(res.data)
+                    noAuth(res.data,()=>this.props.history.push('/login'))
                     if (res.data.code === 'success') {
                         this.setState({ memberData: res.data.data })
                         if(!username){

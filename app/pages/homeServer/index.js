@@ -24,7 +24,7 @@ class index extends Component {
             if(res.data.code==='success'){
                 this.setState({jzfwData:res.data.data})
             }
-            noAuth.noAuthCode(res.data)
+            noAuth(res.data,()=>this.props.history.push('/login'))
         })
     }
     homeServerFunc=(item)=>{
