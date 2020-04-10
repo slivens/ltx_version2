@@ -75,19 +75,28 @@ const allMemberData = (state = [], action) => {
 const condolationObject = (state = [], action) => {
     switch (action.type) {
         case 'Condolation_ObjectData':
-            return action.condolationObjectData;
-        default:
-            return state
-    }
-};const condolationUnit = (state = [], action) => {
-    switch (action.type) {
-        case 'Condolation_UnitData':
-            return action.condolationUnitData;
+            return {
+                ...state,
+                [action.module]: action.condolationObjectData
+            };
         default:
             return state
     }
 };
+
+const condolationObjectChange = (state = [], action) => {
+    switch (action.type) {
+        case 'Condolation_ObjectChange':
+            return {
+                ...state,
+                [action.module]: true
+            };
+        default:
+            return state
+    }
+};
+
 export default combineReducers({
     userinfo, menuData, searchValue, serverCompany, address, allMemberData,
-    condolationObject,condolationUnit
+    condolationObject,condolationObjectChange
 });

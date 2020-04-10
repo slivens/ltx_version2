@@ -41,7 +41,7 @@ class PersonModal extends React.Component {
 
     render() {
         const {personModal} = this.state;
-        const {onClose} = this.props;
+        const {onClose,defaultCheckValues,module} = this.props;
         return (
             <Modal
                 className="selectModal"
@@ -54,7 +54,7 @@ class PersonModal extends React.Component {
                 wrapProps={{onTouchStart: this.onWrapTouchStart}}
             >
                 <div style={{height: '100%', overflow: 'scroll'}}>
-                    <PersonSelect onClose={onClose}/>
+                    <PersonSelect onClose={onClose} defaultCheckValues={defaultCheckValues} module={module}/>
                 </div>
             </Modal>
         );

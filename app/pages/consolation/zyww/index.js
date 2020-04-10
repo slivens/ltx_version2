@@ -5,14 +5,13 @@ import {withRouter} from 'react-router-dom';
 import {SearchBar, Toast} from 'antd-mobile';
 
 import commonUrl from '../../../config';
-import {requestByPost} from '../../../util/request';
+import noAuth from '../../../util/noAuth';
 import {ConsolationRegister} from "../../../redux/actions";
 
-import {listViewData} from "../components/data";
 import ListView from "../components/listView";
 import Topbar from "../components/topbar";
 import AddFooterBar from "../components/addFooterbar";
-import {registerPath, detailPath} from "./path";
+import {registerPath, detailPath,condolencesType} from "./resources";
 import '../style/consolation.less';
 import {prefix} from "../prefix";
 
@@ -36,22 +35,20 @@ class index extends Component {
 
     getListViewData = (searchContent) => {
         const {unitId} = this.props;
-        let params = {condolencesType: "1", registUnit: unitId, condolencesObject: searchContent};
+        let params = {condolencesType: condolencesType, registUnit: unitId, condolencesObject: searchContent};
         Toast.loading('Loading...', 0);
-        requestByPost('app/condolences/findCondolencesList.do', params, (res) => {
-            if (res.data.code === 'success') {
-                this.setState({listViewData: res.data.data});
-                Toast.hide();
-            } else {
-                Toast.hide();
-                Toast.fail(res.message)
-            }
-        })
-        /*  axios.post(`${commonUrl}/app/condolences/findCondolencesList.do`, params)
-         .then(res => {
-
-         }
-         )*/
+        axios.post(`${test}/app/condolences/findCondolencesList.do`, params)
+            .then(res => {
+                    noAuth(res.data, () => this.props.history.push('/login'));
+                    if (res.data.code === 'success') {
+                        this.setState({listViewData: res.data.data});
+                        Toast.hide();
+                    } else {
+                        Toast.hide();
+                        Toast.fail(res.message)
+                    }
+                }
+            )
     };
 
     render() {

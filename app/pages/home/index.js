@@ -97,9 +97,10 @@ class Home extends Component {
                                 }
                             case "志愿者":
                                 //volunteer
+                                //consolation
                                 return {
                                     ...item,
-                                    path: "/volunteer"
+                                    path: "/consolation"
                                 }
                             case "老年大学":
                                 return {

@@ -5,15 +5,16 @@ import {withRouter} from 'react-router-dom';
 import {SearchBar, Toast} from 'antd-mobile';
 
 import commonUrl from '../../../config';
+import noAuth from '../../../util/noAuth';
 import {ConsolationRegister} from "../../../redux/actions";
 
-import {listViewData} from "../components/data";
 import ListView from "../components/listView";
 import Topbar from "../components/topbar";
 import AddFooterBar from "../components/addFooterbar";
-import {registerPath, detailPath} from "./path";
+import {registerPath, detailPath} from "./resources";
 import '../style/consolation.less';
 import {prefix} from "../prefix";
+import {condolencesType} from "./resources";
 
 const test = "http://127.0.0.1:8088";
 
@@ -35,19 +36,20 @@ class index extends Component {
 
     getListViewData = (searchContent) => {
         const {unitId} = this.props;
-        let params = {condolencesType: "4", unitId: unitId};
+        let params = {condolencesType:condolencesType, registUnit: unitId, condolencesObject: searchContent};
         Toast.loading('Loading...', 0);
-        axios.post(`${commonUrl}/app/condolences/findCondolencesList.do`, params)
+        axios.post(`${test}/app/condolences/findCondolencesList.do`, params)
             .then(res => {
+                    noAuth(res.data, () => this.props.history.push('/login'));
                     if (res.data.code === 'success') {
-                        this.setState({listViewData: res.data.data.result});
+                        this.setState({listViewData: res.data.data});
                         Toast.hide();
                     } else {
                         Toast.hide();
-                        Toast.fail(res.data.message)
+                        Toast.fail(res.message)
                     }
                 }
-            )
+            );
     };
 
     render() {
