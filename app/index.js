@@ -10,6 +10,7 @@ import React from 'react';
 import './less/index.less';
 import {withRouter} from 'react-router-dom';
 import NotFound from './components/NotFound';
+import ListView from './components/homeListView/listView';
 import {
     Home, Login, Server,
     Message, My, Detail,
@@ -106,7 +107,8 @@ const App = ({history, location}) => {
         'myorder':<Myorder/>,
         'orderDetail':<OrderDetail/>,
         'member':<MemberSelect/>,
-        'verify':<VerifyCode/>
+        'verify':<VerifyCode/>,
+        'listview':<ListView/>
     };
     const {pathname} = location;
     const path = pathname.split('/')[1];

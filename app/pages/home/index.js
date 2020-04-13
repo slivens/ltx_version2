@@ -14,7 +14,7 @@ import commonUrl from '../../config';
 import { Tabs, WhiteSpace, Badge,Modal } from 'antd-mobile';
 import { connect } from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {changeSearchValue} from '../../redux/actions';
+import {changeSearchValue,AddMenuList} from '../../redux/actions';
 import noAuth from '../../util/noAuth';
 const { Search } = Input;
 const notice_data = [
@@ -60,11 +60,11 @@ class Home extends Component {
         nowtabs:"tab1"
     }
     fetchdata = (type) => {
-        axios.post(`${commonUrl}/app/qryNewsListByCode.do`, { columnCode: type })
+        axios.post(`${commonUrl}/app/qryNewsListByCode.do`, { columnCode: type,pageSize:3,pageNumber:1 })
             .then(res => {
                 if (res.data.code === 'success') {
-                    this.setState({ data: res.data.data })
-                }
+                    this.setState({ data: res.data.data.result })
+                }   
                 noAuth(res.data,()=>this.props.history.push('/login'))
 
             })
@@ -79,57 +79,58 @@ class Home extends Component {
        
     }
     componentWillMount() {
-        axios.post(`${commonUrl}/app/qryAppMenuList.do`, { userId: this.props.userid })
-            .then(res => {
-                if (res.data.code === 'success') {
-                    let noticeData = res.data.data
-                    const newdata = noticeData.map(item => {
-                        switch (item.title) {
-                            case "党建先锋":
-                                return {
-                                    ...item,
-                                    path: "/mybranch"
-                                }
-                            case "学习教育":
-                                return {
-                                    ...item,
-                                    path: "/eduTrain"
-                                }
-                            case "志愿者":
-                                //volunteer
-                                return {
-                                    ...item,
-                                    path: "/volunteer"
-                                }
-                            case "老年大学":
-                                return {
-                                    ...item,
-                                    path: "/lndx"
-                                }
-                            case "活动中心":
-                                return {
-                                    ...item,
-                                    path: "/hdzx"
-                                }
-                                case "老年报":
-                                return {
-                                    ...item,
-                                    path: "/lnb"
-                                }
-                        }
-                    })
-                    this.setState({ notice_data: newdata })
-                }
-                noAuth(res.data,()=>this.props.history.push('/login'))
-            })
+        const {menuData}=this.props;
+        if(!menuData.length){
+            axios.post(`${commonUrl}/app/qryAppMenuList.do`, { userId: this.props.userid })
+                .then(res => {
+                    if (res.data.code === 'success') {
+                        let noticeData = res.data.data
+                        const newdata = noticeData.map(item => {
+                            switch (item.title) {
+                                case "党建先锋":
+                                    return {
+                                        ...item,
+                                        path: "/mybranch"
+                                    }
+                                case "学习教育":
+                                    return {
+                                        ...item,
+                                        path: "/eduTrain"
+                                    }
+                                case "志愿者":
+                                    //volunteer
+                                    return {
+                                        ...item,
+                                        path: "/volunteer"
+                                    }
+                                case "老年大学":
+                                    return {
+                                        ...item,
+                                        path: "/lndx"
+                                    }
+                                case "活动中心":
+                                    return {
+                                        ...item,
+                                        path: "/hdzx"
+                                    }
+                                    case "老年报":
+                                    return {
+                                        ...item,
+                                        path: "/lnb"
+                                    }
+                            }
+                        })
+                        // this.setState({ notice_data: newdata })
+                        this.props.saveMenuData(newdata)
+                    }
+                    noAuth(res.data,()=>this.props.history.push('/login'))
+                })
+        }
             if(localStorage.getItem("tabs")){
                 const tab= JSON.parse(localStorage.getItem("tabs"));
-
-
                 this.setState({nowtabs:tab.key});
                 this.fetchdata(tab.columnCode);
             }else{
-
                 this.fetchdata("workNews");
             }
     }
@@ -161,6 +162,7 @@ class Home extends Component {
         }
     }
     render() {
+        const {menuData}=this.props;
         return (
             <div className={prefix}>
                 <div className={prefix + '_topBar'}>
@@ -195,7 +197,7 @@ class Home extends Component {
                 </div>
                 {/* <NavBar/> */}
                 <Banner />
-                <NoticeBar data={this.state.notice_data} />
+                <NoticeBar data={menuData} />
                 <WhiteSpace />
                 <Tabs tabs={tabs}
                     page={this.state.nowtabs}
@@ -215,12 +217,16 @@ class Home extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
     userid: state.userinfo.id,
-    isFirstPwd:state.userinfo.isFirstPwd
+    isFirstPwd:state.userinfo.isFirstPwd,
+    menuData:state.fetchMenuList
 })
 const mapdispatchToProps=(dispatch, ownProps)=>{
     return {
         searchhandle:(value)=>{
             dispatch(changeSearchValue(value))
+        },
+        saveMenuData:(data)=>{
+            dispatch(AddMenuList(data))
         }
     }
 }

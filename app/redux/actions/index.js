@@ -71,6 +71,12 @@ const CondolationUnitData = (condolationUnitData = []) => {
         condolationUnitData
     }
 };
+const AddMenuList=(menuData=[])=>{
+    return {
+        type:"Add_AddMenuList",
+        menuData
+    }
+};
 export {
     AddUserInfo,
     changeMenu,
@@ -82,4 +88,5 @@ export {
     AddOtherServer,
     CondolationObjectData,
     CondolationUnitData,
+    AddMenuList
 }

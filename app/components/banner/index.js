@@ -32,7 +32,7 @@ class Banner extends React.Component {
       columnCode:"bannerNews"
     }).then(res=>{
       if(res.data.code==='success'){
-        this.setState({data:res.data.data})
+        this.setState({data:res.data.data.result})
       }
       noAuth(res.data,()=>this.props.history.push('/login'))
     })

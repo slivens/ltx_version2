@@ -29,7 +29,7 @@ class ResetPwdComp extends Component {
                 }).then(res=>{
                     noAuth(res.data,()=>this.props.history.push('/login'))
                     if(res.data.code==='success'){
-                        Toast.success('密码修改成功！')
+                        Toast.success('密码修改成功！',2,()=>this.props.history.goBack())
                     }else{
                         Toast.fail(`密码修改失败：${res.data.message}`)
                     }

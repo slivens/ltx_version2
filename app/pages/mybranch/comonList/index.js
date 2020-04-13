@@ -64,7 +64,7 @@ class index extends Component {
         .then(res=>{
             noAuth(res.data,()=>this.props.history.push('/login'))
             if(res.data.code==='success'){
-                this.setState({listdata:res.data.data})
+                this.setState({listdata:res.data.data.result})
             }
             
         })
