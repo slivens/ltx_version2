@@ -33,12 +33,11 @@ class PersonSelect extends React.Component {
         const {module} = this.props;
         // {unitId: this.props.userinfo.unitId, username}
         //"8d11716e-f71a-47ae-aacc-a21dd0412323"
-        axios.post(`${test}/app/user/findWorkerList.do`, {unitId: "8d11716e-f71a-47ae-aacc-a21dd0412323", username})
+        axios.post(`${test}/app/user/findWorkerList.do`, {unitId: this.props.userinfo.unitId, username})
             .then(res => {
                 if (res.data.code === 'success') {
                     this.setState({objectData: res.data.data});
                     if (!username) {
-                        console.log('hahahha')
                         this.props.dispatchObjectData(res.data.data, module)
                     }
                 }
