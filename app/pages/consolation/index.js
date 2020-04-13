@@ -5,30 +5,9 @@ import {withRouter} from 'react-router-dom';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
 import ConmonCard from '../../components/conmonCard';
-import {changeMenu} from '../../redux/actions';
+import {consolationMenuData} from './data';
 import './style/index.less';
-const datasource = [
-    {
-        title: "住院慰问",
-        path: "/zyww",
-        imgPath: "../../../assets/images/djxf.png"
-    },
-    {
-        title: "重大节假日慰问",
-        path: "/zdjjrww",
-        imgPath: "../../../assets/images/djxf.png"
-    },
-    {
-        title: "特殊困难户慰问",
-        path: "/tsknhww",
-        imgPath: "../../../assets/images/djxf.png"
-    },
-    {
-        title: "灾后慰问",
-        path: "/zhww",
-        imgPath: "../../../assets/images/djxf.png"
-    }
-];
+
 class Consolation extends Component {
     state = {
         menudata: [],
@@ -39,7 +18,7 @@ class Consolation extends Component {
     };
 
     componentWillMount() {
-        this.setState({menudadta: datasource})
+        this.setState({menudadta: consolationMenuData})
     }
 
     render() {
@@ -73,11 +52,5 @@ class Consolation extends Component {
         );
     }
 }
-const mapStateToProps = (state, ownprops) => ({
-    menudata: state.menuData
-});
-const mapDispatchToProps = (dispatch, ownprops) => ({
-    fetchMenu: (data) => dispatch(changeMenu(data))
-});
 const ConsolationComp = withRouter(Consolation);
-export default connect(mapStateToProps, mapDispatchToProps)(ConsolationComp);
+export default connect(null, null)(ConsolationComp);

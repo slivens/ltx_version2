@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Modal} from 'antd-mobile';
 import {withRouter} from 'react-router-dom';
 import 'antd/es/icon/style';
-import './style/index.less';
-import Axios from 'axios';
-import commonUrl from '../../../config';
-import {connect} from 'react-redux';
 import PersonSelect from './personSelect';
+import './style/index.less';
 
 function closest(el, selector) {
     const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
@@ -29,7 +27,6 @@ class PersonModal extends React.Component {
     }
 
     onWrapTouchStart = (e) => {
-        // fix touch to scroll background page on iOS
         if (!/iPhone|iPod|iPad/i.test(navigator.userAgent)) {
             return;
         }

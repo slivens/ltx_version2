@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {Button, Flex} from 'antd-mobile';
+
 import './style/index.less';
 const prefix = "ww_footerbar";
 
