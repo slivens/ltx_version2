@@ -99,7 +99,7 @@ class RegisterConn extends Component {
                                 noAuth(res.data, () => this.props.history.push('/login'));
                                 if (res.data.code === 'success') {
                                     let uploadImgResult = res.data.data;
-                                    this.commitInfo(values, uploadImgResult.substring(1, uploadImgResult.length - 1));
+                                    this.commitInfo(values, uploadImgResult);
                                 } else {
                                     Toast.fail(`图片上传失败：${res.message}`)
                                 }
