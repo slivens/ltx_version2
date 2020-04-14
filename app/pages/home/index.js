@@ -60,7 +60,7 @@ class Home extends Component {
         nowtabs:"tab1"
     }
     fetchdata = (type) => {
-        axios.post(`${commonUrl}/app/qryNewsListByCode.do`, { columnCode: type,pageSize:3,pageNumber:1 })
+        axios.post(`${commonUrl}/app/qryNewsPageListByCode.do`, { columnCode: type })
             .then(res => {
                 if (res.data.code === 'success') {
                     this.setState({ data: res.data.data.result })

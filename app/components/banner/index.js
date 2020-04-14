@@ -28,7 +28,7 @@ class Banner extends React.Component {
     // }, 100);
   }
   componentWillMount(){
-    axios.post(`${commonUrl}/app/qryNewsListByCode.do`,{
+    axios.post(`${commonUrl}/app/qryNewsPageListByCode.do`,{
       columnCode:"bannerNews"
     }).then(res=>{
       if(res.data.code==='success'){

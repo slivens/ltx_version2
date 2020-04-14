@@ -43,7 +43,7 @@ class Edutrain extends Component {
         }
     }
     fetchdadta=(type)=>{
-        axios.post(`${commonUrl}/app/qryNewsListByCode.do`,{columnCode:type})
+        axios.post(`${commonUrl}/app/qryNewsPageListByCode.do`,{columnCode:type})
         .then(res=>{
             if(res.data.code==='success'){
                 this.setState({data:res.data.data.result})

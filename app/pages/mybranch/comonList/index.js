@@ -60,7 +60,7 @@ class index extends Component {
         }
     }
     fetchdadta=(type)=>{
-        axios.post(`${commonUrl}/app/qryNewsListByCode.do`,{columnCode:type})
+        axios.post(`${commonUrl}/app/qryNewsPageListByCode.do`,{columnCode:type})
         .then(res=>{
             noAuth(res.data,()=>this.props.history.push('/login'))
             if(res.data.code==='success'){

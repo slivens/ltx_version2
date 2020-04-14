@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-import { ListView } from 'antd-mobile';
 import ReactDOM from 'react-dom';
-function MyBody(props) {
-  return (
-    <div className="am-list-body my-body">
-      <span style={{ display: 'none' }}>you can custom body wrap element</span>
-      {props.children}
-    </div>
-  );
-}
+import { PullToRefresh, ListView, Button } from 'antd-mobile';
+import Axios from 'axios';
+import commonUrl from '../../config';
 
 const data = [
   {
@@ -27,97 +21,106 @@ const data = [
     des: '不是所有的兼职汪都需要风吹日晒',
   },
 ];
-const NUM_SECTIONS = 5;
-const NUM_ROWS_PER_SECTION = 5;
+const NUM_ROWS = 5;
 let pageIndex = 0;
-
-const dataBlobs = {};
-let sectionIDs = [];
-let rowIDs = [];
+let dataBlobs = [];
 function genData(pIndex = 0) {
-  for (let i = 0; i < NUM_SECTIONS; i++) {
-    const ii = (pIndex * NUM_SECTIONS) + i;
-    const sectionName = `Section ${ii}`;
-    sectionIDs.push(sectionName);
-    dataBlobs[sectionName] = sectionName;
-    rowIDs[ii] = [];
-
-    for (let jj = 0; jj < NUM_ROWS_PER_SECTION; jj++) {
-      const rowName = `S${ii}, R${jj}`;
-      rowIDs[ii].push(rowName);
-      dataBlobs[rowName] = rowName;
-    }
+  const dataArr = [];
+  for (let i = 0; i < NUM_ROWS; i++) {
+    dataArr.push(`row - ${(pIndex * NUM_ROWS) + i}`);
   }
-  sectionIDs = [...sectionIDs];
-  rowIDs = [...rowIDs];
+  return dataArr;
 }
 
-class Demo extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
-    const getSectionData = (dataBlob, sectionID) => dataBlob[sectionID];
-    const getRowData = (dataBlob, sectionID, rowID) => dataBlob[rowID];
-
     const dataSource = new ListView.DataSource({
-      getRowData,
-      getSectionHeaderData: getSectionData,
       rowHasChanged: (row1, row2) => row1 !== row2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     });
 
     this.state = {
       dataSource,
+      refreshing: true,
       isLoading: true,
-      height: document.documentElement.clientHeight * 3 / 4,
+      height: document.documentElement.clientHeight,
+      useBodyScroll: false,
     };
-  }
-
-  componentDidMount() {
-    // you can scroll to the specified position
-    // setTimeout(() => this.lv.scrollTo(0, 120), 800);
-
-    const hei = document.documentElement.clientHeight - ReactDOM.findDOMNode(this.lv).parentNode.offsetTop;
-    // simulate initial Ajax
-    setTimeout(() => {
-      genData();
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRowsAndSections(dataBlobs, sectionIDs, rowIDs),
-        isLoading: false,
-        height: hei,
-      });
-    }, 600);
   }
 
   // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
   // componentWillReceiveProps(nextProps) {
   //   if (nextProps.dataSource !== this.props.dataSource) {
   //     this.setState({
-  //       dataSource: this.state.dataSource.cloneWithRowsAndSections(nextProps.dataSource),
+  //       dataSource: this.state.dataSource.cloneWithRows(nextProps.dataSource),
   //     });
   //   }
   // }
 
+  componentDidUpdate() {
+    if (this.state.useBodyScroll) {
+      document.body.style.overflow = 'auto';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+  }
+  renderDataBlobs=(data)=>{
+      dataBlobs=dataBlobs.concat(data)
+  }
+  fetchData=()=>{
+    Axios.post(`${commonUrl}/app/qryNewsPageListByCode.do`, { columnCode: "bannerNews",pageSize:NUM_ROWS,pageNumber:pageIndex})
+            .then(res => {
+                if (res.data.code === 'success') {
+                    this.renderDataBlobs(res.data.data.result)
+                }   
+
+            })
+  }
+  componentDidMount() {
+    const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
+    this.fetchData();
+    setTimeout(() => {
+      this.rData = genData();
+      console.log('@@@@@@@gendata',genData())
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(genData()),
+        height: hei,
+        refreshing: false,
+        isLoading: false,
+      });
+      console.log('@@@this.state.dataSource',this.state.dataSource)
+    }, 1500);
+  }
+
+  onRefresh = () => {
+    this.setState({ refreshing: true, isLoading: true });
+    // simulate initial Ajax
+    setTimeout(() => {
+      this.rData = genData();
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(this.rData),
+        refreshing: false,
+        isLoading: false,
+      });
+    }, 600);
+  };
+
   onEndReached = (event) => {
     // load new data
     // hasMore: from backend data, indicates whether it is the last page, here is false
-    console.log('@@@@@@@@dataSource', this.state.dataSource)
-    const hasMore = this.state.dataSource.rowIdentities.length >= 20 ? false : true;
-    // if (this.state.isLoading && !this.state.hasMore) {
-    //   return;
-    // }
-    if(!hasMore){
-      return
+    if (this.state.isLoading && !this.state.hasMore) {
+      return;
     }
     console.log('reach end', event);
     this.setState({ isLoading: true });
     setTimeout(() => {
-      genData(++pageIndex);
+      this.rData = [...this.rData, ...genData(++pageIndex)];
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRowsAndSections(dataBlobs, sectionIDs, rowIDs),
+        dataSource: this.state.dataSource.cloneWithRows(this.rData),
         isLoading: false,
       });
     }, 1000);
-  }
+  };
 
   render() {
     const separator = (sectionID, rowID) => (
@@ -138,51 +141,57 @@ class Demo extends React.Component {
       }
       const obj = data[index--];
       return (
-        <div key={rowID} style={{ padding: '0 15px' }}>
-          <div
-            style={{
-              lineHeight: '50px',
-              color: '#888',
-              fontSize: 18,
-              borderBottom: '1px solid #F6F6F6',
-            }}
-          >{obj.title}</div>
-          <div style={{ display: '-webkit-box', display: 'flex', padding: '15px 0' }}>
-            <img style={{ height: '64px', marginRight: '15px' }} src={obj.img} alt="" />
-            <div style={{ lineHeight: 1 }}>
-              <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>{obj.des}</div>
-              <div><span style={{ fontSize: '30px', color: '#FF6E27' }}>35</span>¥ {rowID}</div>
+        <div key={rowID}
+          style={{
+            padding: '0 15px',
+            backgroundColor: 'white',
+          }}
+        >
+          <div style={{ height: '50px', lineHeight: '50px', color: '#888', fontSize: '18px', borderBottom: '1px solid #ddd' }}>
+            {obj.title}
+          </div>
+          <div style={{ display: '-webkit-box', display: 'flex', padding: '15px' }}>
+            <img style={{ height: '63px', width: '63px', marginRight: '15px' }} src={obj.img} alt="" />
+            <div style={{ display: 'inline-block' }}>
+              <div style={{ marginBottom: '8px', color: '#000', fontSize: '16px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '250px' }}>{obj.des}-{rowData}</div>
+              <div style={{ fontSize: '16px' }}><span style={{ fontSize: '30px', color: '#FF6E27' }}>{rowID}</span> 元/任务</div>
             </div>
           </div>
         </div>
       );
     };
-
-    return (
+    return (<div>
+      <Button
+        style={{ margin: '30px 15px' }}
+        inline
+        onClick={() => this.setState({ useBodyScroll: !this.state.useBodyScroll })}
+      >
+        {this.state.useBodyScroll ? 'useBodyScroll' : 'partial scroll'}
+      </Button>
       <ListView
+        key={this.state.useBodyScroll ? '0' : '1'}
         ref={el => this.lv = el}
         dataSource={this.state.dataSource}
-        // renderHeader={() => <span>header</span>}
+        // renderHeader={() => <span>Pull to refresh</span>}
         renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
           {this.state.isLoading ? 'Loading...' : 'Loaded'}
         </div>)}
-        renderSectionHeader={sectionData => (
-          <div>{`Task ${sectionData.split(' ')[1]}`}</div>
-        )}
-        renderBodyComponent={() => <MyBody />}
         renderRow={row}
         renderSeparator={separator}
-        style={{
+        useBodyScroll={this.state.useBodyScroll}
+        style={this.state.useBodyScroll ? {} : {
           height: this.state.height,
-          overflow: 'auto',
+          border: '1px solid #ddd',
+          margin: '5px 0',
         }}
-        pageSize={4}
-        onScroll={() => { console.log('scroll'); }}
-        scrollRenderAheadDistance={500}
+        pullToRefresh={<PullToRefresh
+          refreshing={this.state.refreshing}
+          onRefresh={this.onRefresh}
+        />}
         onEndReached={this.onEndReached}
-        onEndReachedThreshold={10}
+        pageSize={5}
       />
-    );
+    </div>);
   }
 }
-export default Demo;
+export default App;

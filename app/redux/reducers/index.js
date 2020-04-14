@@ -75,15 +75,22 @@ const allMemberData = (state = [], action) => {
 const condolationObject = (state = [], action) => {
     switch (action.type) {
         case 'Condolation_ObjectData':
-            return action.condolationObjectData;
+            return {
+                ...state,
+                [action.module]: action.condolationObjectData
+            };
         default:
             return state
     }
 };
-const condolationUnit = (state = [], action) => {
+
+const condolationObjectChange = (state = [], action) => {
     switch (action.type) {
-        case 'Condolation_UnitData':
-            return action.condolationUnitData;
+        case 'Condolation_ObjectChange':
+            return {
+                ...state,
+                [action.module]: true
+            };
         default:
             return state
     }
@@ -98,5 +105,5 @@ const fetchMenuList = (state = [], action) => {
 }
 export default combineReducers({
     userinfo, menuData, searchValue, serverCompany, address, allMemberData,
-    condolationObject, condolationUnit, fetchMenuList
+    condolationObject, fetchMenuList, condolationObject, condolationObjectChange
 });

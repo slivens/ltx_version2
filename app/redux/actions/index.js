@@ -58,17 +58,18 @@ const AddOtherServer=(val="")=>{
     }
 };
 
-const CondolationObjectData = (condolationObjectData = []) => {
+const CondolationObjectData = (condolationObjectData = [],module) => {
     return {
         type: "Condolation_ObjectData",
-        condolationObjectData
+        condolationObjectData,
+        module
     }
 };
 
-const CondolationUnitData = (condolationUnitData = []) => {
+const CondolationObjectChange = (module) => {
     return {
-        type: "Condolation_UnitData",
-        condolationUnitData
+        type: "Condolation_ObjectChange",
+        module
     }
 };
 const AddMenuList=(menuData=[])=>{
@@ -87,6 +88,6 @@ export {
     AddAllMemberData,
     AddOtherServer,
     CondolationObjectData,
-    CondolationUnitData,
-    AddMenuList
+    AddMenuList,
+    CondolationObjectChange
 }

@@ -1,18 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import Axios from 'axios';
+import axios from 'axios';
 import {List, Checkbox, Flex, SearchBar} from 'antd-mobile';
-import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
-import commonUrl from '../../../config';
-import {CondolationObjectData} from '../../../redux/actions';
+import {CondolationObjectData, CondolationObjectChange} from '../../../redux/actions';
 import ConfirmFooterbar from "./confirmFooterbar";
 import Topbar from "./topbar";
 import './style/index.less';
-import {person} from "./data";
 
 const CheckboxItem = Checkbox.CheckboxItem;
+
+const test = "http://127.0.0.1:8088";
 
 class PersonSelect extends React.Component {
     state = {
@@ -21,44 +20,53 @@ class PersonSelect extends React.Component {
     selectList = [];
 
     componentWillMount() {
-        const {objectData} = this.props;
-        if (objectData.length) {
-            this.setState({objectData: objectData});
+        const {objectData, module} = this.props;
+        let temp = objectData[module];
+        if (temp && temp.length) {
+            this.setState({objectData: temp});
             return
         }
         this.fechData()
     }
 
     fechData = (username) => {
-        this.setState({objectData: person.data});
-        this.props.dispatchObjectData(person.data)
-        /*Axios.post(`${commonUrl}/app/activity/findMemberByBranchId.do`,
-            {branchId: this.props.userinfo.partyBranchId, username})
+        const {module} = this.props;
+        // {unitId: this.props.userinfo.unitId, username}
+        //"8d11716e-f71a-47ae-aacc-a21dd0412323"
+        axios.post(`${test}/app/user/findWorkerList.do`, {unitId: this.props.userinfo.unitId, username})
             .then(res => {
                 if (res.data.code === 'success') {
                     this.setState({objectData: res.data.data});
                     if (!username) {
-                        this.props.dispatchObjectData(res.data.data)
+                        this.props.dispatchObjectData(res.data.data, module)
                     }
                 }
-            })*/
+            })
     };
 
 
     onChange = (e, obj) => {
-        const {objectData} = this.props;
-        objectData.forEach((item, index) => {
+        const {objectData, module} = this.props;
+        let temp = objectData[module];
+        let result = [];
+        temp.map((item, index) => {
             if (item.value === obj.value) {
-                objectData[index].checked = e.target.checked
+                item = {...item,checked:e.target.checked};
+                console.log(item,obj)
+                result.push(item);
+            } else {
+                result.push(item);
             }
         });
-        this.props.dispatchObjectData(objectData)
+        this.props.dispatchObjectData(result, module);
+        this.props.dispatchObjectChange(module);
     };
     SearchChange = (e) => {
         const username = this.searchText.state.value;
-        const {objectData} = this.props;
-        if (!username && objectData.length) {
-            this.setState({objectData: objectData});
+        const {objectData, module} = this.props;
+        let temp = objectData[module];
+        if (!username && temp.length) {
+            this.setState({objectData: temp});
             return
         }
         this.fechData(username)
@@ -66,10 +74,21 @@ class PersonSelect extends React.Component {
 
     render() {
         const {objectData} = this.state;
-        const {onClose} = this.props;
+        const {onClose, defaultCheckValues} = this.props;
+        objectData.forEach((objectItem) => {
+            let defaultDatas = defaultCheckValues.split(",");
+            defaultDatas.forEach((defaultItem) => {
+                //objectItem.value === defaultItem
+                if (objectItem.value == defaultItem) {
+                    objectItem.checked = true;
+                }
+            })
+
+        });
+
         return (
             <div className="selectMember">
-                <Topbar title="慰问对象" onClick={onClose}/>
+                <Topbar title="慰问人员" onClick={onClose}/>
                 <SearchBar
                     ref={ref => this.searchText = ref}
                     placeholder="搜索..." maxLength={20}
@@ -97,8 +116,11 @@ const mapStateToProps = (state, ownprops) => {
 };
 const mapDispatchToProps = (dispatch, ownprops) => {
     return {
-        dispatchObjectData: (value) => {
-            dispatch(CondolationObjectData(value))
+        dispatchObjectData: (value, module) => {
+            dispatch(CondolationObjectData(value, module))
+        },
+        dispatchObjectChange: (module) => {
+            dispatch(CondolationObjectChange(module));
         }
     }
 };

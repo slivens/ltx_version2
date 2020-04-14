@@ -9,8 +9,12 @@ const formatDate = (info, key) => {
     return info && info[key] ? new Date(info[key]) : ""
 };
 
-const formatCustomSelectDate = (info, key, value) => {
-    return info && info[key] ? info[key] : arrayToString(value)
+const formatCustomSelectDate = (info, key, value, isUpdate) => {
+    if (isUpdate) {
+        return arrayToString(value);
+    }else{
+        return info && info[key] ? info[key] : arrayToString(value)
+    }
 };
 
 const getInputItemTitle = text => {

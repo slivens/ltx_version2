@@ -10,12 +10,13 @@ import {
 import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
 import EditTopbar from "../components/editTopbar";
+import noAuth from '../../../util/noAuth';
 import commonUrl from '../../../config';
-import {registerPath} from "./path";
+import {registerPath} from "./resources";
 
 import '../style/consolation.less';
-import './style/index.less';
 import {prefix} from "../prefix";
+const test = "http://127.0.0.1:8088";
 
 class DetailConn extends Component {
     constructor(props) {
@@ -30,11 +31,11 @@ class DetailConn extends Component {
     componentWillMount() {
         const detid = this.props.location.pathname.split('/')[2];
         Toast.loading('Loading...', 0);
-        axios.post(`${commonUrl}/app/condolences/findCondolencesDetail.do`, {id: detid}).then(
+        axios.post(`${test}/app/condolences/findCondolencesDetail.do`, {id: detid}).then(
             res => {
+                noAuth(res.data, () => this.props.history.push('/login'));
                 if (res.data.code === 'success') {
-                    console.log(res.data.data)
-                    this.setState({detailData: res.data.data});
+                    this.setState({detailData:  res.data.data});
                     Toast.hide();
                 } else {
                     Toast.hide();
@@ -42,18 +43,6 @@ class DetailConn extends Component {
                 }
             }
         );
-        //todo 获取风采展示
-        axios.post(`${commonUrl}/app/condolences/findAttachmentiIdList.do`, {infoId: detid}).then(
-            res => {
-                if (res.data.code === 'success') {
-                    //this.setState({files: res.data.data});
-                    Toast.hide();
-                } else {
-                    Toast.hide();
-                    Toast.fail(res.data.message)
-                }
-            }
-        )
     }
 
 
@@ -64,8 +53,7 @@ class DetailConn extends Component {
 
 
     render() {
-        const {files, detailData} = this.state;
-
+        const { detailData} = this.state;
         return (
             <div className={prefix}>
                 <EditTopbar title="重大节假日慰问登记"
@@ -94,7 +82,7 @@ class DetailConn extends Component {
                             {/*  condolencesTime*/}
                             <List.Item>
                                 <TextareaItem
-                                    value={ detailData && detailData.name}
+                                    value={ detailData && detailData.condolencesTime}
                                     title="慰问时间"
                                     editable={false}
                                 />
@@ -104,14 +92,14 @@ class DetailConn extends Component {
                         <List>
                             <List.Item>
                                 <TextareaItem
-                                    value={ detailData && detailData.festivalType}
+                                    value={ detailData && detailData.festivalText}
                                     title="节假日类型"
                                     editable={false}
                                 />
                             </List.Item>
                             <List.Item>
                                 <TextareaItem
-                                    value={ detailData && detailData.sex}
+                                    value={ detailData && detailData.sexText}
                                     title="性别"
                                     editable={false}
                                 />
@@ -178,11 +166,9 @@ class DetailConn extends Component {
                             <List.Item className={prefix + "_dj_image"}>
                                 关怀展示
                             </List.Item>
-
                             <ImagePicker
-                                files={files}
-                                onChange={this.imagePickerChange}
-                                selectable={true}
+                                files={detailData && detailData.imagePicker?detailData.imagePicker:[]}
+                                selectable={false}
                                 multiple={true}
                                 length="1"
                             />

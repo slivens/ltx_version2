@@ -10,109 +10,147 @@ import {
 import Form from 'antd/es/form';
 import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
-import {zywwDetailInfoData,holidayData,sexData} from "../components/data";
+
 import Topbar from "../components/topbar";
 import CommitFooterbar from "../components/commitFooterbar";
 import PersonModal from "../components/personModal";
-import UnitModal from "../components/unitModal";
 import {
-    formatDate, formatCustomSelectDate, getInputItemTitle, getEditClassName
+    formatDate,
+    formatCustomSelectDate,
+    getInputItemTitle,
+    getEditClassName
 } from "../utils/utils";
-import commonUrl from '../../../config';
+import {sexData, holidayData} from "../data";
+import {condolencesType, module} from "./resources";
 import '../style/consolation.less';
-import "./style/index.less";
 import {prefix} from "../prefix";
 
+import noAuth from '../../../util/noAuth';
+import commonUrl from '../../../config';
 
+const test = "http://127.0.0.1:8088";
 class RegisterConn extends Component {
     constructor(props) {
         super(props);
-        this.personModalElement = React.createRef();
         this.state = {
             files: [],
             detailData: undefined,
             personModal: false,
-            unitModal: false,
         };
     }
 
     componentWillMount() {
-        const {unitId} = this.props;
         const detid = this.props.location.pathname.split('/')[2];
-        Toast.loading('Loading...', 0);
-        axios.post(`${commonUrl}/app/condolences/findCondolencesDetail.do`, {id: detid}).then(
-            res => {
-                if (res.data.code === 'success') {
-                    this.setState({detailData: res.data.data});
-                    Toast.hide();
-                } else {
-                    Toast.hide();
-                    Toast.fail(res.data.message)
+        if (detid) {
+            Toast.loading('Loading...', 0);
+            axios.post(`${test}/app/condolences/findCondolencesDetail.do`, {id: detid}).then(
+                res => {
+                    if (res.data.code === 'success') {
+                        let detailData = res.data.data;
+                        this.setState({
+                            detailData: detailData,
+                            files: detailData.imagePicker
+                        });
+                        Toast.hide();
+                    } else {
+                        Toast.hide();
+                        Toast.fail(res.data.message)
+                    }
                 }
-            }
-        );
+            );
+        }
+
     }
 
-    imagePickerChange = (files, type, index) => {
-        this.setState({files});
-        if (files.length) {
-            let formData = new FormData();
-            formData.append('imgFile', files[0].url);
-            let config = {headers: {'Content-Type': 'multipart/form-data'}};
-            axios.post(`${commonUrl}/app/condolences/uploadCondolencesImg.do`, formData, config)
-                .then(res => {
-                    if (res.data.code === 'success') {
-                        // this.resImgName = res.data.data;
-                        Toast.success('图片上传成功')
-                    } else {
-                        Toast.fail(`图片上传失败：${res.message}`)
+    imagePickerChange = (filesTemp, operationType, index) => {
+        const {files} = this.state;
+        if ("remove" === operationType) {
+            let file = files[index];
+            axios.post(`${test}/app/condolences/delCondolencesImg.do`, {id: file.id}).then(
+                res => {
+                    if (res.data.code !== 'success') {
+                        Toast.fail(res.data.message)
                     }
-                })
+                }
+            );
         }
+        this.setState({files: filesTemp});
+
     };
+
 
     handleCommit = (e) => {
         e.preventDefault();
-
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                const {objectData, unitData} = this.props;
-                const objects = objectData.filter(item => item.checked);
-                let objectIds = [];
-                if (objects.length) {
-                    objects.forEach(item => {
-                        objectIds.push(item.value)
-                    })
-                }
-
-                const units = unitData.filter(item => item.checked);
-                let unitIds = [];
-                if (units.length) {
-                    units.forEach(item => {
-                        unitIds.push(item.value)
-                    })
-                }
-                const params = {
-                    ...values,
-                    userIds: objectId.join(),
-                    condolencesType: "1",
-                    isRehabilitation: values.isRehabilitation[0]
-                };
-                values.id = null;
-                // values.resImgName =this.resImgName
-                axios.post(`${commonUrl}/app/condolences/saveCondolencesInfo.do`, params)
-                    .then(res => {
-                        if (res.data.code === "success") {
-                            clearTimeout(this.timer);
-                            Toast.success('提交成功', 1, () => this.timer = setTimeout(this.props.history.push('/zyww'), 2000));
-                        } else {
-                            Toast.fail(`提交失败：${res.data.message}`, 2)
+                const {files, detailData} = this.state;
+                if (files.length) {
+                    let urls = [];
+                    files.map((item) => {
+                        if (!item.isUpdaload) {
+                            urls.push(item.url);
                         }
-                    }).catch((err) => {
-                    Toast.fail(`提交失败：${err}`, 2)
-                })
+                    });
+                    if (urls.length > 0) {
+                        let formData = new FormData();
+                        formData.append('condolencesImgName', urls.join("||"));
+                        let config = {headers: {'Content-Type': 'multipart/form-data'}};
+                        axios.post(`${test}/app/condolences/uploadCondolencesImg.do`, formData, config)
+                            .then(res => {
+                                noAuth(res.data, () => this.props.history.push('/login'));
+                                if (res.data.code === 'success') {
+                                    let uploadImgResult = res.data.data;
+                                    this.commitInfo(values, uploadImgResult.substring(1, uploadImgResult.length - 1));
+                                } else {
+                                    Toast.fail(`图片上传失败：${res.message}`)
+                                }
+                            })
+                    } else {
+                        files.map((item) => {
+                            urls.push(item.id);
+                        });
+                        this.commitInfo(values, urls.join(","));
+                    }
+                } else {
+                    Toast.info(`请选择图片上传！`)
+                }
             }
         });
+    };
+
+    commitInfo = (values, attachmentIds) => {
+        const {unitId, objectData} = this.props;
+        let temp = objectData[module];
+        let workerIds = [];
+        if (temp) {
+            const showMember = temp.filter(item => item.checked);
+            if (showMember.length) {
+                showMember.forEach(item => {
+                    workerIds.push(item.value)
+                })
+            }
+        }
+        const params = {
+            ...values,
+            workerIds: workerIds.join(),
+            registUnit: unitId,
+            condolencesType: condolencesType,
+            sex: values.sex[0],
+            festivalType: values.festivalType[0],
+            attachmentIds
+        };
+        axios.post(`${test}/app/condolences/saveCondolencesInfo.do`, params)
+            .then(res => {
+                noAuth(res.data, () => this.props.history.push('/login'));
+                if (res.data.code === "success") {
+                    clearTimeout(this.timer);
+                    Toast.success('提交成功', 1, () => this.timer = setTimeout(this.props.history.push('/zdjjrww'), 2000));
+                } else {
+                    Toast.fail(`提交失败：${res.data.message}`, 2)
+                }
+            }).catch((err) => {
+            Toast.fail(`提交失败：${err}`, 2)
+        })
     };
 
     onClose = key => () => {
@@ -122,63 +160,58 @@ class RegisterConn extends Component {
     };
 
     render() {
-        const {files, detailData, personModal, unitModal} = this.state;
+        const {files, detailData, personModal} = this.state;
         const {getFieldDecorator} = this.props.form;
-        const {objectData, unitData} = this.props;
-
-        const showObject = objectData.filter(item => item.checked);
-        let names = [];
-        if (showObject.length) {
-            showObject.forEach(item => {
-                names.push(item.label)
-            })
+        const {objectData, objectChange} = this.props;
+        let temp = objectData[module];
+        let isUpdate = objectChange[module];
+        let showMemberName = [];
+        let workerIds = [];
+        if (temp) {
+            const showMember = temp.filter(item => item.checked);
+            if (showMember.length) {
+                showMember.forEach(item => {
+                    showMemberName.push(item.label);
+                    workerIds.push(item.value);
+                })
+            }
         }
-
-        const showUnit = unitData.filter(item => item.checked);
-        let units = [];
-        if (showUnit.length) {
-            showUnit.forEach(item => {
-                units.push(item.label)
-            })
-        }
-
         return (
             <div className={prefix}>
                 <Topbar title="重大节假日慰问登记" onClick={() => this.props.history.goBack()}/>
-
                 <div className={prefix + "-register-box"}>
-
                     <Form className={prefix + "_dj"}>
+                        <Form.Item>
+                            {getFieldDecorator('id', {
+                                initialValue: detailData && detailData.id,
+                            })(
+                                <input type="hidden"/>
+                            )}
+                        </Form.Item>
                         <List>
-                            <List.Item className={prefix + "_dj_select"} arrow="horizontal">
+                            <List.Item className={prefix + "_dj_select"}>
                                 <Form.Item>
                                     {getFieldDecorator('name', {
-                                        initialValue: formatCustomSelectDate(detailData, "name", names),
-                                        rules: [{required: true, message: '请选择慰问对象'}],
+                                        initialValue: detailData && detailData.name,
+                                        rules: [{required: true, message: '请输入慰问对象'}],
                                     })(
                                         <InputItem
-                                            placeholder="请选择慰问对象"
+                                            placeholder="请输入慰问对象"
                                             clear
-                                            onClick={() => this.setState({personModal: true})}
-                                        >
-                                            {getInputItemTitle("慰问对象")}
-                                        </InputItem>
+                                        >  {getInputItemTitle("慰问对象")}</InputItem>
                                     )}
                                 </Form.Item>
                             </List.Item>
-                            <List.Item className={prefix + "_dj_select"} arrow="horizontal">
+                            <List.Item className={prefix + "_dj_select"}>
                                 <Form.Item>
                                     {getFieldDecorator('condolencesUnit', {
-                                        initialValue: formatCustomSelectDate(detailData, "condolencesUnit", units),
-                                        rules: [{required: true, message: '请选择慰问单位'}],
+                                        initialValue: detailData && detailData.condolencesUnit,
+                                        rules: [{required: true, message: '请输入慰问单位'}],
                                     })(
                                         <InputItem
-                                            placeholder="请选择慰问单位"
+                                            placeholder="请输入慰问单位"
                                             clear
-                                            onClick={()=>this.setState({unitModal: true})}
-                                        >
-                                            {getInputItemTitle("慰问单位")}
-                                        </InputItem>
+                                        >  {getInputItemTitle("慰问单位")}</InputItem>
                                     )}
                                 </Form.Item>
                             </List.Item>
@@ -208,7 +241,7 @@ class RegisterConn extends Component {
                             <List.Item arrow="horizontal">
                                 <Form.Item>
                                     {getFieldDecorator('festivalType', {
-                                        initialValue: [detailData && detailData.festivalType],
+                                        initialValue: detailData ? [detailData.festivalType] : "",
                                         rules: [{required: true, message: '请选择节假日类型'}],
                                     })(
                                         <Picker
@@ -216,7 +249,8 @@ class RegisterConn extends Component {
                                             extra="请选择节假日类型"
                                             data={holidayData}
                                             cols={1}>
-                                            <List.Item className={prefix + "_dj_picker " + getEditClassName(detailData, "festivalType")}
+                                            <List.Item
+                                                className={prefix + "_dj_picker " + getEditClassName(detailData, "festivalType")}
                                             >
                                                 {getInputItemTitle("节假日类型")}
                                             </List.Item>
@@ -229,7 +263,7 @@ class RegisterConn extends Component {
                             <List.Item arrow="horizontal">
                                 <Form.Item>
                                     {getFieldDecorator('sex', {
-                                        initialValue: [detailData && detailData.sex],
+                                        initialValue: detailData ? [detailData.sex] : "",
                                         rules: [{required: true, message: '请选择性别'}],
                                     })(
                                         <Picker
@@ -237,7 +271,8 @@ class RegisterConn extends Component {
                                             extra="请选择性别"
                                             data={sexData}
                                             cols={1}>
-                                            <List.Item className={prefix + "_dj_picker " + getEditClassName(detailData, "sex")}
+                                            <List.Item
+                                                className={prefix + "_dj_picker " + getEditClassName(detailData, "sex")}
                                             >
                                                 {getInputItemTitle("性别")}
                                             </List.Item>
@@ -319,19 +354,20 @@ class RegisterConn extends Component {
                         </List>
                         <WhiteSpace size="lg"/>
                         <List>
-                            <List.Item className={prefix + "_dj_select"}>
+                            <List.Item className={prefix + "_dj_select"} arrow="horizontal">
                                 <Form.Item>
                                     {getFieldDecorator('condolencesPerson', {
-                                        initialValue: detailData && detailData.condolencesPerson,
-                                        rules: [{required: true, message: '请输入慰问人员'}],
+                                        initialValue: formatCustomSelectDate(detailData, "condolencesPerson", showMemberName, isUpdate),
+                                        rules: [{required: true, message: '请选择慰问人员'}],
                                     })(
                                         <InputItem
-                                            placeholder="请输入慰问人员"
-                                            clear
-                                        >{getInputItemTitle("慰问人员")}</InputItem>
+                                            placeholder="请选择慰问人员"
+                                            onClick={() => this.setState({personModal: true})}
+                                        >
+                                            {getInputItemTitle("慰问人员")}
+                                        </InputItem>
                                     )}
                                 </Form.Item>
-
                             </List.Item>
 
                             <List.Item className={prefix + "_dj_select"}>
@@ -376,19 +412,23 @@ class RegisterConn extends Component {
                                 <ImagePicker
                                     files={files}
                                     onChange={this.imagePickerChange}
-                                    onImageClick={(index, fs) => console.log(index, fs)}
                                     selectable={files.length < 5}
                                     multiple={true}
                                     length="1"
-                                >
-                                    关怀展示
-                                </ImagePicker>
+                                />
                             </Form.Item>
                         </List>
                         <CommitFooterbar commit={this.handleCommit}/>
                     </Form>
-                    <PersonModal visible={personModal} onClose={() => this.onClose('personModal')()}/>
-                    <UnitModal visible={unitModal} onClose={() => this.onClose('unitModal')()}/>
+                    <PersonModal
+                        visible={personModal}
+                        defaultCheckValues={isUpdate ?
+                            (workerIds.length ? workerIds.join(",") : "") :
+                            (detailData && detailData.workerIds ? detailData.workerIds : "")
+                        }
+                        onClose={() => this.onClose('personModal')()}
+                        module={module}
+                    />
                 </div>
             </div>
         );
@@ -396,11 +436,12 @@ class RegisterConn extends Component {
 }
 const mapStateToProps = (state, ownprops) => {
     return {
-        userinfo: state.userinfo,
+        unitId: state.userinfo.unitId,
         objectData: state.condolationObject,
-        unitData: state.condolationUnit
+        objectChange: state.condolationObjectChange,
     }
 };
+
 
 const Register = Form.create({name: 'zdjjrww_dj'})(RegisterConn);
 export default connect(mapStateToProps, null)(withRouter(Register));
