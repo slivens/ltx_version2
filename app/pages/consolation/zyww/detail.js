@@ -16,7 +16,6 @@ import {registerPath} from "./resources";
 
 import '../style/consolation.less';
 import {prefix} from "../prefix";
-const test = "http://127.0.0.1:8088";
 
 class DetailConn extends Component {
     constructor(props) {
@@ -31,7 +30,7 @@ class DetailConn extends Component {
     componentWillMount() {
         const detid = this.props.location.pathname.split('/')[2];
         Toast.loading('Loading...', 0);
-        axios.post(`${test}/app/condolences/findCondolencesDetail.do`, {id: detid}).then(
+        axios.post(`${commonUrl}/app/condolences/findCondolencesDetail.do`, {id: detid}).then(
             res => {
                 noAuth(res.data, () => this.props.history.push('/login'));
                 if (res.data.code === 'success') {

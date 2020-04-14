@@ -28,8 +28,6 @@ import {prefix} from "../prefix";
 import noAuth from '../../../util/noAuth';
 import commonUrl from '../../../config';
 
-const test = "http://127.0.0.1:8088";
-
 class RegisterConn extends Component {
     constructor(props) {
         super(props);
@@ -44,7 +42,7 @@ class RegisterConn extends Component {
         const detid = this.props.location.pathname.split('/')[2];
         if (detid) {
             Toast.loading('Loading...', 0);
-            axios.post(`${test}/app/condolences/findCondolencesDetail.do`, {id: detid}).then(
+            axios.post(`${commonUrl}/app/condolences/findCondolencesDetail.do`, {id: detid}).then(
                 res => {
                     if (res.data.code === 'success') {
                         let detailData = res.data.data;
@@ -67,7 +65,7 @@ class RegisterConn extends Component {
         const {files} = this.state;
         if ("remove" === operationType) {
             let file = files[index];
-            axios.post(`${test}/app/condolences/delCondolencesImg.do`, {id: file.id}).then(
+            axios.post(`${commonUrl}/app/condolences/delCondolencesImg.do`, {id: file.id}).then(
                 res => {
                     if (res.data.code !== 'success') {
                         Toast.fail(res.data.message)
@@ -96,12 +94,12 @@ class RegisterConn extends Component {
                         let formData = new FormData();
                         formData.append('condolencesImgName', urls.join("||"));
                         let config = {headers: {'Content-Type': 'multipart/form-data'}};
-                        axios.post(`${test}/app/condolences/uploadCondolencesImg.do`, formData, config)
+                        axios.post(`${commonUrl}/app/condolences/uploadCondolencesImg.do`, formData, config)
                             .then(res => {
                                 noAuth(res.data, () => this.props.history.push('/login'));
                                 if (res.data.code === 'success') {
                                     let uploadImgResult = res.data.data;
-                                    this.commitInfo(values, uploadImgResult.substring(1, uploadImgResult.length - 1));
+                                    this.commitInfo(values, uploadImgResult);
                                 } else {
                                     Toast.fail(`图片上传失败：${res.message}`)
                                 }
@@ -139,7 +137,7 @@ class RegisterConn extends Component {
             sex: values.sex[0],
             attachmentIds
         };
-        axios.post(`${test}/app/condolences/saveCondolencesInfo.do`, params)
+        axios.post(`${commonUrl}/app/condolences/saveCondolencesInfo.do`, params)
             .then(res => {
                 noAuth(res.data, () => this.props.history.push('/login'));
                 if (res.data.code === "success") {

@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import './style/index.less';
-import {Flex} from 'antd-mobile';
 import {withRouter} from 'react-router-dom';
 import Icon from '../../../components/icon';
 
+import './style/index.less';
 const prefix = "ww_footerbar";
 
 class AddFooterbar extends Component {

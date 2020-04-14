@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import axios from 'axios';
 import {List, Checkbox, Flex, SearchBar} from 'antd-mobile';
+import axios from 'axios';
 import 'antd/es/icon/style';
+
+import commonUrl from '../../../config';
 import {CondolationObjectData, CondolationObjectChange} from '../../../redux/actions';
-import ConfirmFooterbar from "./confirmFooterbar";
+
 import Topbar from "./topbar";
+import ConfirmFooterbar from "./confirmFooterbar";
+
 import './style/index.less';
 
 const CheckboxItem = Checkbox.CheckboxItem;
-
-const test = "http://127.0.0.1:8088";
 
 class PersonSelect extends React.Component {
     state = {
@@ -33,7 +35,7 @@ class PersonSelect extends React.Component {
         const {module} = this.props;
         // {unitId: this.props.userinfo.unitId, username}
         //"8d11716e-f71a-47ae-aacc-a21dd0412323"
-        axios.post(`${test}/app/user/findWorkerList.do`, {unitId: this.props.userinfo.unitId, username})
+        axios.post(`${commonUrl}/app/user/findWorkerList.do`, {unitId: this.props.userinfo.unitId, username})
             .then(res => {
                 if (res.data.code === 'success') {
                     this.setState({objectData: res.data.data});
@@ -52,7 +54,6 @@ class PersonSelect extends React.Component {
         temp.map((item, index) => {
             if (item.value === obj.value) {
                 item = {...item,checked:e.target.checked};
-                console.log(item,obj)
                 result.push(item);
             } else {
                 result.push(item);
