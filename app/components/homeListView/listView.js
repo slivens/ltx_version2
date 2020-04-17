@@ -1,38 +1,20 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { PullToRefresh, ListView, Button } from 'antd-mobile';
+import { PullToRefresh, ListView, Button, Icon } from 'antd-mobile';
 import Axios from 'axios';
 import commonUrl from '../../config';
+import classnames from 'classnames';
+import Skeleton from 'antd/es/skeleton';
+import "antd/es/skeleton/style";
+import {withRouter} from 'react-router-dom';
+// import './style/index.less';
 
-const data = [
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
-    title: 'Meet hotel',
-    des: '不是所有的兼职汪都需要风吹日晒',
-  },
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/XmwCzSeJiqpkuMB.png',
-    title: 'McDonald\'s invites you',
-    des: '不是所有的兼职汪都需要风吹日晒',
-  },
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/hfVtzEhPzTUewPm.png',
-    title: 'Eat the week',
-    des: '不是所有的兼职汪都需要风吹日晒',
-  },
-];
-const NUM_ROWS = 5;
-let pageIndex = 0;
-let dataBlobs = [];
-function genData(pIndex = 0) {
-  const dataArr = [];
-  for (let i = 0; i < NUM_ROWS; i++) {
-    dataArr.push(`row - ${(pIndex * NUM_ROWS) + i}`);
-  }
-  return dataArr;
-}
+const NUM_ROWS = 5; //显示条数
+let pageIndex = 1;  //页码
+let dataBlobs = []; //数据模型
 
-class App extends React.Component {
+
+class ListViewComp extends React.Component {
   constructor(props) {
     super(props);
     const dataSource = new ListView.DataSource({
@@ -40,22 +22,25 @@ class App extends React.Component {
     });
 
     this.state = {
+      hasMore: true,
       dataSource,
       refreshing: true,
       isLoading: true,
       height: document.documentElement.clientHeight,
-      useBodyScroll: false,
+      useBodyScroll: true,
+      SkeletonLoading: false,
+      columnCode: props.columnCode
     };
   }
 
   // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.dataSource !== this.props.dataSource) {
-  //     this.setState({
-  //       dataSource: this.state.dataSource.cloneWithRows(nextProps.dataSource),
-  //     });
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.columnCode !== this.props.columnCode) {
+      this.setState({ SkeletonLoading: true, columnCode: nextProps.columnCode }, () => {
+        this.onRefresh()
+      })
+    }
+  }
 
   componentDidUpdate() {
     if (this.state.useBodyScroll) {
@@ -64,134 +49,123 @@ class App extends React.Component {
       document.body.style.overflow = 'hidden';
     }
   }
-  renderDataBlobs=(data)=>{
-      dataBlobs=dataBlobs.concat(data)
+  renderDataBlobs = (data) => {
+    dataBlobs = dataBlobs.concat(data)
   }
-  fetchData=()=>{
-    Axios.post(`${commonUrl}/app/qryNewsPageListByCode.do`, { columnCode: "bannerNews",pageSize:NUM_ROWS,pageNumber:pageIndex})
-            .then(res => {
-                if (res.data.code === 'success') {
-                    this.renderDataBlobs(res.data.data.result)
-                }   
-
-            })
+  fetchData = (columnCode = "workNews", pIndex = 1) => {
+    Axios.post(`${commonUrl}/app/qryNewsPageListByCode.do`, { columnCode: columnCode, pageSize: NUM_ROWS, pageNumber: pIndex })
+      .then(res => {
+        if (res.data.code === 'success') {
+          this.renderDataBlobs(res.data.data.result)
+          if (!res.data.data.result.length) {
+            this.setState({ hasMore: false })
+          }
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(dataBlobs),
+            refreshing: false,
+            isLoading: false,
+            SkeletonLoading: false,
+          });
+        }
+      })
   }
   componentDidMount() {
-    const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
-    this.fetchData();
-    setTimeout(() => {
-      this.rData = genData();
-      console.log('@@@@@@@gendata',genData())
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(genData()),
-        height: hei,
-        refreshing: false,
-        isLoading: false,
-      });
-      console.log('@@@this.state.dataSource',this.state.dataSource)
-    }, 1500);
+    const { columnCode } = this.state;
+    this.fetchData(columnCode);
   }
-
+  /**
+   * @description: 下拉刷新函数，手势下拉，整体列表刷新。
+   * @param {type} 
+   * @return: 
+   */
   onRefresh = () => {
-    this.setState({ refreshing: true, isLoading: true });
+    const { columnCode } = this.state;
+    dataBlobs = []
+    pageIndex = 1
+    this.setState({ hasMore: true, refreshing: true });
     // simulate initial Ajax
     setTimeout(() => {
-      this.rData = genData();
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.rData),
-        refreshing: false,
-        isLoading: false,
-      });
-    }, 600);
+      this.fetchData(columnCode);
+    }, 600)
   };
-
+  /**
+   * @description: 列表拉到底部进行刷新
+   * @param {type} 
+   * @return: 
+   */
   onEndReached = (event) => {
-    // load new data
-    // hasMore: from backend data, indicates whether it is the last page, here is false
-    if (this.state.isLoading && !this.state.hasMore) {
-      return;
-    }
-    console.log('reach end', event);
     this.setState({ isLoading: true });
-    setTimeout(() => {
-      this.rData = [...this.rData, ...genData(++pageIndex)];
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.rData),
-        isLoading: false,
-      });
-    }, 1000);
+    if (!this.state.hasMore) {
+      return this.setState({ isLoading: false });
+    }
+    const { columnCode } = this.state;
+    this.fetchData(columnCode, ++pageIndex)
   };
-
+  godetail=(id)=>{
+    this.props.history.push(`/detail/${id}`)
+}
   render() {
-    const separator = (sectionID, rowID) => (
-      <div
-        key={`${sectionID}-${rowID}`}
-        style={{
-          backgroundColor: '#F5F5F9',
-          height: 8,
-          borderTop: '1px solid #ECECED',
-          borderBottom: '1px solid #ECECED',
-        }}
-      />
-    );
-    let index = data.length - 1;
-    const row = (rowData, sectionID, rowID) => {
-      if (index < 0) {
-        index = data.length - 1;
-      }
-      const obj = data[index--];
+    const getRowCount = this.state.dataSource.getRowCount();
+    const skeletonData = Array(getRowCount).fill(< Skeleton active />)
+    const row = (item, sectionID, rowID) => {
       return (
-        <div key={rowID}
-          style={{
-            padding: '0 15px',
-            backgroundColor: 'white',
-          }}
-        >
-          <div style={{ height: '50px', lineHeight: '50px', color: '#888', fontSize: '18px', borderBottom: '1px solid #ddd' }}>
-            {obj.title}
-          </div>
-          <div style={{ display: '-webkit-box', display: 'flex', padding: '15px' }}>
-            <img style={{ height: '63px', width: '63px', marginRight: '15px' }} src={obj.img} alt="" />
-            <div style={{ display: 'inline-block' }}>
-              <div style={{ marginBottom: '8px', color: '#000', fontSize: '16px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '250px' }}>{obj.des}-{rowData}</div>
-              <div style={{ fontSize: '16px' }}><span style={{ fontSize: '30px', color: '#FF6E27' }}>{rowID}</span> 元/任务</div>
+        <div onClick={()=>this.godetail(item.id)} key={rowID} className="homeListView_item">
+          <div className={classnames("homeListView_item_right", item.imgPath ? "" : "noimg")}>
+            <div className="homeListView_item_right-top">
+              <div className="title">{item.title}</div>
+              {/*<div dangerouslySetInnerHTML={{__html:item.abstractInfo}} className="content"/>*/}
+            </div>
+            <div className="homeListView_item_right-bottom">
+              <span className="source">{item.source}</span>
+              <span className={"count"}>{item.publicDate}</span>
+              {/* <span className="date">2019-01-18</span> */}
+              {/* <span className="count">1002&nbsp;阅读</span> */}
             </div>
           </div>
+          {
+            item.imgPath &&
+            <div className="homeListView_item_pic">
+              <div style={{ height: "100%", width: "100%" }} className="pic">
+                <img onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `${commonUrl}/app/getUploadImg.do?fn=default.jpg`
+                }}
+                  src={item.imgPath} />
+              </div>
+            </div>
+          }
         </div>
       );
     };
-    return (<div>
-      <Button
-        style={{ margin: '30px 15px' }}
-        inline
-        onClick={() => this.setState({ useBodyScroll: !this.state.useBodyScroll })}
-      >
-        {this.state.useBodyScroll ? 'useBodyScroll' : 'partial scroll'}
-      </Button>
-      <ListView
-        key={this.state.useBodyScroll ? '0' : '1'}
-        ref={el => this.lv = el}
-        dataSource={this.state.dataSource}
-        // renderHeader={() => <span>Pull to refresh</span>}
-        renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-          {this.state.isLoading ? 'Loading...' : 'Loaded'}
-        </div>)}
-        renderRow={row}
-        renderSeparator={separator}
-        useBodyScroll={this.state.useBodyScroll}
-        style={this.state.useBodyScroll ? {} : {
-          height: this.state.height,
-          border: '1px solid #ddd',
-          margin: '5px 0',
-        }}
-        pullToRefresh={<PullToRefresh
-          refreshing={this.state.refreshing}
-          onRefresh={this.onRefresh}
-        />}
-        onEndReached={this.onEndReached}
-        pageSize={5}
-      />
-    </div>);
+    return (
+      <div>
+        {
+          !this.state.SkeletonLoading ?
+            <ListView
+              key={this.state.useBodyScroll ? '0' : '1'}
+              ref={el => this.lv = el}
+              dataSource={this.state.dataSource}
+              renderFooter={() => (<div style={{ padding: 5, textAlign: 'center' }}>
+                {this.state.isLoading ? <Icon type={'loading'} /> : '数据已经加载完啦~'}
+              </div>)}
+              renderRow={row}
+              useBodyScroll={this.state.useBodyScroll}
+              style={this.state.useBodyScroll ? {} : {
+                height: this.state.height,
+                border: '1px solid #ddd',
+                margin: '5px 0',
+              }}
+              pullToRefresh={<PullToRefresh
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+              />}
+              onEndReached={this.onEndReached}
+              onEndReachedThreshold={50}
+              pageSize={5}
+            />
+            : <div>{skeletonData}</div>
+        }</div>
+    );
   }
 }
-export default App;
+export default withRouter(ListViewComp);

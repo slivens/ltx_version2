@@ -88,7 +88,7 @@ class index extends Component {
                 <div className={prefix + "_box"}>
                     <div className={prefix + "_pic"}>
                         <img onError={(e) => {e.target.onerror = null;e.target.src=`${commonUrl}/app/getUploadImg.do?fn=default.jpg`}}
-                         src={homeCompany.companyLogo}
+                         src={homeCompany.companyBanner}
                         />
                     </div>
                     <WhiteSpace />

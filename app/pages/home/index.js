@@ -8,7 +8,8 @@ const prefix = "ltx_home";
 import './style/index.less';
 import NoticeBar from '../../components/noticeBar';
 import Banner from '../../components/banner';
-import ListView from '../../components/homeListView';
+// import ListView from '../../components/homeListView';
+import ListViewComp from '../../components/homeListView/listView';
 import axios from 'axios';
 import commonUrl from '../../config';
 import { Tabs, WhiteSpace, Badge,Modal } from 'antd-mobile';
@@ -57,7 +58,7 @@ class Home extends Component {
     state = {
         data: [],
         notice_data: [],
-        nowtabs:"tab1"
+        nowtabs:{}
     }
     fetchdata = (type) => {
         axios.post(`${commonUrl}/app/qryNewsPageListByCode.do`, { columnCode: type })
@@ -113,6 +114,11 @@ class Home extends Component {
                                         ...item,
                                         path: "/hdzx"
                                     }
+                                    case "家政服务":
+                                        return {
+                                            ...item,
+                                            path: "/homeServer"
+                                        }
                                     case "老年报":
                                     return {
                                         ...item,
@@ -128,7 +134,7 @@ class Home extends Component {
         }
             if(localStorage.getItem("tabs")){
                 const tab= JSON.parse(localStorage.getItem("tabs"));
-                this.setState({nowtabs:tab.key});
+                this.setState({nowtabs:tab});
                 this.fetchdata(tab.columnCode);
             }else{
                 this.fetchdata("workNews");
@@ -137,22 +143,22 @@ class Home extends Component {
     tabsOnchange = (tab, index) => {
         switch (tab.title) {
             case "时政要闻":
-                this.setState({nowtabs:tab.key});
+                this.setState({nowtabs:tab});
                 localStorage.setItem("tabs",JSON.stringify(tab));
                 this.fetchdata("workNews");
                 break;
             case "银龄新闻":
-                this.setState({nowtabs:tab.key});
+                this.setState({nowtabs:tab});
                 localStorage.setItem("tabs",JSON.stringify(tab));
                 this.fetchdata("provinceNews");
                 break;
             case "文史精粹":
-                this.setState({nowtabs:tab.key});
+                this.setState({nowtabs:tab});
                 localStorage.setItem("tabs",JSON.stringify(tab));
                 this.fetchdata("countyNews");
                 break;
             case "养生乐游":
-                this.setState({nowtabs:tab.key});
+                this.setState({nowtabs:tab});
                 localStorage.setItem("tabs",JSON.stringify(tab));
                 this.fetchdata("health");
                 break;
@@ -196,11 +202,12 @@ class Home extends Component {
                     ><Icon type="snippets" /> 专题</div> 
                 </div>
                 {/* <NavBar/> */}
+                <div style={{position:"relative",height:".5rem"}}></div>
                 <Banner />
                 <NoticeBar data={menuData} />
                 <WhiteSpace />
                 <Tabs tabs={tabs}
-                    page={this.state.nowtabs}
+                    page={this.state.nowtabs.key}
                     initialPage={"tab1"}
                     tabBarUnderlineStyle={{ borderColor: "#F83A2E" }}
                     tabBarActiveTextColor={"#F83A2E"}
@@ -208,7 +215,9 @@ class Home extends Component {
                 // onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
                 >
                 </Tabs>
-                <ListView data={this.state.data} />
+                {/* <ListView data={this.state.data} /> */}
+                <ListViewComp columnCode={this.state.nowtabs.columnCode} />
+                <div style={{position:"relative",height:".6rem"}}></div>
                 <FooterBar />
             </div>
         );

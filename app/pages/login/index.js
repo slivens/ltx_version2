@@ -116,8 +116,11 @@ class Logincomp extends Component {
                                         this.showAlert()
                                     }
                             } else {
-                                this.props.history.push('/login');
-                                Toast.fail(`登录失败：${res.data.message}`, 2)
+                                
+                                Toast.fail(`登录失败：${res.data.message}`, 2,()=>{
+                                    localStorage.setItem("loginState",'loginout')
+                                    this.props.history.push('/login');
+                                })
                             }
                         })
         }
