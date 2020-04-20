@@ -102,7 +102,7 @@ class Home extends Component {
                                     //consolation
                                     return {
                                         ...item,
-                                        path: "/consolation"
+                                        path: "/volunteer"
                                     }
                                 case "老年大学":
                                     return {
