@@ -48,7 +48,7 @@ class RegisterConn extends Component {
                         let detailData = res.data.data;
                         this.setState({
                             detailData: detailData,
-                            files: detailData.imagePicker
+                            files: detailData.imagePicker|| []
                         });
                         Toast.hide();
                     } else {
