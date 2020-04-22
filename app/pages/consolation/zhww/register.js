@@ -11,7 +11,7 @@ import Form from 'antd/es/form';
 import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
 
-import Topbar from "../components/topbar";
+import Topbar from "../../../components/topbar/topbar";
 import CommitFooterbar from "../components/commitFooterbar";
 import PersonModal from "../components/personModal";
 import {

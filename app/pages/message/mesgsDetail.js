@@ -16,7 +16,8 @@ import commonUrl from '../../config';
 import {WhiteSpace, Toast} from 'antd-mobile';
 import {connect} from 'react-redux';
 import noAuth from '../../util/noAuth';
-const test = "http://127.0.0.1:8088"
+const test = "http://127.0.0.1:8088";
+import {msgRecordList} from './data';
 class mesgsDetail extends Component {
     state = {
         mesgsList: []
@@ -25,13 +26,14 @@ class mesgsDetail extends Component {
     componentWillMount() {
         const {history, location} = this.props;
         const {params: {title, id, params}} = location;
-        axios.post(`${commonUrl}/app/qryMsgRecordList.do`, {userId: 9984, recordId: id, params})
+        this.setState({mesgsList: msgRecordList.data})
+        /*axios.post(`${commonUrl}/app/qryMsgRecordList.do`, {userId: 9984, recordId: id, params})
             .then(res => {
                 noAuth(res.data, () => this.props.history.push('/login'));
                 if (res.data.code === 'success') {
                     this.setState({mesgsList: res.data.data})
                 }
-            })
+            })*/
     }
 
     readinfo = ({id, params, type}) => {
@@ -79,7 +81,7 @@ class mesgsDetail extends Component {
                                         item.readed && <span className="dot"/>
                                     }
                                     <span className="word">{item.title}</span></div>
-                                <div className="content">{item.content}</div>
+                                <div className="content">发件人：{item.sender}</div>
                                 <div className="detail">查看详情
                                     <Icon
                                         style={{

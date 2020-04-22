@@ -37,7 +37,8 @@ import {
     Zyww, ZywwDetail, ZywwRegister,
     Zdjjrww, ZdjjrwwDetail, ZdjjrwwRegister,
     Zhww,ZhwwDetail,ZhwwRegister,
-    Tsknhww,TsknhwwDetail,TsknhwwRegister
+    Tsknhww,TsknhwwDetail,TsknhwwRegister,
+    TeacherPool
 } from './pages';
 const App = ({history, location}) => {
     const router = {
@@ -110,7 +111,8 @@ const App = ({history, location}) => {
         'member':<MemberSelect/>,
         'verify':<VerifyCode/>,
         'listview':<ListView/>,
-        'listview2':<ListView2/>
+        'listview2':<ListView2/>,
+        'teacherPool':<TeacherPool/>
     };
     const {pathname} = location;
     const path = pathname.split('/')[1];

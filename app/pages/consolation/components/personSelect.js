@@ -7,8 +7,8 @@ import 'antd/es/icon/style';
 
 import commonUrl from '../../../config';
 import {CondolationObjectData, CondolationObjectChange} from '../../../redux/actions';
+import Topbar from "../../../components/topbar/topbar";
 
-import Topbar from "./topbar";
 import ConfirmFooterbar from "./confirmFooterbar";
 
 import './style/index.less';

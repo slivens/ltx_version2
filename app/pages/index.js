@@ -68,4 +68,5 @@ export {default as ZhwwRegister} from './consolation/zhww/register';
 export {default as Tsknhww} from './consolation/tsknhww';
 export {default as TsknhwwDetail} from './consolation/tsknhww/detail';
 export {default as TsknhwwRegister} from './consolation/tsknhww/register';
+export {default as TeacherPool} from './teacherPool';
 

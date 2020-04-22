@@ -9,7 +9,7 @@ import {
 
 import 'antd/es/icon/style';
 import 'antd/es/avatar/style';
-import EditTopbar from "../components/editTopbar";
+import EditTopbar from "../../../components/topbar/editTopbar";
 import commonUrl from '../../../config';
 import noAuth from '../../../util/noAuth';
 import {registerPath} from "./resources";
