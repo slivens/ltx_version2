@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-08-28 10:36:08
- * @LastEditTime: 2020-02-19 11:43:31
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-22 11:45:22
+ * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\index.js
  */
@@ -10,8 +10,6 @@ import React from 'react';
 import './less/index.less';
 import {withRouter} from 'react-router-dom';
 import NotFound from './components/NotFound';
-import ListView from './components/homeListView/listView';
-import ListView2 from './components/homeListView/listView2';
 import {
     Home, Login, Server,
     Message, My, Detail,

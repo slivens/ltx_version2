@@ -82,7 +82,7 @@ class index extends Component {
                                         item.member.map((memberitem,memberindex)=>
                                     <List.Item key={memberindex}>
                                         <Avatar size={48} icon="user" />
-                                        &nbsp;&nbsp;&nbsp;&nbsp;{memberitem.name}
+                                        <span style={{fontFamily:"宋体"}}>&nbsp;{memberitem.name}</span>
                             <a className="clickphone" href={`tel:${memberitem.tel}`}>
                                             <Icon type="phone" />
                                         </a>

@@ -1,61 +1,81 @@
 @import '../../../less/common.less';
-.ltx_home{
-    
+.ltx_home {
+
     height: 100%;
     background: #F8F8F8;
-    &_topBar{
-        &::before{
-            content:"";
+
+    &_topBar {
+
+        &::before {
+            content: "";
             display: inline-block;
             height: 100%;
             width: 0;
             vertical-align: middle;
         }
+
         .topBar;
         text-align:left;
-        position: relative;
-        .header_logo{
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 1000;
+
+        .header_logo {
             display: inline-block;
             position: relative;
-            margin:0 .1rem;
+            margin: 0 .1rem;
             bottom: .02rem;
-            img{
+
+            img {
                 width: .8rem;
             }
         }
-        .header_search{
-            position: absolute; 
-            left: 50%; 
+
+        .header_search {
+            position: absolute;
+            left: 50%;
             margin-left: -1rem;
-            display:inline-block;        
+            display: inline-block;
         }
     }
-    .am-tabs{
+        .listview-box{
+            height: calc(~"100% - .11rem");
+            overflow: auto;
+        }
+    .am-tabs {
         // height: calc(~"100% - 4.1rem - 9px");
-        height:auto;
+        height: auto;
         // .am-tabs-content-wrap-animated{
         //     transition: none;
         // }
     }
 }
-.ant-input:focus, .ant-input:hover {
+
+.ant-input:focus,
+.ant-input:hover {
     border-color: transparent;
     border-right-width: 0px !important;
 }
-.ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled){
-  border-color: transparent;
-  border-right-width: 0px !important;
+
+.ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled) {
+    border-color: transparent;
+    border-right-width: 0px !important;
 }
+
 .ant-input:focus {
-  outline: 0;
-  box-shadow: none;
+    outline: 0;
+    box-shadow: none;
 }
-.ant-input{
+
+.ant-input {
     border: 1px solid #db6e62;
     background: #db6e62;
     border-radius: 12px;
     height: .32rem;
-  }
-  .ant-input::-webkit-input-placeholder{
-      color: white;
-  }
+}
+
+.ant-input::-webkit-input-placeholder {
+    color: white;
+}

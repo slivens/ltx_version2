@@ -45,7 +45,7 @@ class zbactive extends Component {
         if (tab && tab.title === '我参与的') {
             obj.userId = this.props.userid;
         }
-        axios.post(`${commonUrl}/app/subAct/getActList.do`, obj)
+        axios.post(`${commonUrl}/app/subAct/getActPageList.do`, obj)
             .then(res => {
                 noAuth(res.data,()=>this.props.history.push('/login'))
                 if (res.data.code === "success") {

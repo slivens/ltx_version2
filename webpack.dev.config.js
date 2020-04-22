@@ -108,6 +108,7 @@ const config = {
         proxy: {
             "/api": {
                 target: "http://192.168.111.132:8080",
+                changeOrigin:true,
                 pathRewrite: {
                     "^/api": ""
                 }
