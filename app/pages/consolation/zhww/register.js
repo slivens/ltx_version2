@@ -48,7 +48,7 @@ class RegisterConn extends Component {
                         let detailData = res.data.data;
                         this.setState({
                             detailData: detailData,
-                            files: detailData.imagePicker
+                            files: detailData.imagePicker || []
                         });
                         Toast.hide();
                     } else {
@@ -439,7 +439,7 @@ class RegisterConn extends Component {
                                 <ImagePicker
                                     files={files}
                                     onChange={this.imagePickerChange}
-                                    selectable={files.length < 5}
+                                    selectable={ files.length < 5}
                                     multiple={true}
                                     length="1"
                                 />
