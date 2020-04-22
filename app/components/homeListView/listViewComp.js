@@ -1,18 +1,24 @@
+/*
+ * @Author: Sliven
+ * @Date: 2020-04-19 20:44:58
+ * @LastEditTime: 2020-04-22 11:38:51
+ * @LastEditors: Sliven
+ * @Description: In User Settings Edit
+ * @FilePath: \ltx\app\components\homeListView\listViewComp.js
+ */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { PullToRefresh, ListView, Button, Icon } from 'antd-mobile';
 import Axios from 'axios';
-import commonUrl from '../../config';
-import classnames from 'classnames';
 import Skeleton from 'antd/es/skeleton';
 import "antd/es/skeleton/style";
-import {withRouter} from 'react-router-dom';
-// import './style/index.less';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-const NUM_ROWS = 5; //显示条数
+
+const NUM_ROWS = 10; //显示条数
 let pageIndex = 1;  //页码
 let dataBlobs = []; //数据模型
-const skeletonCount=10
+const skeletonCount=10 //预显示骨架数
 
 class ListViewComp extends React.Component {
   constructor(props) {
@@ -27,9 +33,10 @@ class ListViewComp extends React.Component {
       refreshing: true,
       isLoading: true,
       height: document.documentElement.clientHeight,
-      useBodyScroll: true,
+      useBodyScroll: props.useBodyScroll,
       SkeletonLoading: false,
-      columnCode: props.columnCode
+      columnCode: props.columnCode,
+      fech_url: props.url
     };
   }
 
@@ -41,7 +48,9 @@ class ListViewComp extends React.Component {
       })
     }
   }
-
+  componentWillUnmount(){
+    dataBlobs=[]
+  }
   componentDidUpdate() {
     if (this.state.useBodyScroll) {
       document.body.style.overflow = 'auto';
@@ -52,8 +61,15 @@ class ListViewComp extends React.Component {
   renderDataBlobs = (data) => {
     dataBlobs = dataBlobs.concat(data)
   }
-  fetchData = (columnCode = "workNews", pIndex = 1) => {
-    Axios.post(`${commonUrl}/app/qryNewsPageListByCode.do`, { columnCode: columnCode, pageSize: NUM_ROWS, pageNumber: pIndex })
+  fetchData = (pIndex = 1) => {
+    const {columnCode} =this.state;
+    const { params } = this.props;
+    Axios.post(this.state.fech_url, {
+      ...params,
+      columnCode: columnCode||undefined,
+      pageSize: NUM_ROWS,
+      pageNumber: pIndex
+    })
       .then(res => {
         if (res.data.code === 'success') {
           this.renderDataBlobs(res.data.data.result)
@@ -69,14 +85,10 @@ class ListViewComp extends React.Component {
         }
       })
   }
-  componentWillUnmount(){
-    console.log('@@@@componentWillUnmount')
-    dataBlobs=[]
-  }
   componentDidMount() {
-    console.log('@@@@didmount')
-    const { columnCode } = this.state;
-    this.fetchData(columnCode);
+    const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
+    this.setState({ height: hei})
+    this.fetchData();
   }
   /**
    * @description: 下拉刷新函数，手势下拉，整体列表刷新。
@@ -84,14 +96,12 @@ class ListViewComp extends React.Component {
    * @return: 
    */
   onRefresh = () => {
-    console.log('@@@@onRefresh')
-    const { columnCode } = this.state;
     dataBlobs = []
     pageIndex = 1
     this.setState({ hasMore: true, refreshing: true });
     // simulate initial Ajax
     setTimeout(() => {
-      this.fetchData(columnCode);
+      this.fetchData();
     }, 600)
   };
   /**
@@ -100,50 +110,19 @@ class ListViewComp extends React.Component {
    * @return: 
    */
   onEndReached = (event) => {
-    console.log('@@@@onEndReached')
     this.setState({ isLoading: true });
     if (!this.state.hasMore) {
       return this.setState({ isLoading: false });
     }
-    const { columnCode } = this.state;
-    this.fetchData(columnCode, ++pageIndex)
+    this.fetchData(++pageIndex)
   };
-  godetail=(id)=>{
+  godetail = (id) => {
     this.props.history.push(`/detail/${id}`)
-}
+  }
   render() {
-    console.log('@@@this.state.dataSource',this.state.dataSource)
+    const { row } = this.props;
+    // const getRowCount = this.state.dataSource.getRowCount()||NUM_ROWS;
     const skeletonData = Array(skeletonCount).fill(< Skeleton active />)
-    const row = (item, sectionID, rowID) => {
-      return (
-        <div onClick={()=>this.godetail(item.id)} key={rowID} className="homeListView_item">
-          <div className={classnames("homeListView_item_right", item.imgPath ? "" : "noimg")}>
-            <div className="homeListView_item_right-top">
-              <div className="title">{item.title}</div>
-              {/*<div dangerouslySetInnerHTML={{__html:item.abstractInfo}} className="content"/>*/}
-            </div>
-            <div className="homeListView_item_right-bottom">
-              <span className="source">{item.source}</span>
-              <span className={"count"}>{item.publicDate}</span>
-              {/* <span className="date">2019-01-18</span> */}
-              {/* <span className="count">1002&nbsp;阅读</span> */}
-            </div>
-          </div>
-          {
-            item.imgPath &&
-            <div className="homeListView_item_pic">
-              <div style={{ height: "100%", width: "100%" }} className="pic">
-                <img onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = `${commonUrl}/app/getUploadImg.do?fn=default.jpg`
-                }}
-                  src={item.imgPath} />
-              </div>
-            </div>
-          }
-        </div>
-      );
-    };
     return (
       <div>
         {
@@ -159,7 +138,7 @@ class ListViewComp extends React.Component {
               useBodyScroll={this.state.useBodyScroll}
               style={this.state.useBodyScroll ? {} : {
                 height: this.state.height,
-                border: '1px solid #ddd',
+                // border: '1px solid #ddd',
                 margin: '5px 0',
               }}
               pullToRefresh={<PullToRefresh
@@ -175,7 +154,16 @@ class ListViewComp extends React.Component {
     );
   }
 }
-ListViewComp.propTypes={
-  
+ListViewComp.defaultProps = {
+  columnCode: '',
+  useBodyScroll:false
+};
+ListViewComp.propTypes = {
+  url: PropTypes.string.isRequired,
+  columnCode: PropTypes.string,
+  row: PropTypes.func.isRequired,
+  params: PropTypes.object.isRequired,
+  useBodyScroll:PropTypes.bool
+
 }
 export default withRouter(ListViewComp);

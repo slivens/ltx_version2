@@ -1,3 +1,10 @@
+/*
+ * @Author: Sliven
+ * @Date: 2020-03-27 14:58:08
+ * @LastEditors: Sliven
+ * @LastEditTime: 2020-04-21 10:02:50
+ * @Description: the code is written by Sliven
+ */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
@@ -47,11 +54,11 @@ class zbactive extends Component {
         if (tab && tab.title === '我参与的') {
             obj.userId = this.props.userid;
         }
-        axios.post(`${commonUrl}/app/subAct/getActList.do`, obj)
+        axios.post(`${commonUrl}/app/subAct/getActPageList.do`, obj)
             .then(res => {
                 noAuth(res.data,()=>this.props.history.push('/login'))
                 if (res.data.code === "success") {
-                    this.setState({items: res.data.data})
+                    this.setState({items: res.data.data.result})
                 } else {
 
                 }

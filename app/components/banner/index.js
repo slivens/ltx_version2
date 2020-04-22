@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-09-03 11:05:04
- * @LastEditTime: 2020-04-17 11:27:18
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-21 16:13:23
+ * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\components\banner\index.js
  */
@@ -57,7 +57,7 @@ class Banner extends React.Component {
             style={{ display: 'inline-block', width: '100%', height: "2.32rem" }}
           >
             <img
-              src={`${commonUrl}/${val.imgPath}`}
+              src={val.imgPath}
               alt=""
               style={{ width: '100%', verticalAlign: 'top', height: "100%" }}
               onLoad={() => {
