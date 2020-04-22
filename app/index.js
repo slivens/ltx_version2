@@ -108,8 +108,6 @@ const App = ({history, location}) => {
         'orderDetail':<OrderDetail/>,
         'member':<MemberSelect/>,
         'verify':<VerifyCode/>,
-        'listview':<ListView/>,
-        'listview2':<ListView2/>,
         'teacherPool':<TeacherPool/>
     };
     const {pathname} = location;
