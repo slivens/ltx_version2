@@ -30,6 +30,9 @@ class listView extends Component {
     };
 
     goDetail = (id) => {
+       // this.props.history.push(`/partyDetail/${id}`)
+        this.props.history.push(`/teacherPoolDetail`)
+
     };
 
     render() {
@@ -62,14 +65,14 @@ class listView extends Component {
 
                      </List>*/}
                     {this.state.items.map((item, index) => (
-                        <div onClick={() => this.godetail(item.id)} key={index} className={prefix + "_item"}>
+                        <div onClick={() => this.goDetail(item.id)} key={index} className={prefix + "_item"}>
                             <div className={prefix + "_item_avatar"}>
                                 <Avatar size={60} icon="user"/>
                             </div>
                             <div className={prefix + "_item_right"}>
                                 <div className={prefix + "_item_right_title"}>
                                     <span >{item.name}</span>
-                                    <Badge text={item.mark} />
+                                    <Badge text={item.mark} style={{backgroundColor: '#71a9fe'}}/>
                                     {/*<div dangerouslySetInnerHTML={{__html:item.abstractInfo}} className="content"/>*/}
                                 </div>
                                 <div

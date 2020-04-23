@@ -10,7 +10,7 @@ export const consolationMenuData = [
         mark:"社会经济",
     },
     {
-        name: "黄  端",
+        name: "黄端",
         des:"中共福建省委党校，科社与政治学教研部教师，国际政专业博士，福建省稀缺专业引进人才。",
         mark:"思想政治",
     },

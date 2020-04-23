@@ -25,18 +25,19 @@ import {
     Tbkt, MesgsDetail,
     Hdzx, Search,
     Allmember, HomeServer,
-    PushActivity,JinTaiYang,
-    Yuyue,EditAdress,
-    Myorder,OrderDetail,
-    MemberSelect,VerifyCode,
+    PushActivity, JinTaiYang,
+    Yuyue, EditAdress,
+    Myorder, OrderDetail,
+    MemberSelect, VerifyCode,
     Ldyzj, Lgbdx,   //belong to :美玉
-    PartyDetail,PartyMember,
+    PartyDetail, PartyMember,
     Consolation,
     Zyww, ZywwDetail, ZywwRegister,
     Zdjjrww, ZdjjrwwDetail, ZdjjrwwRegister,
-    Zhww,ZhwwDetail,ZhwwRegister,
-    Tsknhww,TsknhwwDetail,TsknhwwRegister,
-    TeacherPool
+    Zhww, ZhwwDetail, ZhwwRegister,
+    Tsknhww, TsknhwwDetail, TsknhwwRegister,
+    TeacherPool, TeacherPoolDetail,
+    MessageNotice
 } from './pages';
 const App = ({history, location}) => {
     const router = {
@@ -101,14 +102,16 @@ const App = ({history, location}) => {
         'tsknhww': <Tsknhww/>,
         'tsknhwwDetail': <TsknhwwDetail/>,
         'tsknhwwRegister': <TsknhwwRegister/>,
-        'homeServerCompany':<JinTaiYang/>,
-        'yuyue':<Yuyue/>,
-        'editAdress':<EditAdress/>,
-        'myorder':<Myorder/>,
-        'orderDetail':<OrderDetail/>,
-        'member':<MemberSelect/>,
-        'verify':<VerifyCode/>,
-        'teacherPool':<TeacherPool/>
+        'homeServerCompany': <JinTaiYang/>,
+        'yuyue': <Yuyue/>,
+        'editAdress': <EditAdress/>,
+        'myorder': <Myorder/>,
+        'orderDetail': <OrderDetail/>,
+        'member': <MemberSelect/>,
+        'verify': <VerifyCode/>,
+        'teacherPool': <TeacherPool/>,
+        'messageNotice': <MessageNotice/>,
+        'teacherPoolDetail': <TeacherPoolDetail/>
     };
     const {pathname} = location;
     const path = pathname.split('/')[1];
