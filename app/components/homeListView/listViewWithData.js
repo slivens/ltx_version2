@@ -27,8 +27,6 @@ class ListViewComp extends React.Component {
             height: document.documentElement.clientHeight,
             useBodyScroll: props.useBodyScroll,
             SkeletonLoading: false,
-            columnCode: props.columnCode,
-            fech_url: props.url
         };
     }
 
@@ -143,15 +141,10 @@ class ListViewComp extends React.Component {
     }
 }
 ListViewComp.defaultProps = {
-    columnCode: '',
     useBodyScroll: true
 };
-/*ListViewComp.propTypes = {
- url: PropTypes.string.isRequired,
- columnCode: PropTypes.string,
- row: PropTypes.func.isRequired,
- params: PropTypes.object.isRequired,
- useBodyScroll: PropTypes.bool
-
- }*/
+ListViewComp.propTypes = {
+    row: PropTypes.func.isRequired,
+    useBodyScroll: PropTypes.bool
+};
 export default withRouter(ListViewComp);
