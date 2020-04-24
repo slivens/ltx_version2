@@ -133,8 +133,9 @@ class MessageNotice extends Component {
         )
     };
     goBack = () => {
-        localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
-        this.props.history.goBack()
+        const {history, location} = this.props;
+       // localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
+        history.push({pathname: "/mesgsDetail", params: location.params})
     };
 
     render() {

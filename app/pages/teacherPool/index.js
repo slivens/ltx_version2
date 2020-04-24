@@ -18,6 +18,7 @@ import ListView from '../../components/homeListView/listViewWithData';
 import {consolationMenuData} from './components/data';
 import './style/index.less';
 import {prefix, listPrefix} from "./prefix";
+import {formatName} from "./utils";
 
 class TeacherPoolIndex extends Component {
     constructor(props) {
@@ -53,7 +54,7 @@ class TeacherPoolIndex extends Component {
                 </div>
                 <div className={listPrefix + "_item_right"}>
                     <div className={listPrefix + "_item_right_title"}>
-                        <div >{this.formatName(item.name)}</div>
+                        <div >{formatName(item.name)}</div>
                         <Badge text={item.mark} style={{backgroundColor: '#71a9fe'}}/>
                         {/*<div dangerouslySetInnerHTML={{__html:item.abstractInfo}} className="content"/>*/}
                     </div>
@@ -66,13 +67,6 @@ class TeacherPoolIndex extends Component {
         )
     };
 
-    formatName = (name) => {
-        if (name.length === 2) {
-            return name.slice(0, 1) + '\xa0\xa0\xa0\xa0' + name.slice(1)
-            //+ '\x0b\v'\x09\xa0\t
-        }
-        return name;
-    };
 
     goDetail = (id) => {
         // this.props.history.push(`/partyDetail/${id}`)

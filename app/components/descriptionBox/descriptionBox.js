@@ -14,7 +14,7 @@ class DescriptionBox extends Component {
                         <span className="border-left"/>&nbsp;&nbsp;<span className="title">{title}</span>
                     </div>
                 </div>
-                <div className={prefix + "_content"}>
+                <div>
                     {children}
                 </div>
             </div>

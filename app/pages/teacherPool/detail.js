@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {withRouter, Link} from 'react-router-dom';
 import Icon from 'antd/es/icon';
+import Avatar from 'antd/es/avatar';
+import 'antd/es/avatar/style';
 import 'antd/es/icon/style';
 import './style/index.less';
-import {Button, WhiteSpace, Flex, Toast, List} from 'antd-mobile';
+import {Button, WhiteSpace, Flex, Toast, List, Badge} from 'antd-mobile';
 import axios from 'axios';
 import commonUrl from '../../config';
 import {connect} from 'react-redux';
@@ -14,6 +16,7 @@ import {detail} from './components/data';
 import TurnFooterbar from './components/turnfooterbar';
 /*import {detail, attachMentList} from './components/data';*/
 import {prefix} from "./prefix";
+import {formatName} from "./utils";
 const test = "http://127.0.0.1:8088";
 
 
@@ -55,7 +58,24 @@ class MessageNotice extends Component {
         return (
             <div className={prefix}>
                 <Topbar title="师资详情" onClick={() => this.props.history.goBack()}/>
-                正在开发中
+                <div className={prefix + "_detail_title_container"}>
+                    <div className={prefix + "_detail_title_avatar"}>
+                        <Avatar size={60} icon="user"/>
+                    </div>
+                    <div className={prefix + "_detail_title_right"}>
+                        <div className={prefix + "_detail_title_right_content"}>
+                            <div className="title">{formatName(detail.name)}</div>
+                            <Badge text={detail.mark}
+                                   style={{
+                                       backgroundColor: '#71a9fe',
+                                       height: '.26rem',
+                                       lineHeight: '.26rem'
+                                   }}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <WhiteSpace />
                 <DescriptionBox title={"教师简介"}>
                     <div className={prefix + "_detail_intro"}>
                         {detail.des}
@@ -63,7 +83,16 @@ class MessageNotice extends Component {
                 </DescriptionBox>
                 <WhiteSpace />
                 <DescriptionBox title={"主讲课题"}>
-                    {detail.des}
+                    <div className={prefix + "_detail_course_container"}>
+                        {
+                            detail.courses.map((item, index) => (
+                                <div className={prefix + "_detail_course_content"}>
+                                    <span className={prefix + "_detail_dot"}/>
+                                    {item.name}
+                                </div>
+                            ))
+                        }
+                    </div>
                 </DescriptionBox>
                 {/* <div className={prefix + "_content"}>
                  <div className={prefix + "_box"}>

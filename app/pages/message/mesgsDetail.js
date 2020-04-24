@@ -129,6 +129,10 @@ class mesgsDetail extends Component {
         )
     };
 
+    goMessage = () => {
+        this.props.history.push('/message');
+    };
+
     render() {
         const {location} = this.props;
         const {isLoading, mesgsList} = this.state;
@@ -142,7 +146,7 @@ class mesgsDetail extends Component {
         }
         return (
             <div className="mesgDetail">
-                <Topbar title={mesTitle} onClick={() => this.props.history.goBack()}/>
+                <Topbar title={mesTitle} onClick={this.goMessage}/>
                 <div className="mesg-detail-list-box">
                     <ListView
                         data={mesgsList}
