@@ -16,7 +16,6 @@ class TurnFooterbar extends Component {
 
     componentWillMount() {
         //window.addEventListener('touchmove', func, { passive: false })
-        console.log(this.props.msgList)
         this.setState({
             msgList: this.props.msgList,
             msgId: this.props.msgId,
@@ -35,28 +34,28 @@ class TurnFooterbar extends Component {
 
     previousPage = () => {
         const {msgList, msgId, msgType} = this.state;
-        const {history} = this.props;
+        const {history,location} = this.props;
         for (let index = 0; index < msgList.length; index++) {
             let fomatParams = JSON.parse(msgList[index].params);
             if (fomatParams.id === msgId) {
-                let turnItem = index == 0 ? msgList[msgList.length - 1] : msgList[index - 1];
+                let turnItem = index === 0 ? msgList[msgList.length - 1] : msgList[index - 1];
                 let turnParams = JSON.parse(turnItem.params);
-                this.props.fetchData(turnParams.id, msgType)
-                history.replace({pathname: `/messageNotice/${turnParams.id}/${msgType}`})
+                this.props.fetchData(turnParams.id, msgType);
+                history.replace({pathname: `/messageNotice/${turnParams.id}/${msgType}`, params: location.params || {}})
             }
         }
     };
 
     nextPage = () => {
         const {msgList, msgId, msgType} = this.state;
-        const {history} = this.props;
+        const {history, location} = this.props;
         for (let index = 0; index < msgList.length; index++) {
             let fomatParams = JSON.parse(msgList[index].params);
             if (fomatParams.id === msgId) {
-                let turnItem = index === msgList.length - 1?msgList[0]:msgList[index + 1];
+                let turnItem = index === msgList.length - 1 ? msgList[0] : msgList[index + 1];
                 let turnParams = JSON.parse(turnItem.params);
                 this.props.fetchData(turnParams.id, msgType);
-                history.replace({pathname: `/messageNotice/${turnParams.id}/${msgType}`})
+                history.replace({pathname: `/messageNotice/${turnParams.id}/${msgType}`, params: location.params || {}})
             }
         }
     };

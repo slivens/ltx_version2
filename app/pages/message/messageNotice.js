@@ -21,7 +21,6 @@ const prefix = "mesNotice";
 const NUM_ROWS = 0x7fffffff;
 const pIndex = 1;
 
-
 class MessageNotice extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +29,8 @@ class MessageNotice extends Component {
             errorMessage: undefined,
             msgList: undefined,
             msgId: undefined,
-            msgType: undefined
+            msgType: undefined,
+            clicked1: 'none',
         };
     }
 
@@ -43,7 +43,7 @@ class MessageNotice extends Component {
     }
 
     fetchData = (msgId, msgType) => {
-        axios.post(`${test}/app/msg/qryAppMsgDetail.do`, {msgId: msgId, msgType: msgType})
+        axios.post(`${commonUrl}/app/msg/qryAppMsgDetail.do`, {msgId: msgId, msgType: msgType})
             .then(res => {
                 noAuth(res.data, () => this.props.history.push('/login'));
                 if (res.data.code === "success") {
@@ -58,7 +58,7 @@ class MessageNotice extends Component {
         const {pathname} = this.props.location;
         const msgType = pathname.split('/')[3];
         let requestParams = {pageNumber: pIndex, pageSize: NUM_ROWS, msgType: msgType};
-        axios.post(`${test}/app/msg/qryMsgRecordPageList.do`, requestParams)
+        axios.post(`${commonUrl}/app/msg/qryMsgRecordPageList.do`, requestParams)
             .then(res => {
                 noAuth(res.data, () => history.push('/login'));
                 if (res.data.code === 'success') {
@@ -67,54 +67,74 @@ class MessageNotice extends Component {
             })
     };
 
+
     downloadFile = (event, item) => {
-        /* let aLink = document.createElement('a');
-         let blob = new Blob([item.attachmentUrl]);
-         let evt = document.createEvent("HTMLEvents");
-         evt.initEvent("click", false, false);//initEvent 不加后两个参数在FF下会报错, 感谢 Barret Lee 的反馈
-         aLink.download = item.attachmentName;
-         aLink.href = URL.createObjectURL(blob);
-         aLink.dispatchEvent(evt);*/
-        event.preventDefault();
-        event.stopPropagation();
-        //开启loading 按钮置灰
-        this.setState({
-            loadingStatus: false,
-            buttonDisabled: true,
-        });
-        axios.post(item.attachmentUrl)
-            .then(res => {
+        /* */
+        let u = navigator.userAgent;
+        let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isAndroid) {
+            let src = item.attachmentUrl;
+            let iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = "javascript: '<script>location.href=\"" + src + "\"<\/script>'";
+            document.getElementsByTagName('body')[0].appendChild(iframe);
+        } else if(isiOS){
+            let filename =item.attachmentName;
+            let filepath =item.attachmentUrl;
+            if (window.plus) {//支持plus
 
-                res.blob().then(blob => {
-                    //关闭loading 按钮恢复正常
-                    let blobUrl = window.URL.createObjectURL(blob);
-                    const filename = times.formatNowDate() + '.zip';
-                    const aElement = document.createElement('a');
-                    document.body.appendChild(aElement);
-                    aElement.style.display = 'none';
-                    aElement.href = blobUrl;
-                    aElement.download = filename;
-                    aElement.click();
-                    document.body.removeChild(aElement);
-                });
-            })
-        /* fetch(, {
-         method: 'get',
-         credentials: 'include',
-         headers: new Headers({
-         'Content-Type': 'application/json',
-         'X-Auth-Token': User.getToken(),
-         }),
-         }).then((response) => {
-
-         }).catch((error) => {
-         //关闭loading 按钮恢复正常
-         this.setState({
-         loadingStatus: false,
-         buttonDisabled: false,
-         });
-         console.log('文件下载失败', error);
-         });*/
+                //判断文件是否已经下载
+                plus.io.resolveLocalFileSystemURL(
+                    '_downloads/' + filename,
+                    function (entry) {//如果已存在文件，则打开文件
+                        if (entry.isFile) {
+                            Toast.success("正在打开文件...");
+                            plus.runtime.openFile('_downloads/' + filename);
+                        }
+                    }, function () {//如果未下载文件，则下载后打开文件
+                        var dtask = plus.downloader.createDownload(filepath, { filename: '_downloads/' + filename }, function (d, status) {
+                            if (status == 200) {
+                                plus.runtime.openFile('_downloads/' + filename);
+                            }
+                            else {
+                                Toast.error("下载失败: " + status);
+                            }
+                        });
+                        dtask.addEventListener("statechanged", function (task, status) {
+                            if (!dtask) { return; }
+                            switch (task.state) {
+                                case 1:
+                                    Toast.success("开始下载...");
+                                    break;
+                                case 2:
+                                    Toast.success("正在下载...");
+                                    break;
+                                case 3: // 已接收到数据
+                                    var progressVal = (task.downloadedSize / task.totalSize) * 100;
+                                    //psb1.progressbar({ progress: progressVal }).show();
+                                    //dstatus[0].innerHTML = task.downloadedSize + '/' + task.totalSize;
+                                    //hui.toast('下载进度：' + (task.downloadedSize + '/' + task.totalSize));
+                                  /*  if (hui('.progress').length > 0) {
+                                        hui('.progress').html(parseInt(progressVal) + '%');
+                                    }
+                                    break;*/
+                                case 4:
+                                    dtask = null;
+                                    /*if (hui('.progress').length > 0) {
+                                        hui('.progress').html('0%');
+                                    }*/
+                                    Toast.success("正在打开文件...");
+                                    break;
+                            }
+                        });
+                        dtask.start();
+                    }
+                );
+            } else {//不支持plus
+                window.open(filepath);
+            }
+        }
     };
 
     desContent = (attachMentList) => {
@@ -132,9 +152,11 @@ class MessageNotice extends Component {
             </List>
         )
     };
+
     goBack = () => {
-        localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
-        this.props.history.goBack()
+        const {history, location} = this.props;
+        // localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
+        history.push({pathname: "/mesgsDetail", params: location.params})
     };
 
     render() {
@@ -193,10 +215,20 @@ class MessageNotice extends Component {
         );
     }
 }
-const mapStateToProps = (state, ownProps) => ({
-    userId: state.userinfo.id
-});
-const mapdispatchToProps = (dispatch, ownProps) => {
-    return {}
-};
-export default connect(mapStateToProps, mapdispatchToProps)(withRouter(MessageNotice));
+const
+    mapStateToProps = (state, ownProps) => ({
+        userId: state.userinfo.id
+    });
+const
+    mapdispatchToProps = (dispatch, ownProps) => {
+        return {}
+    };
+export
+default
+
+connect(mapStateToProps, mapdispatchToProps)
+
+(
+    withRouter(MessageNotice)
+)
+;
