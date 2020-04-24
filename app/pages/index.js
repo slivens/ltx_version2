@@ -55,10 +55,12 @@ export {default as GgwView} from './ggw/ggwView';
 
 
 //Belong to ：美玉
+/*老党员之家、老干部党校*/
 export {default as Ldyzj} from './mybranch/ldyzj';
 export {default as Lgbdx} from './mybranch/lgbdx';
 export {default as PartyDetail} from './mybranch/partyDetail';
 export {default as PartyMember} from './mybranch/partyDetail/allmember';
+/*慰问管理*/
 export {default as Consolation} from './consolation'
 export {default as Zyww} from './consolation/zyww';
 export {default as ZywwDetail} from './consolation/zyww/detail';
@@ -72,4 +74,11 @@ export {default as ZhwwRegister} from './consolation/zhww/register';
 export {default as Tsknhww} from './consolation/tsknhww';
 export {default as TsknhwwDetail} from './consolation/tsknhww/detail';
 export {default as TsknhwwRegister} from './consolation/tsknhww/register';
+/*师资库*/
+export {default as TeacherPool} from './teacherPool';
+export {default as TeacherPoolDetail} from './teacherPool/detail';
+/*消息公告*/
+export {default as MessageNotice} from './message/messageNotice';
+
+
 

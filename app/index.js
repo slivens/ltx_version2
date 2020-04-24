@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-08-28 10:36:08
- * @LastEditTime: 2020-04-23 14:55:07
+ * @LastEditTime: 2020-04-24 12:13:08
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\index.js
@@ -32,12 +32,14 @@ import {
     Secret,Ggw,
     GgwView,
     Ldyzj, Lgbdx,   //belong to :美玉
-    PartyDetail,PartyMember,
+    PartyDetail, PartyMember,
     Consolation,
     Zyww, ZywwDetail, ZywwRegister,
     Zdjjrww, ZdjjrwwDetail, ZdjjrwwRegister,
-    Zhww,ZhwwDetail,ZhwwRegister,
-    Tsknhww,TsknhwwDetail,TsknhwwRegister
+    Zhww, ZhwwDetail, ZhwwRegister,
+    Tsknhww, TsknhwwDetail, TsknhwwRegister,
+    TeacherPool, TeacherPoolDetail,
+    MessageNotice
 } from './pages';
 const App = ({history, location}) => {
     const router = {
@@ -111,7 +113,10 @@ const App = ({history, location}) => {
         'verify':<VerifyCode/>,
         'secret':<Secret/>,
         'ggw':<Ggw/>,
-        'ggwView':<GgwView/>
+        'ggwView':<GgwView/>,
+        'teacherPool': <TeacherPool/>,
+        'messageNotice': <MessageNotice/>,
+        'teacherPoolDetail': <TeacherPoolDetail/>
     };
     const {pathname} = location;
     const path = pathname.split('/')[1];

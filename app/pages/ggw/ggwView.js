@@ -2,7 +2,7 @@
  * @Author: Sliven
  * @Date: 2020-04-23 14:48:51
  * @LastEditors: Sliven
- * @LastEditTime: 2020-04-24 11:29:13
+ * @LastEditTime: 2020-04-24 13:16:41
  * @Description: the code is written by Sliven
  */
 import React, { Component } from 'react'
@@ -23,8 +23,11 @@ class ggwView extends Component {
         tabsArr: []
     }
     tabsOnchange = (tab, index) => {
-        this.setState({ nowtabs: tab });
-        localStorage.setItem("ggwTab", JSON.stringify(tab));
+        console.log('@@@@@@@@@@this.childListView.allFetch',this.childListView.allFetch)
+        if(this.childListView.allFetch){
+            this.setState({ nowtabs: tab });
+            localStorage.setItem("ggwTab", JSON.stringify(tab));
+        }
     }
     renderTabs = (arr) => {
         return arr.map(item => ({
@@ -124,6 +127,7 @@ class ggwView extends Component {
                         {
                             this.state.nowtabs.key &&
                             <ListView
+                                onRef={(ref)=>this.childListView=ref}
                                 params={listViewParams}
                                 url={`${commonUrl}/app/qryNewsPageListByCode.do`}
                                 columnCode={this.state.nowtabs.key}

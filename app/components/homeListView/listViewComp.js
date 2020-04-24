@@ -1,7 +1,7 @@
 /*
  * @Author: Sliven
  * @Date: 2020-04-19 20:44:58
- * @LastEditTime: 2020-04-24 11:10:36
+ * @LastEditTime: 2020-04-24 12:31:57
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\components\homeListView\listViewComp.js
@@ -26,7 +26,7 @@ class ListViewComp extends React.Component {
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
-
+  this.allFetch=false;
     this.state = {
       hasMore: true,
       dataSource,
@@ -82,11 +82,14 @@ class ListViewComp extends React.Component {
             refreshing: false,
             isLoading: false,
             SkeletonLoading: false,
-          });
+          },()=>{this.allFetch=true});
         }
       })
   }
   componentDidMount() {
+    if(this.props.onRef){
+      this.props.onRef(this);
+    }
     const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
     this.setState({ height: hei})
     this.fetchData();

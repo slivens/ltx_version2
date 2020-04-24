@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Flex} from 'antd-mobile';
+import classnames from 'classnames';
+import {Flex, TextareaItem, List, Badge} from 'antd-mobile';
+import Avatar from 'antd/es/avatar';
 import Empty from 'antd/es/empty';
+import 'antd/es/avatar/style';
 import "antd/es/empty/style";
-import Icon from '../../../components/icon';
+
 
 import './style/index.less';
-const prefix = "zyListView";
+const prefix = "teacherPoolListView";
 
 class listView extends Component {
     constructor(props) {
@@ -27,8 +30,9 @@ class listView extends Component {
     };
 
     goDetail = (id) => {
-        const {detailPath} = this.props;
-        this.props.history.push(`/${detailPath}/${id}`);
+       // this.props.history.push(`/partyDetail/${id}`)
+        this.props.history.push(`/teacherPoolDetail`)
+
     };
 
     render() {
@@ -49,22 +53,32 @@ class listView extends Component {
                         </p>
                     }
                 >
+                    {/*  <List className="my-list">
+                     {
+                     this.state.items.map((item, index) =>
+                     <List.Item key={index}>
+                     <Avatar size={48} icon="user"/>
+                     &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
+                     <TextareaItem value={item.des}/>
+                     </List.Item>
+                     )}
+
+                     </List>*/}
                     {this.state.items.map((item, index) => (
                         <div onClick={() => this.goDetail(item.id)} key={index} className={prefix + "_item"}>
-                            <div className={prefix + "_item_top"}>
-                                <div className={prefix + "_item_top_title"}>
-                                    <Icon
-                                        className="footer_icon"
-                                        style={{color: "#71A9FE", fontSize: ".2rem", marginRight: ".05rem",}}
-                                        type="wode"/>
-                                    <span>{item.name}</span>
-                                </div>
+                            <div className={prefix + "_item_avatar"}>
+                                <Avatar size={60} icon="user"/>
                             </div>
-                            <div className={prefix + "_item_bottom"}>
-                                <Flex>
-                                    <Flex.Item>慰问单位：{item.condolencesUnit}</Flex.Item>
-                                    <Flex.Item>慰问时间：{item.condolencesTime}</Flex.Item>
-                                </Flex>
+                            <div className={prefix + "_item_right"}>
+                                <div className={prefix + "_item_right_title"}>
+                                    <span >{item.name}</span>
+                                    <Badge text={item.mark} style={{backgroundColor: '#71a9fe'}}/>
+                                    {/*<div dangerouslySetInnerHTML={{__html:item.abstractInfo}} className="content"/>*/}
+                                </div>
+                                <div
+                                    className={prefix + "_item_right_des"}>{/*className="homeListView_item_right-bottom"*/}
+                                    {item.des}
+                                </div>
                             </div>
                         </div>
                     ))}

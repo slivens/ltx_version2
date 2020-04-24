@@ -7,10 +7,10 @@ import {SearchBar, Toast} from 'antd-mobile';
 import commonUrl from '../../../config';
 import {ConsolationRegister} from "../../../redux/actions";
 import noAuth from '../../../util/noAuth';
+import Topbar from "../../../components/topbar/topbar";
 
 import {condolencesType} from "./resources";
 import ListView from "../components/listView";
-import Topbar from "../components/topbar";
 import AddFooterBar from "../components/addFooterbar";
 import {registerPath, detailPath} from "./resources";
 import '../style/consolation.less';

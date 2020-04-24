@@ -14,6 +14,7 @@ import 'antd/es/icon/style';
 import PartyTab from '../components/partyTab';
 import PartyList from '../components/partyList';
 import commonUrl from '../../../config/index';
+import Topbar from "../../../components/topbar/topbar";
 import './style/index.less';
 import noAuth from '../../../util/noAuth';
 
@@ -68,21 +69,7 @@ class zbactive extends Component {
     render() {
         return (
             <div className={prefix}>
-                <div className={prefix + "_topbar"}>
-                    <Icon
-                        onClick={() => this.props.history.goBack()}
-                        style={{
-                            position: "absolute",
-                            left: ".1rem",
-                            top: "50%",
-                            color: "#F7F8F4",
-                            fontSize: ".24rem",
-                            transform: "translateY(-50%)"
-                        }}
-                        type="left"
-                    />
-                    老党员之家
-                </div>
+                <Topbar title="老党员之家" onClick={() => this.props.history.goBack()}/>
                 <div className={prefix + "-box"}>
                     <PartyTab tabonChange={this.tabonChange} tabs={tabs}/>
                     <div style={{height: ".2rem"}}/>

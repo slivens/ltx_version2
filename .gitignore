@@ -3,3 +3,4 @@ dist/
 npm-debug.log
 .idea/
 .vsCode/
+/.idea/workspace.xml

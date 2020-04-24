@@ -38,6 +38,7 @@
 1. 进入webpack.dev.config.js将output.publicPath="./" (发布完要改回"/"，不然资源文件访问不到)
 2. 进入config文件修改commonUrl = 'http://192.168.111.132:8080'(打包后修改为commonUrl = '/api';)
 3. 根目录下执行 npm run hb
+
 ****列表ListView组件****
 ```
 1.import ListView from "{相对路径}/component/homeListView/listViewComp" //引入方式

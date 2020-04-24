@@ -6,7 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\pages\message\list.js
  */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Avatar from 'antd/es/avatar';
 import 'antd/es/avatar/style';
 import Row from 'antd/es/row';
@@ -15,7 +15,7 @@ import 'antd/es/col/style';
 import 'antd/es/row/style';
 import {Badge} from 'antd-mobile';
 import {withRouter} from 'react-router-dom';
-const List = ({ children }) => {
+const List = ({children}) => {
     return (
         <div className="mesg_list">
             {children}
@@ -23,19 +23,27 @@ const List = ({ children }) => {
     )
 }
 
-const Item = withRouter(({history,id, title, avatar, date, content, newMsgNum,createTime,params }) => {
+const Item = withRouter(({history, id, title, avatar, date, content, newMsgNum, createTime, params}) => {
+    const goMessageDetail = () => {
+        localStorage.setItem("messageNotice", JSON.stringify({title, id, params}));
+        history.push({pathname: "mesgsDetail", params: {title, id, params}})
+    };
     return (
-        <div className="mesg_item" onClick={()=>history.push({pathname:"mesgsDetail",params:{title,id,params}})}>
-            <Row style={{height:"100%"}} type="flex" align="middle">
-                <Col span={4}>&nbsp;&nbsp;<Avatar icon="user" /></Col>
-                <Col span={14}><div className="mesg_item_content">
-                    <span className="title">{title}</span>
-                    <div className="content">{content}</div>
-                </div></Col>
-                <Col span={6}><div className="mesg_item_right">
-                    <div className="date">{date}</div>
-                    <div className="count"><Badge text={newMsgNum} hot/></div>
-                </div></Col>
+        <div className="mesg_item" onClick={() =>goMessageDetail()}>
+            <Row style={{height: "100%"}} type="flex" align="middle">
+                <Col span={4}>&nbsp;&nbsp;<Avatar icon="user"/></Col>
+                <Col span={14}>
+                    <div className="mesg_item_content">
+                        <span className="title">{title}</span>
+                        <div className="content">{content}</div>
+                    </div>
+                </Col>
+                <Col span={6}>
+                    <div className="mesg_item_right">
+                        <div className="date">{date}</div>
+                        <div className="count"><Badge text={newMsgNum} hot/></div>
+                    </div>
+                </Col>
             </Row>
         </div>
     )

@@ -174,6 +174,10 @@ class index extends Component {
             return "88%"
         }
     }
+    goBack = () => {
+        localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
+        this.props.history.goBack()
+    };
     render() {
         const {detail,memberStatus}=this.state;
         const {pathname} = this.props.location;
@@ -183,7 +187,7 @@ class index extends Component {
             <div className="zbdetail">
                 <div className="zbdetail_topbar">
                     <Icon
-                        onClick={() => this.props.history.goBack()}
+                        onClick={this.goBack}
                         style={{
                             position: "absolute",
                             left: ".1rem",

@@ -15,6 +15,7 @@ import './style/index.less';
 import List from './list';
 import axios from 'axios';
 import commonUrl from '../../config';
+import Topbar from '../../components/topbar/topbar';
 import {connect} from 'react-redux';
 import noAuth from '../../util/noAuth';
 const data=[
@@ -53,32 +54,22 @@ class index extends Component {
     render() {
         return (
             <div className="mesg">
-                <div className="mesg_topbar">
-                    <span>消息</span>
-                    <Icon style={{
-                        position:"absolute",
-                        right:".1rem",
-                        top:"50%",
-                        color:"#F7F8F4",
-                        fontSize:".24rem",
-                        transform: "translateY(-50%)"
-                    }} 
-                    type="search"
-                    />
-                </div>
+                <Topbar title="消息" onClick={() => this.props.history.goBack()}/>
                 {/* <div className="mesg_select">
                 <SegmentedControl
                     values={['消息', '联系人']}
                     tintColor={'#ff0000'} 
                 />
                 </div> */}
-                <List>
-                    {
-                        this.state.mesgs.map(
-                            (item,key)=><List.Item key={key} {...item}/>
+                <div className="mesg-list-box">
+                    <List>
+                        {
+                            this.state.mesgs.map(
+                                (item,key)=><List.Item key={key} {...item}/>
                             )
-                    }
-                </List>
+                        }
+                    </List>
+                </div>
                 <FooterBar />
             </div>
         );
