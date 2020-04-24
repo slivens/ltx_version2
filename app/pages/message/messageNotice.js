@@ -21,7 +21,6 @@ const prefix = "mesNotice";
 const NUM_ROWS = 0x7fffffff;
 const pIndex = 1;
 
-
 class MessageNotice extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +29,8 @@ class MessageNotice extends Component {
             errorMessage: undefined,
             msgList: undefined,
             msgId: undefined,
-            msgType: undefined
+            msgType: undefined,
+            clicked1: 'none',
         };
     }
 
@@ -69,21 +69,72 @@ class MessageNotice extends Component {
 
 
     downloadFile = (event, item) => {
-        event.preventDefault();
-        event.stopPropagation();
-        axios.get(item.attachmentUrl, {responseType: "blob"})
-            .then(res => {
-                let blob = new Blob([res.data]);
-                let blobUrl = window.URL.createObjectURL(blob);
-                const aElement = document.createElement('a');
-                document.body.appendChild(aElement);
-                aElement.style.display = 'none';
-                aElement.href = blobUrl;
-                aElement.download = item.attachmentName;
-                aElement.click();
-                window.URL.revokeObjectURL(aElement.href);
-                document.body.removeChild(aElement);
-            })
+        /* */
+        let u = navigator.userAgent;
+        let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isAndroid) {
+            let src = item.attachmentUrl;
+            let iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = "javascript: '<script>location.href=\"" + src + "\"<\/script>'";
+            document.getElementsByTagName('body')[0].appendChild(iframe);
+        } else if(isiOS){
+            let filename =item.attachmentName;
+            let filepath =item.attachmentUrl;
+            if (window.plus) {//支持plus
+
+                //判断文件是否已经下载
+                plus.io.resolveLocalFileSystemURL(
+                    '_downloads/' + filename,
+                    function (entry) {//如果已存在文件，则打开文件
+                        if (entry.isFile) {
+                            Toast.success("正在打开文件...");
+                            plus.runtime.openFile('_downloads/' + filename);
+                        }
+                    }, function () {//如果未下载文件，则下载后打开文件
+                        var dtask = plus.downloader.createDownload(filepath, { filename: '_downloads/' + filename }, function (d, status) {
+                            if (status == 200) {
+                                plus.runtime.openFile('_downloads/' + filename);
+                            }
+                            else {
+                                Toast.error("下载失败: " + status);
+                            }
+                        });
+                        dtask.addEventListener("statechanged", function (task, status) {
+                            if (!dtask) { return; }
+                            switch (task.state) {
+                                case 1:
+                                    Toast.success("开始下载...");
+                                    break;
+                                case 2:
+                                    Toast.success("正在下载...");
+                                    break;
+                                case 3: // 已接收到数据
+                                    var progressVal = (task.downloadedSize / task.totalSize) * 100;
+                                    //psb1.progressbar({ progress: progressVal }).show();
+                                    //dstatus[0].innerHTML = task.downloadedSize + '/' + task.totalSize;
+                                    //hui.toast('下载进度：' + (task.downloadedSize + '/' + task.totalSize));
+                                  /*  if (hui('.progress').length > 0) {
+                                        hui('.progress').html(parseInt(progressVal) + '%');
+                                    }
+                                    break;*/
+                                case 4:
+                                    dtask = null;
+                                    /*if (hui('.progress').length > 0) {
+                                        hui('.progress').html('0%');
+                                    }*/
+                                    Toast.success("正在打开文件...");
+                                    break;
+                            }
+                        });
+                        dtask.start();
+                    }
+                );
+            } else {//不支持plus
+                window.open(filepath);
+            }
+        }
     };
 
     desContent = (attachMentList) => {
@@ -101,6 +152,7 @@ class MessageNotice extends Component {
             </List>
         )
     };
+
     goBack = () => {
         const {history, location} = this.props;
         // localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
