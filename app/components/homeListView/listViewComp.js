@@ -1,7 +1,7 @@
 /*
  * @Author: Sliven
  * @Date: 2020-04-19 20:44:58
- * @LastEditTime: 2020-04-22 11:38:51
+ * @LastEditTime: 2020-04-24 11:10:36
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\components\homeListView\listViewComp.js
@@ -43,6 +43,7 @@ class ListViewComp extends React.Component {
   // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
   componentWillReceiveProps(nextProps) {
     if (nextProps.columnCode !== this.props.columnCode) {
+      console.log('@@@@@@@@componentWillReceiveProps')
       this.setState({ SkeletonLoading: true, columnCode: nextProps.columnCode }, () => {
         this.onRefresh()
       })
@@ -122,6 +123,7 @@ class ListViewComp extends React.Component {
   render() {
     const { row } = this.props;
     // const getRowCount = this.state.dataSource.getRowCount()||NUM_ROWS;
+    console.log('@@@@@@@@@this.state.dataSource',this.state.dataSource)
     const skeletonData = Array(skeletonCount).fill(< Skeleton active />)
     return (
       <div>

@@ -11,7 +11,7 @@ const ServerItem= ({item,onClick})=>{
                                 <img onError={(e) => {e.target.onerror = null;e.target.src=`${commonUrl}/app/getUploadImg.do?fn=default.jpg`}} src={item.companyLogo}/>
                                 <div className="zzfw_card_box">
                                     <div className="zzfw_card_title">{item.companyName}</div>
-                                    <div className="zzfw_card_content">{item.description}</div>
+                                    <div dangerouslySetInnerHTML={{__html:item.description}} className="zzfw_card_content"></div>
                                 </div>
                             </div>
                     <WhiteSpace size="lg" />

@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-10-16 13:54:01
- * @LastEditTime: 2020-01-07 15:43:08
- * @LastEditors: your name
+ * @LastEditTime: 2020-04-23 17:03:03
+ * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\redux\actions\index.js
  */
@@ -78,6 +78,12 @@ const AddMenuList=(menuData=[])=>{
         menuData
     }
 };
+const GGWTabs=(tabs={})=>{
+    return {
+        type:"GGWTabs",
+        tabs
+    }
+};
 export {
     AddUserInfo,
     changeMenu,
@@ -89,5 +95,6 @@ export {
     AddOtherServer,
     CondolationObjectData,
     AddMenuList,
-    CondolationObjectChange
+    CondolationObjectChange,
+    GGWTabs
 }

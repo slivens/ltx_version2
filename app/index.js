@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-08-28 10:36:08
- * @LastEditTime: 2020-04-22 11:45:22
+ * @LastEditTime: 2020-04-23 14:55:07
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\index.js
@@ -29,6 +29,8 @@ import {
     Yuyue,EditAdress,
     Myorder,OrderDetail,
     MemberSelect,VerifyCode,
+    Secret,Ggw,
+    GgwView,
     Ldyzj, Lgbdx,   //belong to :美玉
     PartyDetail,PartyMember,
     Consolation,
@@ -107,6 +109,9 @@ const App = ({history, location}) => {
         'orderDetail':<OrderDetail/>,
         'member':<MemberSelect/>,
         'verify':<VerifyCode/>,
+        'secret':<Secret/>,
+        'ggw':<Ggw/>,
+        'ggwView':<GgwView/>
     };
     const {pathname} = location;
     const path = pathname.split('/')[1];

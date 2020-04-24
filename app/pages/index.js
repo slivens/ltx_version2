@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-08-28 16:34:35
- * @LastEditTime : 2020-01-16 16:33:14
- * @LastEditors  : Please set LastEditors
+ * @LastEditTime: 2020-04-23 14:54:37
+ * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\pages\index.js
  */
@@ -49,6 +49,10 @@ export {default as Myorder} from './homeServer/myorder';
 export {default as OrderDetail} from './homeServer/orderDetail';
 export {default as MemberSelect} from './mybranch/pushActivity/memberSelect';
 export {default as VerifyCode} from '../components/verifyCode';
+export {default as Secret} from '../components/secret/secret';
+export {default as Ggw} from './ggw';
+export {default as GgwView} from './ggw/ggwView';
+
 
 //Belong to ：美玉
 export {default as Ldyzj} from './mybranch/ldyzj';

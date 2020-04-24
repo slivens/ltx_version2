@@ -71,7 +71,7 @@ class Home extends Component {
   componentWillMount() {
     const { menuData } = this.props;
     if (!menuData.length) {
-      axios.post(`${commonUrl}/app/qryAppMenuList.do`, { userId: this.props.userid })
+      axios.post(`${commonUrl}/app/menu/qryAppMenuList.do`, { userId: this.props.userid })
         .then(res => {
           if (res.data.code === 'success') {
             let noticeData = res.data.data
@@ -113,6 +113,16 @@ class Home extends Component {
                     ...item,
                     path: "/lnb"
                   }
+                case "关工委":
+                  return {
+                    ...item,
+                    path: "/ggw"
+                  }
+                default:
+                  return {
+                    ...item,
+                    path: "/Nofound"
+                  }
               }
             })
             // this.setState({ notice_data: newdata })
@@ -127,27 +137,9 @@ class Home extends Component {
     }
   }
   tabsOnchange = (tab, index) => {
-    switch (tab.title) {
-      case "时政要闻":
-        this.setState({ nowtabs: tab });
-        localStorage.setItem("tabs", JSON.stringify(tab));
-        break;
-      case "银龄新闻":
-        this.setState({ nowtabs: tab });
-        localStorage.setItem("tabs", JSON.stringify(tab));
-        break;
-      case "文史精粹":
-        this.setState({ nowtabs: tab });
-        localStorage.setItem("tabs", JSON.stringify(tab));
-        break;
-      case "养生乐游":
-        this.setState({ nowtabs: tab });
-        localStorage.setItem("tabs", JSON.stringify(tab));
-        break;
-      default:
-        this.setState({ data: [] })
-        break;
-    }
+    this.setState({ nowtabs: tab });
+    localStorage.setItem("tabs", JSON.stringify(tab));
+
   }
   godetail = (id) => {
     this.props.history.push(`/detail/${id}`)

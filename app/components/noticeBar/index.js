@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-09-06 09:42:37
- * @LastEditTime : 2020-01-15 14:06:51
- * @LastEditors  : Please set LastEditors
+ * @LastEditTime: 2020-04-23 14:37:29
+ * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\components\noticeBar\index.js
  */
@@ -51,7 +51,7 @@ class NoticeBar extends Component{
                 align="middle"
                 justify="space-around"
                 style={{
-                    textAlign: "center",
+                    textAlign: "left",
                     height: "100%"
                 }}
                 >

@@ -102,7 +102,7 @@ class index extends Component {
                             thumb={item.serviceLogo}
                             multipleLine
                         >
-                            {item.serviceName} <div style={{color:"#888",fontSize:".15rem"}}>{item.serviceDescription}</div>
+                            {item.serviceName} <div dangerouslySetInnerHTML={{__html:item.serviceDescription}} style={{color:"#888",fontSize:".15rem"}}></div>
                         </Item>
                         )
                         :<Skeleton active/>

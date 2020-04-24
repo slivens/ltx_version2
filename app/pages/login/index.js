@@ -4,21 +4,23 @@ import './less/index.less';
 import LoginInput from '../../components/loginInput';
 import Divider from 'antd/es/divider';
 import 'antd/es/divider/style';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Form from 'antd/es/form';
 import 'antd/es/form/style';
 const prefix = "ltx_login";
 import axios from 'axios';
-import { Toast, Modal } from 'antd-mobile';
-import { AddUserInfo } from '../../redux/actions';
+import { Toast, Modal,Checkbox } from 'antd-mobile';
+import { AddUserInfo} from '../../redux/actions';
 import { connect } from 'react-redux';
 import commonUrl from '../../config';
 import noAuth from '../../util/noAuth';
 const alert = Modal.alert;
+const AgreeItem = Checkbox.AgreeItem;
 class Logincomp extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.AgreeSecret=false
   }
 
   componentWillUnmount() {
@@ -47,6 +49,10 @@ class Logincomp extends Component {
   }
   handleLogin = (e) => {
     e.preventDefault();
+    if(!this.AgreeSecret){
+      Toast.fail('您未同意《隐私政策》')
+      return
+    }
     this.props.form.validateFields((err, values) => {
 
       if (!err) {
@@ -167,6 +173,11 @@ class Logincomp extends Component {
                     <LoginInput type="password" icon="lock" />
                   )}
                 </Form.Item>
+                <AgreeItem 
+                style={{marginLeft:".32rem"}}
+                data-seed="logId" onChange={e => this.AgreeSecret=e.target.checked}>
+                  勾选即代表您同意 <Link to="/secret" >《隐私政策》</Link>
+                </AgreeItem>
                 <Button onClick={this.handleLogin} type="warning" className="login_btn">登录</Button>
                 {/* <div className={prefix + "_pwd"}>
                                  <span onClick={this.forgetpwd}>修改密码</span>

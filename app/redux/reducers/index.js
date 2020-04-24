@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-10-16 13:54:08
- * @LastEditTime : 2020-01-07 16:09:22
- * @LastEditors  : Please set LastEditors
+ * @LastEditTime: 2020-04-24 09:29:28
+ * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\redux\reducers\index.js
  */
@@ -103,7 +103,19 @@ const fetchMenuList = (state = [], action) => {
             return state;
     }
 }
+const ggwTasbs=(state = {}, action)=>{
+    switch (action.type) {
+        case 'GGWTabs':
+            return {
+                ...state,
+                ...action.tabs
+            };
+        default:
+            return state;
+    }
+}
 export default combineReducers({
     userinfo, menuData, searchValue, serverCompany, address, allMemberData,
-    condolationObject, fetchMenuList, condolationObject, condolationObjectChange
+    condolationObject, fetchMenuList, condolationObject, condolationObjectChange,
+    ggwTasbs
 });
