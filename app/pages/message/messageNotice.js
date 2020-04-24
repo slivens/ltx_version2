@@ -67,54 +67,23 @@ class MessageNotice extends Component {
             })
     };
 
+
     downloadFile = (event, item) => {
-        /* let aLink = document.createElement('a');
-         let blob = new Blob([item.attachmentUrl]);
-         let evt = document.createEvent("HTMLEvents");
-         evt.initEvent("click", false, false);//initEvent 不加后两个参数在FF下会报错, 感谢 Barret Lee 的反馈
-         aLink.download = item.attachmentName;
-         aLink.href = URL.createObjectURL(blob);
-         aLink.dispatchEvent(evt);*/
         event.preventDefault();
         event.stopPropagation();
-        //开启loading 按钮置灰
-        this.setState({
-            loadingStatus: false,
-            buttonDisabled: true,
-        });
-        axios.get(item.attachmentUrl)
+        axios.get(item.attachmentUrl, {responseType: "blob"})
             .then(res => {
-
-                res.blob().then(blob => {
-                    //关闭loading 按钮恢复正常
-                    let blobUrl = window.URL.createObjectURL(blob);
-                    const filename = times.formatNowDate() + '.zip';
-                    const aElement = document.createElement('a');
-                    document.body.appendChild(aElement);
-                    aElement.style.display = 'none';
-                    aElement.href = blobUrl;
-                    aElement.download = filename;
-                    aElement.click();
-                    document.body.removeChild(aElement);
-                });
+                let blob = new Blob([res.data]);
+                let blobUrl = window.URL.createObjectURL(blob);
+                const aElement = document.createElement('a');
+                document.body.appendChild(aElement);
+                aElement.style.display = 'none';
+                aElement.href = blobUrl;
+                aElement.download = item.attachmentName;
+                aElement.click();
+                window.URL.revokeObjectURL(aElement.href);
+                document.body.removeChild(aElement);
             })
-        /* fetch(, {
-         method: 'get',
-         credentials: 'include',
-         headers: new Headers({
-         'Content-Type': 'application/json',
-         'X-Auth-Token': User.getToken(),
-         }),
-         }).then((response) => {
-
-         }).catch((error) => {
-         //关闭loading 按钮恢复正常
-         this.setState({
-         loadingStatus: false,
-         buttonDisabled: false,
-         });
-         console.log('文件下载失败', error);
-         });*/
     };
 
     desContent = (attachMentList) => {
@@ -134,7 +103,7 @@ class MessageNotice extends Component {
     };
     goBack = () => {
         const {history, location} = this.props;
-       // localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
+        // localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
         history.push({pathname: "/mesgsDetail", params: location.params})
     };
 
@@ -194,10 +163,20 @@ class MessageNotice extends Component {
         );
     }
 }
-const mapStateToProps = (state, ownProps) => ({
-    userId: state.userinfo.id
-});
-const mapdispatchToProps = (dispatch, ownProps) => {
-    return {}
-};
-export default connect(mapStateToProps, mapdispatchToProps)(withRouter(MessageNotice));
+const
+    mapStateToProps = (state, ownProps) => ({
+        userId: state.userinfo.id
+    });
+const
+    mapdispatchToProps = (dispatch, ownProps) => {
+        return {}
+    };
+export
+default
+
+connect(mapStateToProps, mapdispatchToProps)
+
+(
+    withRouter(MessageNotice)
+)
+;
