@@ -77,7 +77,6 @@ class TeacherPoolIndex extends Component {
 
     render() {
         const {listViewData, isLoading} = this.state;
-        console.log(isLoading)
         return (
             <div className={prefix}>
                 <Topbar title="师资库" onClick={() => this.props.history.goBack()}/>

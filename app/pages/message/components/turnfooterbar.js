@@ -16,7 +16,6 @@ class TurnFooterbar extends Component {
 
     componentWillMount() {
         //window.addEventListener('touchmove', func, { passive: false })
-        console.log(this.props.msgList)
         this.setState({
             msgList: this.props.msgList,
             msgId: this.props.msgId,
