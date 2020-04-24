@@ -38,9 +38,9 @@ class TurnFooterbar extends Component {
         for (let index = 0; index < msgList.length; index++) {
             let fomatParams = JSON.parse(msgList[index].params);
             if (fomatParams.id === msgId) {
-                let turnItem = index == 0 ? msgList[msgList.length - 1] : msgList[index - 1];
+                let turnItem = index === 0 ? msgList[msgList.length - 1] : msgList[index - 1];
                 let turnParams = JSON.parse(turnItem.params);
-                this.props.fetchData(turnParams.id, msgType)
+                this.props.fetchData(turnParams.id, msgType);
                 history.replace({pathname: `/messageNotice/${turnParams.id}/${msgType}`, params: location.params || {}})
             }
         }
