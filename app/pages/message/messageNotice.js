@@ -11,13 +11,15 @@ import commonUrl from '../../config';
 import {connect} from 'react-redux';
 import noAuth from '../../util/noAuth';
 import Topbar from '../../components/topbar/topbar';
-import DescriptionBox from './components/descriptionBox';
+import DescriptionBox from '../../components/descriptionBox/descriptionBox';
 import TurnFooterbar from './components/turnfooterbar';
 import {detail, attachMentList} from './data';
 
 const test = "http://127.0.0.1:8088";
 
 const prefix = "mesNotice";
+const NUM_ROWS = 0x7fffffff;
+const pIndex = 1;
 
 
 class MessageNotice extends Component {
@@ -25,31 +27,42 @@ class MessageNotice extends Component {
         super(props);
         this.state = {
             detail: undefined,
-            memberStatus: {},
-            errorMessage: undefined
+            errorMessage: undefined,
+            msgList: undefined,
+            msgId: undefined,
+            msgType: undefined
         };
     }
 
     componentWillMount() {
-        this.fetchData()
-    }
-
-    componentDidMount() {
-
-    }
-
-    fetchData = () => {
         const {pathname} = this.props.location;
         const msgId = pathname.split('/')[2];
-        // const msgId = ""
-        /**/
-        axios.post(`${test}/app/msg/qryAppMsgDetail.do`, {msgId: msgId, msgType: "2"})
+        const msgType = pathname.split('/')[3];
+        this.fetchData(msgId, msgType);
+        this.fetchMsgList();
+    }
+
+    fetchData = (msgId, msgType) => {
+        axios.post(`${test}/app/msg/qryAppMsgDetail.do`, {msgId: msgId, msgType: msgType})
             .then(res => {
                 noAuth(res.data, () => this.props.history.push('/login'));
                 if (res.data.code === "success") {
-                    this.setState({detail: res.data.data})
+                    this.setState({detail: res.data.data, msgId, msgType})
                 } else {
                     this.setState({errorMessage: res.data.message})
+                }
+            })
+    };
+
+    fetchMsgList = () => {
+        const {pathname} = this.props.location;
+        const msgType = pathname.split('/')[3];
+        let requestParams = {pageNumber: pIndex, pageSize: NUM_ROWS, msgType: msgType};
+        axios.post(`${test}/app/msg/qryMsgRecordPageList.do`, requestParams)
+            .then(res => {
+                noAuth(res.data, () => history.push('/login'));
+                if (res.data.code === 'success') {
+                    this.setState({msgList: res.data.data.result})
                 }
             })
     };
@@ -104,12 +117,12 @@ class MessageNotice extends Component {
          });*/
     };
 
-    desContent = () => {
+    desContent = (attachMentList) => {
         return (
             <List className={prefix + "_des_box_bottom"}>
                 {
                     attachMentList.map((item, index) => (
-                            <List.Item arrow="horizontal"
+                            <List.Item arrow="horizontal" key={`mesNoticeList${index}`}
                                        onClick={(event) => this.downloadFile(event, item)}>
                                 {item.attachmentName}
                             </List.Item>
@@ -119,14 +132,20 @@ class MessageNotice extends Component {
             </List>
         )
     };
+    goBack = () => {
+        localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
+        this.props.history.goBack()
+    };
 
     render() {
-        const {detail, memberStatus, errorMessage} = this.state;
+        const {detail, errorMessage, msgList, msgId, msgType} = this.state;
+        /* const {history, location} = this.props;
+         const {params} = location;
+         console.log(params)*/
         const {pathname} = this.props.location;
-        const actId = pathname.split('/')[2];
         return (
             <div className={prefix}>
-                <Topbar title="通知详情" onClick={() => this.props.history.goBack()}/>
+                <Topbar title="通知详情" onClick={this.goBack}/>
                 {
                     detail ? (
                         <div className={prefix + "_content"}>
@@ -150,24 +169,23 @@ class MessageNotice extends Component {
                                 {/*  <div className="content" dangerouslySetInnerHTML={{__html: findOne.publicInfo}}></div>*/}
                             </div>
                             <WhiteSpace />
-                            <DescriptionBox title={"正文"}
-                                            content={
-                                                <div className={prefix + "_des_box_content"}
-                                                     dangerouslySetInnerHTML={{__html: detail.content}}/>
-                                            }
-                            />
+                            <DescriptionBox title={"正文"}>
+                                <div className={prefix + "_des_box_content"}
+                                     dangerouslySetInnerHTML={{__html: detail.content}}/>
+                            </DescriptionBox>
                             <WhiteSpace />
                             {
                                 detail && detail.attachMentList && detail.attachMentList.length ? (
                                     <div>
-                                        <DescriptionBox title={"附件"} content={
-                                            this.desContent(attachMentList)
-                                        }/>
+                                        <DescriptionBox title={"附件"}>
+                                            { this.desContent(detail.attachMentList)}
+                                        </DescriptionBox>
                                         <WhiteSpace />
                                     </div>
                                 ) : ""
                             }
-                            <TurnFooterbar/>
+                            <TurnFooterbar msgList={msgList} msgId={msgId} msgType={msgType}
+                                           fetchData={this.fetchData}/>
                         </div>
                     ) : <Empty description={errorMessage}/>
                 }

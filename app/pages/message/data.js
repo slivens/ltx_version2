@@ -100,12 +100,6 @@ export const detail = {
     },
     "properties": {}
 };
-const detail1 = {
-    "code": "success",
-    "message": "查询成功",
-
-    "properties": {}
-}
 
 export const attachMentList = [
     {

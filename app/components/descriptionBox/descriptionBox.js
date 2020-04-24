@@ -2,12 +2,11 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {List} from 'antd-mobile';
 import './style/index.less';
-const prefix = "mesNotice_des_box";
-import {attachMentList} from  "../data";
+const prefix = "des_box";
 
 class DescriptionBox extends Component {
     render() {
-        const {title, content, files} = this.props;
+        const {title, children} = this.props;
         return (
             <div className={prefix}>
                 <div className={prefix + "_bar"}>
@@ -15,7 +14,9 @@ class DescriptionBox extends Component {
                         <span className="border-left"/>&nbsp;&nbsp;<span className="title">{title}</span>
                     </div>
                 </div>
-                {content}
+                <div className={prefix + "_content"}>
+                    {children}
+                </div>
             </div>
 
         );

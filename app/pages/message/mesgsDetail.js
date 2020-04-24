@@ -30,33 +30,36 @@ class mesgsDetail extends Component {
     };
 
     componentWillMount() {
+
         this.fetchData();
     }
 
     fetchData = (pIndex = 1) => {
         const {history, location} = this.props;
+        let msgType = undefined;
         if (location.params) {
             const {params: {id, params}} = location;
-            let requestParams = {
-                pageNumber: pIndex,
-                pageSize: NUM_ROWS,
-                msgType: id
-            };
-            axios.post(`${test}/app/msg/qryMsgRecordPageList.do`, requestParams)
-                .then(res => {
-                    noAuth(res.data, () => history.push('/login'));
-                    let data = [];
-                    data = data.concat(res.data.data.result);
-                    if (res.data.code === 'success') {
-                        this.setState({mesgsList: data, isLoading: false})
-                    }
-                })
+            msgType = id;
         } else {
-            this.goMessage();
+            let messageNotice = JSON.parse(localStorage.getItem('messageNotice'));
+            msgType = messageNotice.id;
         }
-        //
-        console.log(location);
-        //this.setState({mesgsList: msgRecordList.data, isLoading: false});
+        let requestParams = {
+            pageNumber: pIndex,
+            pageSize: NUM_ROWS,
+            msgType: msgType
+        };
+        // const {params} = location;
+        axios.post(`${test}/app/msg/qryMsgRecordPageList.do`, requestParams)
+            .then(res => {
+                noAuth(res.data, () => history.push('/login'));
+                let data = [];
+                data = data.concat(res.data.data.result);
+                if (res.data.code === 'success') {
+                    // location.params = {...params,mesgsList:res.data.data.result};
+                    this.setState({mesgsList: data, isLoading: false})
+                }
+            })
         /*
          */
         /* 旧版本消息获取
@@ -73,9 +76,17 @@ class mesgsDetail extends Component {
         const {history, location} = this.props;
         let fomatParams = JSON.parse(params);
         if (type === 4) {
-            history.replace({pathname: `/zbdetail/${fomatParams.id}`})
+            history.push({pathname: `/zbdetail/${fomatParams.id}`, params: location.params || {}})
         } else {
-            history.replace({pathname: `/messageNotice/${fomatParams.id}`})
+            let msgType = undefined;
+            if (location.params) {
+                const {params: {id, params}} = location;
+                msgType = id;
+            } else {
+                let messageNotice = JSON.parse(localStorage.getItem('messageNotice'));
+                msgType = messageNotice.id;
+            }
+            history.push({pathname: `/messageNotice/${fomatParams.id}/${msgType}`, params: location.params || {}})
         }
         axios.post(`${commonUrl}/app/readMsgRecord.do`, {userId: 9984, recordId: id, params})
             .then(res => {
@@ -84,62 +95,66 @@ class mesgsDetail extends Component {
                 }
             })
     };
+
     row = (item, sectionID, rowID) => {
         return (
             <div key={rowID} className="mesgDetail_item" onClick={() => this.readinfo(item)}>
                 <WhiteSpace size="lg"/>
                 <div className="date"><span>{item.createTime}</span></div>
                 <div className="mesgDetail_item_card">
-                    <div className="title">
-                        {
-                            item.readed && <span className="dot"/>
-                        }
-                        <span className="word">{item.title}</span></div>
-                    <div className="content">发件人：{item.sendName}</div>
-                    <div className="detail">查看详情
-                        <Icon
-                            style={{
-                                position: "absolute",
-                                right: ".1rem",
-                                top: "50%",
-                                color: "#bbb",
-                                fontSize: ".24rem",
-                                transform: "translateY(-50%)"
-                            }} type="right"/>
+                    <div className="mesgDetail_item_card_body">
+                        <div className="title">
+                            {
+                                item.readed === 0 ? <span className="dot"/> : ""
+                            }
+                            <span className="word">{item.title}</span></div>
+                        <div className="content">
+                            <div>发件人：{item.sendName}</div>
+                        </div>
+                        <div className="detail">查看详情
+                            <Icon
+                                style={{
+                                    position: "absolute",
+                                    right: ".1rem",
+                                    top: "50%",
+                                    color: "#bbb",
+                                    fontSize: ".24rem",
+                                    transform: "translateY(-50%)"
+                                }} type="right"/>
+                        </div>
                     </div>
                 </div>
+
             </div>
         )
     };
-    goMessage = () => {
-        this.props.history.push('/message');
-    };
 
     render() {
-        const {history, location} = this.props;
+        const {location} = this.props;
         const {isLoading, mesgsList} = this.state;
+        let mesTitle = undefined;
         if (location.params) {
-            const {params: {title, id, params}} = location;
-            return (
-                <div className="mesgDetail">
-                    <Topbar title={title} onClick={() => this.props.history.goBack()}/>
-                    <div className="mesg-detail-list-box">
-                        <ListView
-                            data={mesgsList}
-                            row={this.row}
-                            useBodyScroll={false}
-                            isLoading={isLoading}
-                            fetchData={this.fetchData}
-                        />
-                    </div>
-
-                </div>
-            );
+            const {params: {title}} = location;
+            mesTitle = title;
         } else {
-            return (
-                <div></div>
-            )
+            let messageNotice = JSON.parse(localStorage.getItem('messageNotice'));
+            mesTitle = messageNotice.title;
         }
+        return (
+            <div className="mesgDetail">
+                <Topbar title={mesTitle} onClick={() => this.props.history.goBack()}/>
+                <div className="mesg-detail-list-box">
+                    <ListView
+                        data={mesgsList}
+                        row={this.row}
+                        useBodyScroll={false}
+                        isLoading={isLoading}
+                        fetchData={this.fetchData}
+                    />
+                </div>
+
+            </div>
+        );
     }
 }
 const mapStateToProps = (state, onwporps) => {

@@ -92,7 +92,7 @@ class TeacherPoolIndex extends Component {
                     <ListView
                         data={listViewData}
                         row={this.row}
-                        useBodyScroll
+                        useBodyScroll={false}
                         isLoading={isLoading}
                         fetchData={this.fetchData}
                     />
