@@ -43,7 +43,7 @@ class MessageNotice extends Component {
     }
 
     fetchData = (msgId, msgType) => {
-        axios.post(`${test}/app/msg/qryAppMsgDetail.do`, {msgId: msgId, msgType: msgType})
+        axios.post(`${commonUrl}/app/msg/qryAppMsgDetail.do`, {msgId: msgId, msgType: msgType})
             .then(res => {
                 noAuth(res.data, () => this.props.history.push('/login'));
                 if (res.data.code === "success") {
@@ -58,7 +58,7 @@ class MessageNotice extends Component {
         const {pathname} = this.props.location;
         const msgType = pathname.split('/')[3];
         let requestParams = {pageNumber: pIndex, pageSize: NUM_ROWS, msgType: msgType};
-        axios.post(`${test}/app/msg/qryMsgRecordPageList.do`, requestParams)
+        axios.post(`${commonUrl}/app/msg/qryMsgRecordPageList.do`, requestParams)
             .then(res => {
                 noAuth(res.data, () => history.push('/login'));
                 if (res.data.code === 'success') {
@@ -82,7 +82,7 @@ class MessageNotice extends Component {
             loadingStatus: false,
             buttonDisabled: true,
         });
-        axios.post(item.attachmentUrl)
+        axios.get(item.attachmentUrl)
             .then(res => {
 
                 res.blob().then(blob => {

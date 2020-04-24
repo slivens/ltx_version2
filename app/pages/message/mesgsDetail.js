@@ -50,7 +50,7 @@ class mesgsDetail extends Component {
             msgType: msgType
         };
         // const {params} = location;
-        axios.post(`${test}/app/msg/qryMsgRecordPageList.do`, requestParams)
+        axios.post(`${commonUrl}/app/msg/qryMsgRecordPageList.do`, requestParams)
             .then(res => {
                 noAuth(res.data, () => history.push('/login'));
                 let data = [];
