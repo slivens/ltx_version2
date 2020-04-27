@@ -10,14 +10,15 @@ import NoticeBar from '../../components/noticeBar';
 import Banner from '../../components/banner';
 import axios from 'axios';
 import commonUrl from '../../config';
-import { Tabs, WhiteSpace, Badge, Modal } from 'antd-mobile';
+import { Tabs, WhiteSpace, Badge, Modal, ListView } from 'antd-mobile';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { changeSearchValue, AddMenuList } from '../../redux/actions';
 import noAuth from '../../util/noAuth';
-import ListView from '../../components/homeListView/listViewComp';
+import ListViewComp from '../../components/homeListView/listViewComp2';
 import classnames from 'classnames';
 const { Search } = Input;
+let CancelToken = axios.CancelToken;
 const notice_data = [
   {
     title: "党建先锋",
@@ -53,13 +54,28 @@ const tabs = [
 ];
 const alert = Modal.alert;
 
-
+let dataBlobs = []; //数据模型
+const NUM_ROWS = 5;
+let pageIndex = 1;  //页码
+const dataSource = new ListView.DataSource({
+  rowHasChanged: (row1, row2) => row1 !== row2,
+});
 class Home extends Component {
-  state = {
-    data: [],
-    notice_data: [],
-    nowtabs: tabs[0]
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: [],
+      notice_data: [],
+      nowtabs: tabs[0],
+      listViewData: [],
+      dataSource,
+      hasMore: true,
+      refreshing: true,   //pulldown
+      isLoading: true,
+      SkeletonLoading: false, //骨架
+    }
   }
+
 
   showAlert = () => {
     const alertInstance = alert('提示', '当前为初始密码 , 是否前往重置密码', [
@@ -67,7 +83,9 @@ class Home extends Component {
       { text: '是', onPress: () => this.props.history.push('/resetpwd') },
     ]);
   }
-
+  renderDataBlobs = (data) => {
+    dataBlobs = dataBlobs.concat(data)
+  }
   componentWillMount() {
     const { menuData } = this.props;
     if (!menuData.length) {
@@ -136,11 +154,76 @@ class Home extends Component {
       this.setState({ nowtabs: tab });
     }
   }
-  tabsOnchange = (tab, index) => {
-    this.setState({ nowtabs: tab });
-    localStorage.setItem("tabs", JSON.stringify(tab));
-
+  componentDidMount() {
+    this.fetchData()
   }
+  fetchData = (pIndex = 1, cancelToken) => {
+    this.setState({ hasMore: true })
+    axios.post(`${commonUrl}/app/qryNewsPageListByCode.do`, {
+      columnCode: this.state.nowtabs.columnCode,
+      pageSize: NUM_ROWS,
+      pageNumber: pIndex
+    }, {
+      cancelToken: cancelToken ? cancelToken.cancelToken : undefined //拦截
+    })
+      .then(res => {
+        if (res.data.code === 'success') {
+          if (!res.data.data.result.length) {
+            this.setState({ hasMore: false })
+          }
+          this.renderDataBlobs(res.data.data.result)
+          this.setState({
+            refreshing: false,
+            isLoading: false,
+            SkeletonLoading: false,
+            dataSource: this.state.dataSource.cloneWithRows(dataBlobs),
+          })
+        }
+      })
+  }
+  /**
+   * @description: 下拉刷新函数，手势下拉，整体列表刷新。
+   * @param {type} 
+   * @return: 
+   */
+  onRefresh = () => {
+    dataBlobs = []
+    pageIndex = 1
+    this.setState({ hasMore: true, refreshing: true });
+    // simulate initial Ajax
+    setTimeout(() => {
+      this.fetchData();
+    }, 600)
+  };
+  /**
+   * @description: 列表拉到底部进行刷新
+   * @param {type} 
+   * @return: 
+   */
+  onEndReached = (event) => {
+    this.setState({ isLoading: true });
+    if (!this.state.hasMore) {
+      return this.setState({ isLoading: false });
+    }
+    this.fetchData(++pageIndex)
+  };
+  tabsOnchange = (tab, index) => {
+    dataBlobs = [];
+    pageIndex = 1;
+    let _this = this;
+    this.fetchCancel ? this.fetchCancel() : console.log('not cancel');
+    let cancelToken = {
+      cancelToken: new CancelToken((c) => {
+        _this.fetchCancel = c
+      })
+    }
+    this.setState({ SkeletonLoading: true, nowtabs: tab }
+      , () => {
+        this.fetchData(undefined, cancelToken)
+      });
+    localStorage.setItem("tabs", JSON.stringify(tab));
+  }
+
   godetail = (id) => {
     this.props.history.push(`/detail/${id}`)
   }
@@ -175,7 +258,6 @@ class Home extends Component {
     );
   };
   render() {
-    const params = {}
     const { menuData } = this.props;
     return (
       <div className={prefix}>
@@ -225,11 +307,16 @@ class Home extends Component {
         </Tabs>
         {/* <ListView data={this.state.data} /> */}
         {/* <ListViewComp columnCode={this.state.nowtabs.columnCode} /> */}
-        <ListView
-          params={params}
-          url={`${commonUrl}/app/qryNewsPageListByCode.do`}
-          columnCode={this.state.nowtabs.columnCode}
+        <ListViewComp
+          refreshing={this.state.refreshing}
+          isLoading={this.state.isLoading}
+          SkeletonLoading={this.state.SkeletonLoading}
+          fetchData={(pageNumber) => { this.fetchData(pageNumber) }}
           row={this.row}
+          hasMore={this.state.hasMore}
+          dataSource={this.state.dataSource}
+          onRefresh={this.onRefresh}
+          onEndReached={this.onEndReached}
           useBodyScroll
         />
         <div style={{ position: "relative", height: ".6rem" }}></div>

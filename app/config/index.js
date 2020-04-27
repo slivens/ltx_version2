@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-10-21 12:03:13
- * @LastEditTime: 2020-02-27 15:16:52
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-27 09:17:29
+ * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\config\index.js
  */

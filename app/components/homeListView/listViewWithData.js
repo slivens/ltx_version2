@@ -31,6 +31,7 @@ class ListViewComp extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log('@@@@@@@@fetchData')
         this.renderDataBlobs(nextProps.data);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(dataBlobs),
