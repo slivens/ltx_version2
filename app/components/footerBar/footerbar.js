@@ -14,9 +14,22 @@ import {Flex, Badge} from 'antd-mobile';
 import {withRouter} from 'react-router-dom';
 import Icon from '../icon';
 class footerbar extends Component {
+
+    componentDidMount() {
+        // 监听plusready事件
+        document.addEventListener("plusready", function () {
+            // 扩展API加载完毕，现在可以正常调用扩展API
+            // 添加监听从系统消息中心点击某条消息启动应用事件
+            plus.push.addEventListener("click", function (msg) {
+                // 分析msg.payload处理业务逻辑
+                console.log("You clicked: " + msg.content);
+            });
+        }, false);
+    }
+
     gowhere = (key) => {
         this.props.history.push(key)
-    }
+    };
 
     render() {
         const {history, location} = this.props;
@@ -47,7 +60,7 @@ class footerbar extends Component {
                     <Flex.Item
                         onClick={() => localStorage.getItem('username') ? this.gowhere('/message') : this.gowhere('/login')}>
                         <div className={path === "message" ? "active" : ""}>
-                            <Badge overflowCount={99} text={0} style={{marginTop:'5px'}}>
+                            <Badge overflowCount={99} text={0} style={{marginTop: '5px'}}>
                                 <Icon
                                     className="footer_icon"
                                     style={{color: "#b6b6b6", fontSize: ".28rem"}}

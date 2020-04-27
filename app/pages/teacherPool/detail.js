@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {withRouter, Link} from 'react-router-dom';
-import Icon from 'antd/es/icon';
 import Avatar from 'antd/es/avatar';
 import 'antd/es/avatar/style';
 import 'antd/es/icon/style';
@@ -12,15 +11,11 @@ import {connect} from 'react-redux';
 import noAuth from '../../util/noAuth';
 import Topbar from '../../components/topbar/topbar';
 import DescriptionBox from '../../components/descriptionBox/descriptionBox';
-import {detail} from './components/data';
-import TurnFooterbar from './components/turnfooterbar';
-/*import {detail, attachMentList} from './components/data';*/
 import {prefix} from "./prefix";
 import {formatName} from "./utils";
-const test = "http://127.0.0.1:8088";
 
 
-class MessageNotice extends Component {
+class TeacherPoolDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,17 +29,14 @@ class MessageNotice extends Component {
 
     fetchData = () => {
         const {pathname} = this.props.location;
-        this.setState({detail: detail.data})
-        // const msgId = pathname.split('/')[2];
-        // const msgId = "4028c1e26fa1bc5a016fa1bee1900016";
-        /*  const msgId = "40281f816f55b811016f55c9d9630017";
-         axios.post(`${commonUrl}/app/msg/qryAppMsgDetail.do`, {msgId: msgId, msgType: "2"})
-         .then(res => {
-         noAuth(res.data, () => this.props.history.push('/login'));
-         if (res.data.code === "success") {
-         this.setState({detail: res.data.data})
-         }
-         })*/
+        const teacherId = pathname.split('/')[2];
+        axios.post(`${commonUrl}/app/teacherStore/getTeacherDetail.do`, {teacherId: teacherId})
+            .then(res => {
+                noAuth(res.data, () => this.props.history.push('/login'));
+                if (res.data.code === "success") {
+                    this.setState({detail: res.data.data})
+                }
+            })
     };
 
     componentDidMount() {
@@ -52,20 +44,33 @@ class MessageNotice extends Component {
     }
 
     render() {
-        const {detail, memberStatus} = this.state;
-        const {pathname} = this.props.location;
-        const actId = pathname.split('/')[2];
+        const {detail} = this.state;
+        const getHeadPhoto = (photo) => {
+            if (photo) {
+                return (
+                    <img src={photo} key={`headPhoto{index}`} onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `${commonUrl}/app/getUploadImg.do?fn=default.jpg`
+                    }}/>
+                )
+            } else {
+                return (
+                    <Avatar size={60} icon="user"/>
+                )
+            }
+
+        };
         return (
             <div className={prefix}>
                 <Topbar title="师资详情" onClick={() => this.props.history.goBack()}/>
                 <div className={prefix + "_detail_title_container"}>
                     <div className={prefix + "_detail_title_avatar"}>
-                        <Avatar size={60} icon="user"/>
+                        {getHeadPhoto(detail.photo)}
                     </div>
                     <div className={prefix + "_detail_title_right"}>
                         <div className={prefix + "_detail_title_right_content"}>
                             <div className="title">{formatName(detail.name)}</div>
-                            <Badge text={detail.mark}
+                            <Badge text={detail.teacherClass}
                                    style={{
                                        backgroundColor: '#71a9fe',
                                        height: '.26rem',
@@ -78,68 +83,37 @@ class MessageNotice extends Component {
                 <WhiteSpace />
                 <DescriptionBox title={"教师简介"}>
                     <div className={prefix + "_detail_intro"}>
-                        {detail.des}
+                        {detail.intro}
                     </div>
                 </DescriptionBox>
                 <WhiteSpace />
-                <DescriptionBox title={"主讲课题"}>
-                    <div className={prefix + "_detail_course_container"}>
-                        {
-                            detail.courses.map((item, index) => (
-                                <div className={prefix + "_detail_course_content"}>
-                                    <span className={prefix + "_detail_dot"}/>
-                                    {item.name}
-                                </div>
-                            ))
-                        }
-                    </div>
-                </DescriptionBox>
-                {/* <div className={prefix + "_content"}>
-                 <div className={prefix + "_box"}>
-                 <div className={prefix + "_box_title"}>{detail.title}</div>
-                 <Flex>
-                 <Flex.Item>发布人：</Flex.Item>
-                 <Flex.Item>{detail.sender}</Flex.Item>
-                 </Flex>
-                 <Flex>
-                 <Flex.Item>发布时间：</Flex.Item>
-                 <Flex.Item>{detail.createTime}</Flex.Item>
-                 </Flex>
-                 <Flex>
-                 <Flex.Item>附件：</Flex.Item>
-                 <Flex.Item>{detail.fileName}</Flex.Item>
-                 </Flex>
-                 <div className="pic"><img src={findOne.imgPath}/></div>
-                 <div className="content" dangerouslySetInnerHTML={{__html: findOne.publicInfo}}></div>
-                 </div>
-                 <WhiteSpace />
-                 <DescriptionBox title={"正文"}
-                 content={<div className={prefix + "_des_box_content"}>{detail.content}</div>}
-                 />
-                 <WhiteSpace />
-                 <DescriptionBox title={"附件"} content={
-                 <List className={prefix + "_des_box_bottom"}>
-                 {
-                 attachMentList.map((item, index) => (
-                 <List.Item arrow="horizontal" onClick={(event) => this.downloadFile(event, item)}>
-                 {item.attachmentName}
-                 </List.Item>
-                 )
-                 )
-                 }
-                 </List>
-                 }/>
-                 <WhiteSpace />
-                 <TurnFooterbar/>
-                 </div>*/}
+                {detail && detail.course ? (
+                    <DescriptionBox title={"主讲课题"}>
+                        <div className={prefix + "_detail_course_container"}>
+                            {/*  {
+                             detail.course.map((item, index) => (
+                             <div className={prefix + "_detail_course_content"}>
+                             <span className={prefix + "_detail_dot"}/>
+                             {item.name}
+                             </div>
+                             ))
+                             }*/}
+                            <div className={prefix + "_detail_course_content"} dangerouslySetInnerHTML={{__html:detail.course}}>
+                              {/*  <span className={prefix + "_detail_dot"}/>*/}
+
+                            </div>
+                        </div>
+                    </DescriptionBox>
+                ) : ""}
+
             </div>
         );
     }
 }
-const mapStateToProps = (state, ownProps) => ({
-    userId: state.userinfo.id
-});
-const mapdispatchToProps = (dispatch, ownProps) => {
-    return {}
-};
-export default connect(mapStateToProps, mapdispatchToProps)(withRouter(MessageNotice));
+/*const mapStateToProps = (state, ownProps) => ({
+ userId: state.userinfo.id
+ });
+ const mapdispatchToProps = (dispatch, ownProps) => {
+ return {}
+ };*/
+export default connect(null, null)(withRouter(TeacherPoolDetail));
