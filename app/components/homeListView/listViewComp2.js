@@ -1,7 +1,7 @@
 /*
  * @Author: Sliven
  * @Date: 2020-04-19 20:44:58
- * @LastEditTime: 2020-04-27 14:13:05
+ * @LastEditTime: 2020-04-27 21:26:17
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\components\homeListView\listViewComp.js
@@ -9,37 +9,18 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { PullToRefresh, ListView, Button, Icon } from 'antd-mobile';
-import Axios from 'axios';
 import Skeleton from 'antd/es/skeleton';
 import "antd/es/skeleton/style";
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-const NUM_ROWS = 10; //显示条数
-let pageIndex = 1;  //页码
-let dataBlobs = []; //数据模型
-const skeletonCount=10 //预显示骨架数
+const skeletonCount = 10 //预显示骨架数
 class ListViewComp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      refreshing: true,
-      isLoading: true,
       height: document.documentElement.clientHeight,
       useBodyScroll: props.useBodyScroll,
-      SkeletonLoading: false,
     };
-  }
-
-  // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
-  componentWillReceiveProps(nextProps) {
-    // if (nextProps.dataSource !== this.props.dataSource) {
-    //   console.log('@@@@@@@@componentWillReceiveProps')
-    //   nextProps.fetchData();
-    // }
-  }
-  componentWillUnmount(){
-    // dataBlobs=[]
   }
   componentDidUpdate() {
     if (this.state.useBodyScroll) {
@@ -48,16 +29,13 @@ class ListViewComp extends React.Component {
       document.body.style.overflow = 'hidden';
     }
   }
-  
   componentDidMount() {
     const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
-    this.setState({ height: hei})
+    this.setState({ height: hei })
   }
-  
+
   render() {
-    const { row,dataSource,refreshing,isLoading,SkeletonLoading } = this.props;
-    // const getRowCount = this.state.dataSource.getRowCount()||NUM_ROWS;
-    console.log('@@@@@@@@@this.state.dataSource',dataSource)
+    const { row, dataSource, refreshing, isLoading, SkeletonLoading } = this.props;
     const skeletonData = Array(skeletonCount).fill(< Skeleton active />)
     return (
       <div>
@@ -79,10 +57,10 @@ class ListViewComp extends React.Component {
               }}
               pullToRefresh={<PullToRefresh
                 refreshing={refreshing}
-                onRefresh={()=>{this.props.onRefresh()}}
-                
+                onRefresh={() => { this.props.onRefresh() }}
+
               />}
-              onEndReached={(event)=>{this.props.onEndReached(event)}}
+              onEndReached={(event) => { this.props.onEndReached(event) }}
               onEndReachedThreshold={50}
               pageSize={5}
             />
@@ -92,11 +70,19 @@ class ListViewComp extends React.Component {
   }
 }
 ListViewComp.defaultProps = {
-  useBodyScroll:false
+  useBodyScroll: false
 };
 ListViewComp.propTypes = {
-  row: PropTypes.func.isRequired,
-  useBodyScroll:PropTypes.bool
-
+  row: PropTypes.func,
+  useBodyScroll: PropTypes.bool,
+  refreshing: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  hasMore: PropTypes.bool,
+  SkeletonLoading: PropTypes.bool,
+  fetchData: PropTypes.func,
+  dataSource: PropTypes.array,
+  onRefresh: PropTypes.func,
+  onEndReached: PropTypes.func
 }
+
 export default withRouter(ListViewComp);

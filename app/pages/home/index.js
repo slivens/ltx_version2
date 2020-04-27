@@ -150,12 +150,20 @@ class Home extends Component {
         })
     }
     if (localStorage.getItem("tabs")) {
+      dataBlobs = [];
+      pageIndex = 1;
       const tab = JSON.parse(localStorage.getItem("tabs"));
-      this.setState({ nowtabs: tab });
+      this.setState({ nowtabs: tab }, () => { this.fetchData() });
+    } else {
+      this.fetchData()
     }
   }
   componentDidMount() {
-    this.fetchData()
+
+  }
+  componentWillUnmount(){
+    dataBlobs = []
+    pageIndex = 1
   }
   fetchData = (pIndex = 1, cancelToken) => {
     this.setState({ hasMore: true })
