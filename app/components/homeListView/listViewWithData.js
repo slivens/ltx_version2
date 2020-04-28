@@ -22,7 +22,7 @@ class ListViewComp extends React.Component {
         this.state = {
             hasMore: true,
             dataSource,
-            refreshing: true,
+            refreshing: false,
             isLoading: true,
             height: document.documentElement.clientHeight,
             useBodyScroll: props.useBodyScroll,
@@ -31,12 +31,14 @@ class ListViewComp extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('@@@@@@@@fetchData')
+        if(nextProps.refreshing){
+            dataBlobs=[]
+        }
         this.renderDataBlobs(nextProps.data);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(dataBlobs),
             refreshing: false,
-            isLoading: false,
+            isLoading: nextProps.isLoading,
             SkeletonLoading: false,
         });
     }
@@ -45,8 +47,8 @@ class ListViewComp extends React.Component {
         this.renderDataBlobs(this.props.data);
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(dataBlobs),
-            refreshing: false,
-            isLoading: false,
+            refreshing:false,
+            isLoading: this.props.isLoading,
             SkeletonLoading: false,
         });
     }
@@ -107,8 +109,8 @@ class ListViewComp extends React.Component {
     };
 
     render() {
-        const {row, isLoading} = this.props;
-        const {height, useBodyScroll} = this.state;
+        const {row} = this.props;
+        const {height, useBodyScroll,isLoading} = this.state;
         // const getRowCount = this.state.dataSource.getRowCount()||NUM_ROWS;
         const skeletonData = Array(skeletonCount).fill(< Skeleton active/>);
         return (
