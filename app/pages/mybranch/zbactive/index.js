@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-09-19 10:36:55
- * @LastEditTime: 2020-04-28 09:16:29
+ * @LastEditTime: 2020-04-28 16:20:33
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\pages\mybranch\zbactive\index.js
@@ -10,17 +10,20 @@ import React, { Component } from 'react';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
 import './style/index.less';
-import Zbtj from './zbtj';
 import 'antd/es/empty/style';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import commonUrl from '../../../config/index';
 import { connect } from 'react-redux';
-import { Toast, Badge,ListView} from 'antd-mobile';
+import { Toast, Badge, ListView,Tabs } from 'antd-mobile';
 import noAuth from '../../../util/noAuth';
-const test = "http://192.168.111.132:8080";
 import ListViewComp from '../../../components/homeListView/listViewComp2';
 let CancelToken = axios.CancelToken;
+const tabs = [
+  { title: '全部活动', key: 't1' },
+  { title: '我参与的', key: 't2' },
+  { title: '我发布的', key: 't3' },
+];
 let dataBlobs = []; //数据模型
 const NUM_ROWS = 10;
 let pageIndex = 1;  //页码
@@ -30,7 +33,7 @@ const dataSource = new ListView.DataSource({
 class zbactive extends Component {
   state = {
     items: [],
-    tab: {},
+    tab: tabs[0],
     dataSource,
     hasMore: true,
     refreshing: true,   //pulldown
@@ -59,13 +62,12 @@ class zbactive extends Component {
   }
   componentWillMount() {
     if (localStorage.getItem("branch_tab")) {
-      
       dataBlobs = [];
       pageIndex = 1;
       const tab = JSON.parse(localStorage.getItem("branch_tab"));
       this.setState({ tab: tab }, () => { this.fetchData() });
     } else {
-      
+ 
       this.fetchData()
     }
   }
@@ -95,11 +97,11 @@ class zbactive extends Component {
     dataBlobs = []
     pageIndex = 1
   }
-   /**
-   * @description: 下拉刷新函数，手势下拉，整体列表刷新。
-   * @param {type} 
-   * @return: 
-   */
+  /**
+  * @description: 下拉刷新函数，手势下拉，整体列表刷新。
+  * @param {type} 
+  * @return: 
+  */
   onRefresh = () => {
     dataBlobs = []
     pageIndex = 1
@@ -124,7 +126,7 @@ class zbactive extends Component {
 
   fetchData = (pIndex = 1, cancelToken) => {
     let obj = {};
-    const {tab}=this.state;
+    const { tab } = this.state;
     if (tab && tab.title === '我参与的') {
       obj.userId = this.props.userid;
     }
@@ -179,14 +181,6 @@ class zbactive extends Component {
     );
   };
   render() {
-    const { tab } = this.state;
-    let params = {};
-    if (tab && tab.title === '我参与的') {
-      params.userId = this.props.userid;
-    }
-    if (tab && tab.title === '我发布的') {
-      params.operUserId = this.props.userid;
-    }
     return (
       <div className="zbactive">
         <div className="zbactive_topbar">
@@ -217,18 +211,27 @@ class zbactive extends Component {
           />
         </div>
         <div className="zbactive-box">
-          <Zbtj tabonChange={this.tabsOnchange} />
+          {/* <Zbtj tabonChange={this.tabsOnchange} /> */}
+          <Tabs tabs={tabs}
+            page={this.state.tab.key}
+            initialPage={"tab1"}
+            tabBarUnderlineStyle={{ borderColor: "#F83A2E" }}
+            tabBarActiveTextColor={"#F83A2E"}
+            onChange={this.tabsOnchange}
+          // onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+          >
+          </Tabs>
           <ListViewComp
-          refreshing={this.state.refreshing}
-          isLoading={this.state.isLoading}
-          SkeletonLoading={this.state.SkeletonLoading}
-          row={this.row}
-          hasMore={this.state.hasMore}
-          dataSource={this.state.dataSource}
-          onRefresh={this.onRefresh}
-          onEndReached={this.onEndReached}
-         
-        />
+            refreshing={this.state.refreshing}
+            isLoading={this.state.isLoading}
+            SkeletonLoading={this.state.SkeletonLoading}
+            row={this.row}
+            hasMore={this.state.hasMore}
+            dataSource={this.state.dataSource}
+            onRefresh={this.onRefresh}
+            onEndReached={this.onEndReached}
+
+          />
         </div>
       </div>
     );
