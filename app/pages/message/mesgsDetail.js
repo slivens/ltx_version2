@@ -88,11 +88,10 @@ class mesgsDetail extends Component {
             }
             history.push({pathname: `/messageNotice/${fomatParams.id}/${msgType}`, params: location.params || {}})
         }
-        axios.post(`${commonUrl}/app/readMsgRecord.do`, {userId: 9984, recordId: id, params})
+        axios.post(`${commonUrl}/app/readMsgRecord.do`, {userId: this.props.userId, recordId: id})
             .then(res => {
                 noAuth(res.data, () => this.props.history.push('/login'));
-                if (res.data.code === 'success') {
-                }
+                if (res.data.code === 'success') {}
             })
     };
 

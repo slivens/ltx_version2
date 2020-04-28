@@ -43,10 +43,13 @@ class MessageNotice extends Component {
     }
 
     fetchData = (msgId, msgType) => {
+
         axios.post(`${commonUrl}/app/msg/qryAppMsgDetail.do`, {msgId: msgId, msgType: msgType})
             .then(res => {
                 noAuth(res.data, () => this.props.history.push('/login'));
                 if (res.data.code === "success") {
+                    //todo 消息已读取的id不对，接口要改
+                    this.readInfo(res.data.data.id);
                     this.setState({detail: res.data.data, msgId, msgType})
                 } else {
                     this.setState({errorMessage: res.data.message})
@@ -67,6 +70,15 @@ class MessageNotice extends Component {
             })
     };
 
+    readInfo = (recordId) => {
+        axios.post(`${commonUrl}/app/readMsgRecord.do`, {userId: this.props.userId, recordId: recordId})
+            .then(res => {
+                noAuth(res.data, () => this.props.history.push('/login'));
+                if (res.data.code === 'success') {
+                }
+            })
+    };
+
 
     downloadFile = (event, item) => {
         /* */
@@ -79,9 +91,9 @@ class MessageNotice extends Component {
             iframe.style.display = 'none';
             iframe.src = "javascript: '<script>location.href=\"" + src + "\"<\/script>'";
             document.getElementsByTagName('body')[0].appendChild(iframe);
-        } else if(isiOS){
-            let filename =item.attachmentName;
-            let filepath =item.attachmentUrl;
+        } else if (isiOS) {
+            let filename = item.attachmentName;
+            let filepath = item.attachmentUrl;
             if (window.plus) {//支持plus
 
                 //判断文件是否已经下载
@@ -93,7 +105,7 @@ class MessageNotice extends Component {
                             plus.runtime.openFile('_downloads/' + filename);
                         }
                     }, function () {//如果未下载文件，则下载后打开文件
-                        var dtask = plus.downloader.createDownload(filepath, { filename: '_downloads/' + filename }, function (d, status) {
+                        var dtask = plus.downloader.createDownload(filepath, {filename: '_downloads/' + filename}, function (d, status) {
                             if (status == 200) {
                                 plus.runtime.openFile('_downloads/' + filename);
                             }
@@ -102,7 +114,9 @@ class MessageNotice extends Component {
                             }
                         });
                         dtask.addEventListener("statechanged", function (task, status) {
-                            if (!dtask) { return; }
+                            if (!dtask) {
+                                return;
+                            }
                             switch (task.state) {
                                 case 1:
                                     Toast.success("开始下载...");
@@ -112,18 +126,18 @@ class MessageNotice extends Component {
                                     break;
                                 case 3: // 已接收到数据
                                     var progressVal = (task.downloadedSize / task.totalSize) * 100;
-                                    //psb1.progressbar({ progress: progressVal }).show();
-                                    //dstatus[0].innerHTML = task.downloadedSize + '/' + task.totalSize;
-                                    //hui.toast('下载进度：' + (task.downloadedSize + '/' + task.totalSize));
-                                  /*  if (hui('.progress').length > 0) {
-                                        hui('.progress').html(parseInt(progressVal) + '%');
-                                    }
-                                    break;*/
+                                //psb1.progressbar({ progress: progressVal }).show();
+                                //dstatus[0].innerHTML = task.downloadedSize + '/' + task.totalSize;
+                                //hui.toast('下载进度：' + (task.downloadedSize + '/' + task.totalSize));
+                                /*  if (hui('.progress').length > 0) {
+                                 hui('.progress').html(parseInt(progressVal) + '%');
+                                 }
+                                 break;*/
                                 case 4:
                                     dtask = null;
                                     /*if (hui('.progress').length > 0) {
-                                        hui('.progress').html('0%');
-                                    }*/
+                                     hui('.progress').html('0%');
+                                     }*/
                                     Toast.success("正在打开文件...");
                                     break;
                             }
@@ -154,9 +168,11 @@ class MessageNotice extends Component {
     };
 
     goBack = () => {
-        const {history, location} = this.props;
-        // localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
-        history.push({pathname: "/mesgsDetail", params: location.params})
+        /*  const {history, location} = this.props;
+         // localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
+         history.push({pathname: "/mesgsDetail", params: location.params})*/
+        localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
+        this.props.history.goBack();
     };
 
     render() {
@@ -215,20 +231,7 @@ class MessageNotice extends Component {
         );
     }
 }
-const
-    mapStateToProps = (state, ownProps) => ({
-        userId: state.userinfo.id
-    });
-const
-    mapdispatchToProps = (dispatch, ownProps) => {
-        return {}
-    };
-export
-default
-
-connect(mapStateToProps, mapdispatchToProps)
-
-(
-    withRouter(MessageNotice)
-)
-;
+const mapStateToProps = (state, ownProps) => ({
+    userId: state.userinfo.id
+});
+export default connect(mapStateToProps, null)(withRouter(MessageNotice));

@@ -24,12 +24,7 @@ class zbactive extends Component {
     };
 
     componentWillMount() {
-        let tab = localStorage.getItem('branch_tab');
-        if (tab) {
-            this.fetchdata(JSON.parse(tab));
-        } else {
-            this.fetchdata()
-        }
+        this.fetchdata()
     }
 
 

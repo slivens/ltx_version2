@@ -32,13 +32,7 @@ class zbactive extends Component {
     };
 
     componentWillMount() {
-
-        let tab = localStorage.getItem('branch_tab');
-        if (tab) {
-            this.fetchdata(JSON.parse(tab));
-        } else {
-            this.fetchdata()
-        }
+        this.fetchdata()
     }
 
 
@@ -48,6 +42,7 @@ class zbactive extends Component {
 
 
     fetchdata = (tab) => {
+        console.log('@@@@@@@@@老党员之家',JSON.stringify(tab))
         const {unitId} = this.props;
         let obj = {};
         obj.actType = "1";
