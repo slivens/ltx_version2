@@ -1,7 +1,7 @@
 /*
  * @Author: Sliven
  * @Date: 2020-04-19 20:44:58
- * @LastEditTime: 2020-04-24 12:31:57
+ * @LastEditTime: 2020-04-27 12:21:33
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\components\homeListView\listViewComp.js
@@ -19,7 +19,7 @@ const NUM_ROWS = 10; //显示条数
 let pageIndex = 1;  //页码
 let dataBlobs = []; //数据模型
 const skeletonCount=10 //预显示骨架数
-
+let fechCount=0 //请求数
 class ListViewComp extends React.Component {
   constructor(props) {
     super(props);
@@ -62,9 +62,14 @@ class ListViewComp extends React.Component {
   renderDataBlobs = (data) => {
     dataBlobs = dataBlobs.concat(data)
   }
-  fetchData = (pIndex = 1) => {
+  fetchData = (pIndex = 1,callback) => {
     const {columnCode} =this.state;
     const { params } = this.props;
+    let nowfechCount
+    if(callback&&typeof callback=='function'){
+      nowfechCount=++fechCount;
+      console.log('@@@@@@@@fechCount',nowfechCount)
+    }
     Axios.post(this.state.fech_url, {
       ...params,
       columnCode: columnCode||undefined,
@@ -82,7 +87,14 @@ class ListViewComp extends React.Component {
             refreshing: false,
             isLoading: false,
             SkeletonLoading: false,
-          },()=>{this.allFetch=true});
+          },()=>{
+            if(callback&&typeof callback=='function'&&nowfechCount===fechCount){
+              console.log('@@@@@callback')
+              callback()
+            }else{
+              console.log('not callback')
+            }
+          });
         }
       })
   }
@@ -105,7 +117,9 @@ class ListViewComp extends React.Component {
     this.setState({ hasMore: true, refreshing: true });
     // simulate initial Ajax
     setTimeout(() => {
-      this.fetchData();
+      this.fetchData(undefined,()=>{
+        // dataBlobs = []
+      });
     }, 600)
   };
   /**
@@ -149,6 +163,7 @@ class ListViewComp extends React.Component {
               pullToRefresh={<PullToRefresh
                 refreshing={this.state.refreshing}
                 onRefresh={this.onRefresh}
+                
               />}
               onEndReached={this.onEndReached}
               onEndReachedThreshold={50}

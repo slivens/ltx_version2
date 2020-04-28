@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-09-06 09:42:37
- * @LastEditTime: 2020-04-23 14:37:29
+ * @LastEditTime: 2020-04-26 14:37:45
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\components\noticeBar\index.js
@@ -32,7 +32,7 @@ class NoticeBar extends Component{
          menuPid:item.id
         }).then(res=>{
             if(res.data.code==='success'){
-                if(item.title!=='学习教育'){
+                if(item.contentType=='menu'){
                     this.props.fetchMenu(res.data.data);
                 }
                 this.props.history.push(item.path)

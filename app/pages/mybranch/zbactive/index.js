@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-09-19 10:36:55
- * @LastEditTime: 2020-04-22 11:48:55
+ * @LastEditTime: 2020-04-28 16:20:33
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\pages\mybranch\zbactive\index.js
@@ -10,33 +10,65 @@ import React, { Component } from 'react';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
 import './style/index.less';
-import Zbtj from './zbtj';
 import 'antd/es/empty/style';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import commonUrl from '../../../config/index';
 import { connect } from 'react-redux';
-import { Toast, Badge } from 'antd-mobile';
+import { Toast, Badge, ListView,Tabs } from 'antd-mobile';
 import noAuth from '../../../util/noAuth';
-const test = "http://192.168.111.132:8080";
-import ListView from '../../../components/homeListView/listViewComp';
+import ListViewComp from '../../../components/homeListView/listViewComp2';
+let CancelToken = axios.CancelToken;
+const tabs = [
+  { title: '全部活动', key: 't1' },
+  { title: '我参与的', key: 't2' },
+  { title: '我发布的', key: 't3' },
+];
+let dataBlobs = []; //数据模型
+const NUM_ROWS = 10;
+let pageIndex = 1;  //页码
+const dataSource = new ListView.DataSource({
+  rowHasChanged: (row1, row2) => row1 !== row2,
+});
 class zbactive extends Component {
   state = {
     items: [],
-    tab: {}
+    tab: tabs[0],
+    dataSource,
+    hasMore: true,
+    refreshing: true,   //pulldown
+    isLoading: true,
+    SkeletonLoading: false, //骨架
   }
-  tabonChange = (tab) => {
-    this.setState({ tab: tab }, () => {
-      this.fetchdata(tab)
-    })
+  tabsOnchange = (tab, index) => {
+    dataBlobs = [];
+    pageIndex = 1;
+    let _this = this;
+    this.fetchCancel ? this.fetchCancel() : console.log('not cancel');
+    let cancelToken = {
+      cancelToken: new CancelToken((c) => {
+        _this.fetchCancel = c
+      })
+    }
+    this.setState({ SkeletonLoading: true, tab: tab }
+      , () => {
+        this.fetchData(undefined, cancelToken)
+      });
+    localStorage.setItem("branch_tab", JSON.stringify(tab));
+  }
+
+  renderDataBlobs = (data) => {
+    dataBlobs = dataBlobs.concat(data)
   }
   componentWillMount() {
-    let tab = localStorage.getItem('branch_tab')
-    if (tab) {
-      this.setState({ tab: JSON.parse(tab) })
-      this.fetchdata(JSON.parse(tab));
+    if (localStorage.getItem("branch_tab")) {
+      dataBlobs = [];
+      pageIndex = 1;
+      const tab = JSON.parse(localStorage.getItem("branch_tab"));
+      this.setState({ tab: tab }, () => { this.fetchData() });
     } else {
-      this.fetchdata()
+ 
+      this.fetchData()
     }
   }
   renderStatus = (type) => {
@@ -60,24 +92,71 @@ class zbactive extends Component {
         }
     }
   }
-  fetchdata = (tab) => {
+
+  componentWillUnmount() {
+    dataBlobs = []
+    pageIndex = 1
+  }
+  /**
+  * @description: 下拉刷新函数，手势下拉，整体列表刷新。
+  * @param {type} 
+  * @return: 
+  */
+  onRefresh = () => {
+    dataBlobs = []
+    pageIndex = 1
+    this.setState({ hasMore: true, refreshing: true });
+    // simulate initial Ajax
+    setTimeout(() => {
+      this.fetchData();
+    }, 600)
+  };
+  /**
+   * @description: 列表拉到底部进行刷新
+   * @param {type} 
+   * @return: 
+   */
+  onEndReached = (event) => {
+    this.setState({ isLoading: true });
+    if (!this.state.hasMore) {
+      return this.setState({ isLoading: false });
+    }
+    this.fetchData(++pageIndex)
+  };
+
+  fetchData = (pIndex = 1, cancelToken) => {
     let obj = {};
+    const { tab } = this.state;
     if (tab && tab.title === '我参与的') {
       obj.userId = this.props.userid;
     }
     if (tab && tab.title === '我发布的') {
       obj.operUserId = this.props.userid;
     }
-    axios.post(`${commonUrl}/app/activity/findActPageList.do`, obj
-    )
+    this.setState({ hasMore: true })
+    axios.post(`${commonUrl}/app/activity/findActPageList.do`, {
+      ...obj,
+      pageSize: NUM_ROWS,
+      pageNumber: pIndex
+    }, {
+      cancelToken: cancelToken ? cancelToken.cancelToken : undefined //拦截
+    })
       .then(res => {
-        noAuth(res.data, () => this.props.history.push('/login'))
-        if (res.data.code === "success") {
-          this.setState({ items: res.data.data.result })
-        } else {
+        if (res.data.code === 'success') {
+          if (!res.data.data.result.length) {
+            this.setState({ hasMore: false })
+          }
+          this.renderDataBlobs(res.data.data.result)
+          this.setState({
+            refreshing: false,
+            isLoading: false,
+            SkeletonLoading: false,
+            dataSource: this.state.dataSource.cloneWithRows(dataBlobs),
+          })
         }
       })
   }
+
   godetail = (id) => {
     this.props.history.push(`/detail/${id}`)
   }
@@ -102,14 +181,6 @@ class zbactive extends Component {
     );
   };
   render() {
-    const { tab } = this.state;
-    let params = {};
-    if (tab && tab.title === '我参与的') {
-      params.userId = this.props.userid;
-    }
-    if (tab && tab.title === '我发布的') {
-      params.operUserId = this.props.userid;
-    }
     return (
       <div className="zbactive">
         <div className="zbactive_topbar">
@@ -140,15 +211,27 @@ class zbactive extends Component {
           />
         </div>
         <div className="zbactive-box">
-          <Zbtj tabonChange={this.tabonChange} />
-          <ListView
-            params={params}
-            url={`${commonUrl}/app/activity/findActPageList.do`}
-            columnCode={tab.key}
+          {/* <Zbtj tabonChange={this.tabsOnchange} /> */}
+          <Tabs tabs={tabs}
+            page={this.state.tab.key}
+            initialPage={"tab1"}
+            tabBarUnderlineStyle={{ borderColor: "#F83A2E" }}
+            tabBarActiveTextColor={"#F83A2E"}
+            onChange={this.tabsOnchange}
+          // onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+          >
+          </Tabs>
+          <ListViewComp
+            refreshing={this.state.refreshing}
+            isLoading={this.state.isLoading}
+            SkeletonLoading={this.state.SkeletonLoading}
             row={this.row}
+            hasMore={this.state.hasMore}
+            dataSource={this.state.dataSource}
+            onRefresh={this.onRefresh}
+            onEndReached={this.onEndReached}
 
           />
-
         </div>
       </div>
     );
