@@ -319,7 +319,6 @@ class Home extends Component {
           refreshing={this.state.refreshing}
           isLoading={this.state.isLoading}
           SkeletonLoading={this.state.SkeletonLoading}
-          fetchData={(pageNumber) => { this.fetchData(pageNumber) }}
           row={this.row}
           hasMore={this.state.hasMore}
           dataSource={this.state.dataSource}

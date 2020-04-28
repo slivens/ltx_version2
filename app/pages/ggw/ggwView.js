@@ -2,7 +2,7 @@
  * @Author: Sliven
  * @Date: 2020-04-23 14:48:51
  * @LastEditors: Sliven
- * @LastEditTime: 2020-04-26 15:05:18
+ * @LastEditTime: 2020-04-28 09:49:10
  * @Description: the code is written by Sliven
  */
 import React, { Component } from 'react'
@@ -13,28 +13,107 @@ import './style/index.less';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import commonUrl from '../../config';
-import { Tabs, WhiteSpace, Badge, Modal } from 'antd-mobile';
+import { Tabs, WhiteSpace, Badge, Modal,ListView } from 'antd-mobile';
 import { GGWTabs } from '../../redux/actions';
-import ListView from '../../components/homeListView/listViewComp';
+import ListViewComp from '../../components/homeListView/listViewComp2';
 import classnames from 'classnames';
+let CancelToken = axios.CancelToken;
+let dataBlobs = []; //数据模型
+const NUM_ROWS = 10;
+let pageIndex = 1;  //页码
+const dataSource = new ListView.DataSource({
+  rowHasChanged: (row1, row2) => row1 !== row2,
+});
 class ggwView extends Component {
     state = {
         nowtabs: {},
-        tabsArr: []
+        tabsArr: [],
+        dataSource,
+        hasMore: true,
+        refreshing: true,   //pulldown
+        isLoading: true,
+        SkeletonLoading: false, //骨架
     }
     tabsOnchange = (tab, index) => {
-            this.setState({ nowtabs: tab });
-            localStorage.setItem("ggwTab", JSON.stringify(tab));
-    }
+        dataBlobs = [];
+        pageIndex = 1;
+        let _this = this;
+        this.fetchCancel ? this.fetchCancel() : console.log('not cancel');
+        let cancelToken = {
+          cancelToken: new CancelToken((c) => {
+            _this.fetchCancel = c
+          })
+        }
+        this.setState({ SkeletonLoading: true, nowtabs: tab }
+          , () => {
+            this.fetchData(undefined, cancelToken)
+          });
+        localStorage.setItem("ggwTab", JSON.stringify(tab));
+      }
+
     renderTabs = (arr) => {
         return arr.map(item => ({
             title: item.noticeColumn,
             key: item.noticeCode
         }))
     }
-    ShouldComponentUpdate( nextProps, nextState){
-        console.log('@@@@@@@@@@@nextState',nextProps,nextState)
+    renderDataBlobs = (data) => {
+        dataBlobs = dataBlobs.concat(data)
+      }
+      componentWillUnmount(){
+        dataBlobs = []
+        pageIndex = 1
+      }
+    fetchData = (pIndex = 1, cancelToken) => {
+        this.setState({ hasMore: true })
+        axios.post(`${commonUrl}/app/qryNewsPageListByCode.do`, {
+            columnCode: this.state.nowtabs.key,
+          pageSize: NUM_ROWS,
+          pageNumber: pIndex
+        }, {
+          cancelToken: cancelToken ? cancelToken.cancelToken : undefined //拦截
+        })
+          .then(res => {
+            if (res.data.code === 'success') {
+              if (!res.data.data.result.length) {
+                this.setState({ hasMore: false })
+              }
+              this.renderDataBlobs(res.data.data.result)
+              this.setState({
+                refreshing: false,
+                isLoading: false,
+                SkeletonLoading: false,
+                dataSource: this.state.dataSource.cloneWithRows(dataBlobs),
+              })
+            }
+          })
+      }
+      /**
+   * @description: 下拉刷新函数，手势下拉，整体列表刷新。
+   * @param {type} 
+   * @return: 
+   */
+  onRefresh = () => {
+    dataBlobs = []
+    pageIndex = 1
+    this.setState({ hasMore: true, refreshing: true });
+    // simulate initial Ajax
+    setTimeout(() => {
+      this.fetchData();
+    }, 600)
+  };
+  /**
+   * @description: 列表拉到底部进行刷新
+   * @param {type} 
+   * @return: 
+   */
+  onEndReached = (event) => {
+    this.setState({ isLoading: true });
+    if (!this.state.hasMore) {
+      return this.setState({ isLoading: false });
     }
+    this.fetchData(++pageIndex)
+  };
     componentWillMount() {
         const { ggwTasbs } = this.props;
         axios.post(`${commonUrl}/app/menu/qryAppTabList.do`, { columnCode: ggwTasbs.code })
@@ -44,6 +123,8 @@ class ggwView extends Component {
                     const tabs = this.renderTabs(res.data.data);
                     this.props.GGWTabs({ tabs: tabs })
                     if (localStorage.getItem("ggwTab")) {
+                        dataBlobs = [];
+                        pageIndex = 1;
                         const tab = JSON.parse(localStorage.getItem("ggwTab"));
                         const judge = tabs.find(item => item.key === tab.key)
                         if (judge) {
@@ -54,7 +135,7 @@ class ggwView extends Component {
                     } else {
                         nowtabs = tabs[0]
                     }
-                    this.setState({ tabsArr: tabs, nowtabs: nowtabs })
+                    this.setState({ tabsArr: tabs, nowtabs: nowtabs },()=>{this.fetchData()})
                 }
             })
 
@@ -96,7 +177,6 @@ class ggwView extends Component {
     render() {
         const { ggwTasbs } = this.props;
         const listViewParams = {}
-        console.log('@@@@@this.state.nowtabs.code', this.state.nowtabs)
         return (
             <div>
                 <div className="ggw">
@@ -123,12 +203,16 @@ class ggwView extends Component {
                         </Tabs>
                         {
                             this.state.nowtabs.key &&
-                            <ListView
-                                params={listViewParams}
-                                url={`${commonUrl}/app/qryNewsPageListByCode.do`}
-                                columnCode={this.state.nowtabs.key}
-                                row={this.row}
-                            />
+                            <ListViewComp
+                            refreshing={this.state.refreshing}
+                            isLoading={this.state.isLoading}
+                            SkeletonLoading={this.state.SkeletonLoading}
+                            row={this.row}
+                            hasMore={this.state.hasMore}
+                            dataSource={this.state.dataSource}
+                            onRefresh={this.onRefresh}
+                            onEndReached={this.onEndReached}
+                          />
                         }
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 /*
  * @Author: Sliven
  * @Date: 2020-04-19 20:44:58
- * @LastEditTime: 2020-04-27 21:26:17
+ * @LastEditTime: 2020-04-28 09:22:52
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\components\homeListView\listViewComp.js
@@ -64,7 +64,7 @@ class ListViewComp extends React.Component {
               onEndReachedThreshold={50}
               pageSize={5}
             />
-            : <div>{skeletonData}</div>
+            : <div style={{backgroundColor:"#fff"}}>{skeletonData}</div>
         }</div>
     );
   }
@@ -79,7 +79,6 @@ ListViewComp.propTypes = {
   isLoading: PropTypes.bool,
   hasMore: PropTypes.bool,
   SkeletonLoading: PropTypes.bool,
-  fetchData: PropTypes.func,
   dataSource: PropTypes.array,
   onRefresh: PropTypes.func,
   onEndReached: PropTypes.func
