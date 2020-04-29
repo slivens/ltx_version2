@@ -225,7 +225,7 @@ class MessageNotice extends Component {
                             <TurnFooterbar msgList={msgList} msgId={msgId} msgType={msgType}
                                            fetchData={this.fetchData}/>
                         </div>
-                    ) : <Empty description={errorMessage}/>
+                    ) : ""
                 }
             </div>
         );
