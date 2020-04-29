@@ -8,8 +8,7 @@
  */
 // const commonUrl = 'http://218.5.2.250:11889';
 //const test = 'http://127.0.0.1:8088';
-// const commonUrl = 'http://192.168.111.132:8080';
+ const commonUrl = 'http://192.168.111.132:8080';
 // const commonUrl = 'http://220.160.52.124:8080';
-const commonUrl = '/api';
-
+//const commonUrl = '/api';
 export default commonUrl;

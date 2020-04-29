@@ -11,6 +11,9 @@ import noAuth from '../../../util/noAuth';
 import './style/index.less';
 const prefix = "mesNotice_footerbar";
 
+let pageIndex = 1;  //页码
+let dataBlobs = []; //数据模型
+
 class TurnFooterbar extends Component {
 
     state = {
@@ -61,7 +64,10 @@ class TurnFooterbar extends Component {
 
     nextPage = () => {
         const {msgList, msgId, msgType} = this.state;
-        const {history, location} = this.props;
+        const {history, location,isFinished} = this.props;
+        if(!isFinished){
+            this.props.fetchMsgList(++pageIndex);
+        }
         for (let index = 0; index < msgList.length; index++) {
             let fomatParams = JSON.parse(msgList[index].params);
             if (fomatParams.id === msgId) {

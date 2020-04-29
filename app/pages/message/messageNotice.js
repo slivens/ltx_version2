@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 import {withRouter, Link} from 'react-router-dom';
-import Icon from 'antd/es/icon';
-import Empty from 'antd/es/empty';
-import 'antd/es/icon/style';
-import 'antd/es/empty/style';
 import './style/index.less';
 import {Button, WhiteSpace, Flex, Toast, List} from 'antd-mobile';
 import axios from 'axios';
@@ -13,29 +9,32 @@ import noAuth from '../../util/noAuth';
 import Topbar from '../../components/topbar/topbar';
 import DescriptionBox from '../../components/descriptionBox/descriptionBox';
 import TurnFooterbar from './components/turnfooterbar';
-import {detail, attachMentList} from './data';
 
 const test = "http://127.0.0.1:8088";
 
+let dataBlobs = [];
 const prefix = "mesNotice";
-const NUM_ROWS = 0x7fffffff;
-const pIndex = 1;
+const NUM_ROWS = 5;
 
 class MessageNotice extends Component {
     constructor(props) {
         super(props);
         this.state = {
             detail: undefined,
-            errorMessage: undefined,
             msgList: undefined,
             msgId: undefined,
             msgType: undefined,
+
             clicked1: 'none',
+            isFinished: false
         };
     }
 
     componentWillMount() {
         const {pathname} = this.props.location;
+        if (this.props.location.params) {
+            localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
+        }
         const msgId = pathname.split('/')[2];
         const msgType = pathname.split('/')[3];
         this.fetchData(msgId, msgType);
@@ -52,12 +51,12 @@ class MessageNotice extends Component {
                     this.readInfo(res.data.data.id);
                     this.setState({detail: res.data.data, msgId, msgType})
                 } else {
-                    this.setState({errorMessage: res.data.message})
+                    Toast.fail(res.data.message);
                 }
             })
     };
 
-    fetchMsgList = () => {
+    fetchMsgList = (pIndex = 1) => {
         const {pathname} = this.props.location;
         const msgType = pathname.split('/')[3];
         let requestParams = {pageNumber: pIndex, pageSize: NUM_ROWS, msgType: msgType};
@@ -65,9 +64,19 @@ class MessageNotice extends Component {
             .then(res => {
                 noAuth(res.data, () => history.push('/login'));
                 if (res.data.code === 'success') {
-                    this.setState({msgList: res.data.data.result})
+                    if (res.data.data.result.length === 0) {
+                        this.setState({isFinished: true})
+                    } else {
+                        this.renderDataBlobs(res.data.data.result);
+                        this.setState({msgList: dataBlobs})
+                    }
+
                 }
             })
+    };
+
+    renderDataBlobs = (data) => {
+        dataBlobs = dataBlobs.concat(data)
     };
 
     readInfo = (recordId) => {
@@ -81,35 +90,25 @@ class MessageNotice extends Component {
 
 
     downloadFile = (event, item) => {
-        /* */
         let u = navigator.userAgent;
         let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
         let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-        if (isAndroid) {
-            let src = item.attachmentUrl;
-            let iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = "javascript: '<script>location.href=\"" + src + "\"<\/script>'";
-            document.getElementsByTagName('body')[0].appendChild(iframe);
-        } else if (isiOS) {
+        if (isiOS) {
             let filename = item.attachmentName;
             let filepath = item.attachmentUrl;
             if (window.plus) {//支持plus
-
                 //判断文件是否已经下载
                 plus.io.resolveLocalFileSystemURL(
                     '_downloads/' + filename,
                     function (entry) {//如果已存在文件，则打开文件
                         if (entry.isFile) {
-                            Toast.success("正在打开文件...");
                             plus.runtime.openFile('_downloads/' + filename);
                         }
                     }, function () {//如果未下载文件，则下载后打开文件
                         var dtask = plus.downloader.createDownload(filepath, {filename: '_downloads/' + filename}, function (d, status) {
                             if (status == 200) {
                                 plus.runtime.openFile('_downloads/' + filename);
-                            }
-                            else {
+                            } else {
                                 Toast.error("下载失败: " + status);
                             }
                         });
@@ -119,26 +118,13 @@ class MessageNotice extends Component {
                             }
                             switch (task.state) {
                                 case 1:
-                                    Toast.success("开始下载...");
+                                    Toast.success("开始下载...", 1);
                                     break;
                                 case 2:
-                                    Toast.success("正在下载...");
+                                    Toast.success("正在下载...", 1);
                                     break;
-                                case 3: // 已接收到数据
-                                    var progressVal = (task.downloadedSize / task.totalSize) * 100;
-                                //psb1.progressbar({ progress: progressVal }).show();
-                                //dstatus[0].innerHTML = task.downloadedSize + '/' + task.totalSize;
-                                //hui.toast('下载进度：' + (task.downloadedSize + '/' + task.totalSize));
-                                /*  if (hui('.progress').length > 0) {
-                                 hui('.progress').html(parseInt(progressVal) + '%');
-                                 }
-                                 break;*/
                                 case 4:
                                     dtask = null;
-                                    /*if (hui('.progress').length > 0) {
-                                     hui('.progress').html('0%');
-                                     }*/
-                                    Toast.success("正在打开文件...");
                                     break;
                             }
                         });
@@ -148,6 +134,12 @@ class MessageNotice extends Component {
             } else {//不支持plus
                 window.open(filepath);
             }
+        } else {
+            let src = item.attachmentUrl;
+            let iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = "javascript: '<script>location.href=\"" + src + "\"<\/script>'";
+            document.getElementsByTagName('body')[0].appendChild(iframe);
         }
     };
 
@@ -168,19 +160,11 @@ class MessageNotice extends Component {
     };
 
     goBack = () => {
-        /*  const {history, location} = this.props;
-         // localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
-         history.push({pathname: "/mesgsDetail", params: location.params})*/
-        localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
         this.props.history.goBack();
     };
 
     render() {
-        const {detail, errorMessage, msgList, msgId, msgType} = this.state;
-        /* const {history, location} = this.props;
-         const {params} = location;
-         console.log(params)*/
-        const {pathname} = this.props.location;
+        const {detail, msgList, msgId, msgType, isFinished} = this.state;
         return (
             <div className={prefix}>
                 <Topbar title="通知详情" onClick={this.goBack}/>
@@ -223,7 +207,9 @@ class MessageNotice extends Component {
                                 ) : ""
                             }
                             <TurnFooterbar msgList={msgList} msgId={msgId} msgType={msgType}
-                                           fetchData={this.fetchData}/>
+                                           isFinished={isFinished}
+                                           fetchData={this.fetchData}
+                                           fetchMsgList={this.fetchMsgList}/>
                         </div>
                     ) : ""
                 }
