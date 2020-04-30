@@ -11,8 +11,8 @@ import {connect} from 'react-redux';
 import {withRouter} from "react-router-dom";
 import axios from 'axios';
 import {SegmentedControl, WingBlank} from 'antd-mobile';
-import Icon from 'antd/es/icon';
-import 'antd/es/icon/style';
+import Empty from 'antd/es/empty';
+import "antd/es/empty/style";
 
 import './style/index.less';
 import List from './list';
@@ -71,14 +71,23 @@ class index extends Component {
                  />
                  </div> */}
                 <div className="mesg-list-box">
-                    <List>
-                        {
-                            this.state.mesgs.map(
-                                (item, key) => <List.Item key={key} {...item}/>
-                            )
-                        }
-                    </List>
+                    {
+                        this.state.mesgs.length ? (
+                            <List>
+                                {
+                                    this.state.mesgs.map(
+                                        (item, key) => <List.Item key={key} {...item}/>
+                                    )
+                                }
+                            </List>
+                        ) : (
+                            <Empty description={"暂无数据"} style={{marginTop: '.2rem'}}/>
+                        )
+                    }
+
                 </div>
+
+
                 <FooterBar />
             </div>
         );

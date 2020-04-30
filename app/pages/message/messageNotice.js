@@ -10,7 +10,7 @@ import Topbar from '../../components/topbar/topbar';
 import DescriptionBox from '../../components/descriptionBox/descriptionBox';
 import TurnFooterbar from './components/turnfooterbar';
 
-const test = "http://127.0.0.1:8088";
+const test = "http://192.168.137.1:8088";
 
 let dataBlobs = [];
 const prefix = "mesNotice";
@@ -48,7 +48,7 @@ class MessageNotice extends Component {
                 noAuth(res.data, () => this.props.history.push('/login'));
                 if (res.data.code === "success") {
                     //todo 消息已读取的id不对，接口要改
-                    this.readInfo(res.data.data.id);
+                    this.readInfo(res.data.data.recordId);
                     this.setState({detail: res.data.data, msgId, msgType})
                 } else {
                     Toast.fail(res.data.message);
@@ -96,41 +96,46 @@ class MessageNotice extends Component {
         if (isiOS) {
             let filename = item.attachmentName;
             let filepath = item.attachmentUrl;
+
             if (window.plus) {//支持plus
                 //判断文件是否已经下载
-                plus.io.resolveLocalFileSystemURL(
-                    '_downloads/' + filename,
-                    function (entry) {//如果已存在文件，则打开文件
-                        if (entry.isFile) {
-                            plus.runtime.openFile('_downloads/' + filename);
-                        }
-                    }, function () {//如果未下载文件，则下载后打开文件
-                        var dtask = plus.downloader.createDownload(filepath, {filename: '_downloads/' + filename}, function (d, status) {
-                            if (status == 200) {
+                try {
+                    plus.io.resolveLocalFileSystemURL(
+                        '_downloads/' + filename,
+                        function (entry) {//如果已存在文件，则打开文件
+                            if (entry.isFile) {
                                 plus.runtime.openFile('_downloads/' + filename);
-                            } else {
-                                Toast.error("下载失败: " + status);
                             }
-                        });
-                        dtask.addEventListener("statechanged", function (task, status) {
-                            if (!dtask) {
-                                return;
-                            }
-                            switch (task.state) {
-                                case 1:
-                                    Toast.success("开始下载...", 1);
-                                    break;
-                                case 2:
-                                    Toast.success("正在下载...", 1);
-                                    break;
-                                case 4:
-                                    dtask = null;
-                                    break;
-                            }
-                        });
-                        dtask.start();
-                    }
-                );
+                        }, function () {//如果未下载文件，则下载后打开文件
+                            var dtask = plus.downloader.createDownload(filepath, {filename: '_downloads/' + filename}, function (d, status) {
+                                if (status == 200) {
+                                    plus.runtime.openFile('_downloads/' + filename);
+                                } else {
+                                    Toast.error("下载失败: " + status);
+                                }
+                            });
+                            dtask.addEventListener("statechanged", function (task, status) {
+                                if (!dtask) {
+                                    return;
+                                }
+                                switch (task.state) {
+                                    case 1:
+                                        Toast.success("开始下载...", 1);
+                                        break;
+                                    case 2:
+                                        Toast.success("正在下载...", 1);
+                                        break;
+                                    case 4:
+                                        dtask = null;
+                                        break;
+                                }
+                            });
+                            dtask.start();
+                        }
+                    );
+                } catch (plusError) {
+                    console.log('该浏览器不支持plus')
+                }
             } else {//不支持plus
                 window.open(filepath);
             }

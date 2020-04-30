@@ -20,7 +20,7 @@ import Topbar from '../../components/topbar/topbar';
 import "./style/index.less";
 import {msgRecordList} from './data';
 
-const test = "http://127.0.0.1:8088";
+const test = "http://192.168.137.1:8088";
 const NUM_ROWS = 5; //显示条数
 
 class mesgsDetail extends Component {

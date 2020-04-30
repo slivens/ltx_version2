@@ -8,6 +8,7 @@ import './style/index.less';
 // import 'antd/es/icon/style';
 
 import noAuth from '../../util/noAuth';
+import commonUrl from '../../config';
 import Icon from '../icon';
 
 //const test = "http://127.0.0.1:8088";
@@ -23,37 +24,53 @@ class footerbar extends Component {
     }
 
     componentDidMount() {
-        // 监听plusready事件
-       /* document.addEventListener("plusready", function () {
-            // 添加监听从系统消息中心点击某条消息启动应用事件
-            //监听系统通知栏消息点击事件
-            plus.push.addEventListener("click", function (msg) {
-                console.log('====================click====================', msg);
-            }, false);
+        const {history} = this.props;
+        const _that = this;
+        try {
+            if (window.plus) {
+                plus.push.addEventListener("click", function (msg) {
+                    console.log('====================click====================', JSON.stringify(msg));
+                    let payload = msg.payload;
+                    payload = (new Function("return " + payload))();
+                    let msgType = payload.type;
+                    let params = decodeURIComponent(payload.params);
+                    params = (new Function("return " + params))();
+                    if (msgType == 4) {
+                        history.push({pathname: `/zbdetail/${params.id}`});
+                    } else {
+                        history.push({pathname: `/messageNotice/${params.id}/${msgType}`})
+                    }
+                }, false);
 
-            // 获取个推服务端编程透传的消息，
-            plus.push.addEventListener("receive", function (msg) {
-                console.log('====================receive====================', msg);
-                this.getUnreadedMsgNum();
-            }, false);
-        }, false);*/
-        if (window.plus){
-            plus.push.addEventListener("click", function (msg) {
-                console.log('====================click====================', msg);
-            }, false);
-
-            plus.push.addEventListener("receive", function (msg) {
-                console.log('====================receive====================', msg);
-                this.getUnreadedMsgNum();
-            }, false);
+                plus.push.addEventListener("receive", function (msg) {
+                    console.log('====================receive====================');
+                    console.log(JSON.stringify(msg));
+                    _that.getUnreadedMsgNum();
+                    let msgBody = undefined;
+                    try {
+                        let content = JSON.parse(msg.content);
+                        msgBody = content.msgBody;
+                    } catch (err) {
+                        msgBody = msg.content;
+                    }
+                    let payload = msg.payload;
+                    payload.way = "LocalMsg";
+                    if (!msg.aps) { // 服务器发来的消息
+                        let messageOption = {cover: false, delay: 1};
+                        plus.push.createMessage(msgBody, JSON.stringify(payload), messageOption);
+                    }
+                }, false);
+            }
+        } catch (plusError) {
+            console.log('该浏览器不支持plus')
         }
+
 
     }
 
     getUnreadedMsgNum = () => {
-        console.log('=====getUnreadedMsgNum=====')
-        const {userinfo} = this.props;
-        axios.post(`${test}/app/msg/qryUnreadedMsgNum.do`, {userId: userinfo.id})
+        const {userinfo, history} = this.props;
+        axios.post(`${commonUrl}/app/msg/qryUnreadedMsgNum.do`, {userId: userinfo.id})
             .then(res => {
                 noAuth(res.data, () => history.push('/login'));
                 if (res.data.code === 'success') {
@@ -63,36 +80,6 @@ class footerbar extends Component {
     };
 
     gowhere = (key) => {
-        let msg = {
-            "__UUID__": "androidPushMsg126874268",
-            "title": "福建老干部",
-            "appid": "com.rjsoft.lgbEnt",
-            "content": "{'msgType':'2', 'msgTitle':'测试11', 'objId':'8181808471bf9c5e0171bf9d29800002', 'msgId':'8181808471bf9c5e0171bfa35619000f'}",
-            "payload": "{msgType=2, msgTitle=测试11, objId=8181808471bf9c5e0171bf9d29800002, msgId=8181808471bf9c5e0171bfa35619000f}"
-        };
-        /*const {history, location} = this.props;
-        if (key === '/message') {
-            let payload = msg.content;
-            payload = (new Function("return " + payload))();
-            let msgType = payload.msgType;
-            // params: {id: msgType, params} || {}   params: location.params || {}
-            if (msgType == 4) {
-                history.push({pathname: `/zbdetail/${payload.objId}`})
-            } else {
-                history.push({pathname: `/messageNotice/${payload.objId}/${msgType}`})
-            }
-        }*/
-        if (window.plus) {
-           /* plus.push.createMessage(
-                "测试",
-                JSON.stringify({
-                    msgType: 2,
-                    msgTitle: '测试11',
-                    objId: '8181808471bf9c5e0171bf9d29800002',
-                    msgId: '8181808471bf9c5e0171bfa35619000f'
-                }),
-                "LocalMSG");*/
-        }
         this.props.history.push(key)
     };
 
