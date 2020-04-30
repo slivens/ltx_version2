@@ -17,14 +17,10 @@ class PartyTab extends Component {
     }
 
     componentDidMount() {
-        let tab = localStorage.getItem('party_branch_tab');
-        if (tab) {
-            this.props.tabonChange(JSON.parse(tab))
-        }
     }
 
     tabonChange = (tab, index) => {
-        localStorage.setItem('party_branch_tab', JSON.stringify(tab));
+        console.log('tabonChange')
         this.props.tabonChange(tab)
     };
 

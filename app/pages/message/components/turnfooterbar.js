@@ -1,10 +1,18 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
-import {Flex} from 'antd-mobile';
+import {connect} from 'react-redux';
+import {Flex, Toast} from 'antd-mobile';
 import Icon from 'antd/es/icon';
 import 'antd/es/icon/style';
+
+import commonUrl from '../../../config';
+import noAuth from '../../../util/noAuth';
+
 import './style/index.less';
 const prefix = "mesNotice_footerbar";
+
+let pageIndex = 1;  //页码
+let dataBlobs = []; //数据模型
 
 class TurnFooterbar extends Component {
 
@@ -34,31 +42,50 @@ class TurnFooterbar extends Component {
 
     previousPage = () => {
         const {msgList, msgId, msgType} = this.state;
-        const {history,location} = this.props;
+        const {history, location} = this.props;
         for (let index = 0; index < msgList.length; index++) {
             let fomatParams = JSON.parse(msgList[index].params);
             if (fomatParams.id === msgId) {
-                let turnItem = index === 0 ? msgList[msgList.length - 1] : msgList[index - 1];
-                let turnParams = JSON.parse(turnItem.params);
-                this.props.fetchData(turnParams.id, msgType);
-                history.replace({pathname: `/messageNotice/${turnParams.id}/${msgType}`, params: location.params || {}})
+                if (index === 0) {
+                    Toast.info(`已经是第一条！`)
+                } else {
+                    let turnItem = msgList[index - 1];
+                    let turnParams = JSON.parse(turnItem.params);
+                    this.props.fetchData(turnParams.id, msgType);
+                    history.replace({
+                        pathname: `/messageNotice/${turnParams.id}/${msgType}`,
+                        params: location.params || {}
+                    })
+                }
+
             }
         }
     };
 
     nextPage = () => {
         const {msgList, msgId, msgType} = this.state;
-        const {history, location} = this.props;
+        const {history, location,isFinished} = this.props;
+        if(!isFinished){
+            this.props.fetchMsgList(++pageIndex);
+        }
         for (let index = 0; index < msgList.length; index++) {
             let fomatParams = JSON.parse(msgList[index].params);
             if (fomatParams.id === msgId) {
-                let turnItem = index === msgList.length - 1 ? msgList[0] : msgList[index + 1];
-                let turnParams = JSON.parse(turnItem.params);
-                this.props.fetchData(turnParams.id, msgType);
-                history.replace({pathname: `/messageNotice/${turnParams.id}/${msgType}`, params: location.params || {}})
+                if (index === msgList.length - 1) {
+                    Toast.info(`已经是最后一条！`)
+                } else {
+                    let turnItem = msgList[index + 1];
+                    let turnParams = JSON.parse(turnItem.params);
+                    this.props.fetchData(turnParams.id, msgType);
+                    history.replace({
+                        pathname: `/messageNotice/${turnParams.id}/${msgType}`,
+                        params: location.params || {}
+                    })
+                }
             }
         }
     };
+
 
     render() {
         return (
@@ -75,13 +102,13 @@ class TurnFooterbar extends Component {
                                      transform: "translateY(-50%)",
                                      color: "#f02933"
                                  }} type="left"/>
-                        <span className={prefix + "_left_text"}>上一页</span>
+                        <span className={prefix + "_left_text"}>上一条</span>
                         </span>
 
                     </Flex.Item>
                     <Flex.Item>
                         <span onClick={this.nextPage}>
-                            <span className={prefix + "_right_text"}> 下一页</span>
+                            <span className={prefix + "_right_text"}> 下一条</span>
                             <Icon
                                 style={{
                                     position: "absolute",
@@ -99,4 +126,9 @@ class TurnFooterbar extends Component {
         );
     }
 }
-export default withRouter(TurnFooterbar);
+const mapStateToProps = (state, onwporps) => {
+    return {
+        userId: state.userinfo.id
+    }
+};
+export default connect(mapStateToProps)(withRouter(TurnFooterbar));
