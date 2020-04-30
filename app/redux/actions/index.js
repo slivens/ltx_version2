@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-10-16 13:54:01
- * @LastEditTime: 2020-04-23 17:03:03
+ * @LastEditTime: 2020-04-29 13:22:51
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\redux\actions\index.js
@@ -84,6 +84,12 @@ const GGWTabs=(tabs={})=>{
         tabs
     }
 };
+const EditActive=(activeObj={})=>{
+    return {
+        type:"EditActive",
+        activeObj,
+    }
+}
 export {
     AddUserInfo,
     changeMenu,
@@ -96,5 +102,6 @@ export {
     CondolationObjectData,
     AddMenuList,
     CondolationObjectChange,
-    GGWTabs
+    GGWTabs,
+    EditActive
 }

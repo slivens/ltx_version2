@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-09-19 10:36:55
- * @LastEditTime: 2020-04-28 16:20:33
+ * @LastEditTime: 2020-04-29 13:21:59
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\pages\mybranch\zbactive\index.js
@@ -17,6 +17,7 @@ import commonUrl from '../../../config/index';
 import { connect } from 'react-redux';
 import { Toast, Badge, ListView,Tabs } from 'antd-mobile';
 import noAuth from '../../../util/noAuth';
+import {EditActive} from '../../../redux/actions';
 import ListViewComp from '../../../components/homeListView/listViewComp2';
 let CancelToken = axios.CancelToken;
 const tabs = [
@@ -157,12 +158,12 @@ class zbactive extends Component {
       })
   }
 
-  godetail = (id) => {
-    this.props.history.push(`/detail/${id}`)
+  godetail = (item) => {
+     this.props.history.push(`/zbdetail/${item.activityId}`)
   }
   row = (item, sectionID, rowID) => {
     return (
-      <div onClick={() => this.props.history.push(`/zbdetail/${item.activityId}`)} key={rowID} className="zbactive_item">
+      <div onClick={()=>{this.godetail(item)}} key={rowID} className="zbactive_item">
         <div className="zbactive_item_left">
           <img
             onError={(e) => { e.target.onerror = null; e.target.src = `${commonUrl}/app/getUploadImg.do?fn=default.jpg` }}
@@ -180,6 +181,14 @@ class zbactive extends Component {
       </div>
     );
   };
+  pushActivity=()=>{
+    if(this.props.partyBranchId){
+      this.props.editActive();
+      this.props.history.push('/pushActivity') 
+    }else{
+      Toast.info('未获得发布权限，请联系管理员！')
+    }
+  }
   render() {
     return (
       <div className="zbactive">
@@ -207,7 +216,7 @@ class zbactive extends Component {
               fontSize: ".18rem",
               transform: "translateY(-50%)"
             }}
-            onClick={() => this.props.partyBranchId ? this.props.history.push('/pushActivity') : Toast.info('未获得发布权限，请联系管理员！')}
+            onClick={this.pushActivity}
           />
         </div>
         <div className="zbactive-box">
@@ -243,6 +252,9 @@ const mapStateToProps = (state, ownProps) => ({
 })
 const mapdispatchToProps = (dispatch, ownProps) => {
   return {
+    editActive: () => {
+      dispatch(EditActive({}))
+    }
   }
 }
 export default connect(mapStateToProps, mapdispatchToProps)(withRouter(zbactive));
