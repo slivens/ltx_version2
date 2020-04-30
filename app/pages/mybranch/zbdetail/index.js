@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2019-09-19 15:39:06
- * @LastEditTime: 2020-02-27 18:01:23
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-04-30 13:02:32
+ * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\pages\mybranch\zbdetail\index.js
  */
@@ -17,6 +17,7 @@ import commonUrl from '../../../config';
 import DetailBox from './detailBox';
 import {connect} from 'react-redux';
 import noAuth from '../../../util/noAuth';
+import {EditActive} from '../../../redux/actions';
 
 class index extends Component {
     constructor(props){
@@ -178,6 +179,22 @@ class index extends Component {
         localStorage.setItem("messageNotice", JSON.stringify(this.props.location.params));
         this.props.history.goBack()
     };
+    editActive=(item)=>{
+        if(item.actStatus==='筹备中'){
+            axios.post(`${commonUrl}/app/activity/editActivity.do`,{activityId:"4028ef0471aac43f0171c3e98f2a0858"})
+            .then(res => {
+                if (res.data.code === 'success') {
+                    console.log('@@@@@@@@res',res.data.data)
+                    this.props.editActive(res.data.data)
+                    this.props.history.push('/pushActivity') 
+                } else {
+                   
+                }
+            })
+        }
+        
+        
+    }
     render() {
         const {detail,memberStatus}=this.state;
         const {pathname} = this.props.location;
@@ -199,6 +216,20 @@ class index extends Component {
                         type="left"
                     />
                     活动详情
+                    {
+                       detail.actStatus==='筹备中'&& detail.operUser===this.props.userId&&
+                    <div
+                    onClick={()=>this.editActive(detail)}
+                    style={{
+                            position: "absolute",
+                            right: ".1rem",
+                            top: "50%",
+                            color: "#F7F8F4",
+                            fontSize: ".18rem",
+                            transform: "translateY(-50%)"
+                        }}
+                        >编辑</div>
+                    }
                     </div>
                     <div className="zbdetail_box">
                     <div className="zbdetail_pic">
@@ -322,6 +353,9 @@ const mapStateToProps = (state, ownProps) => ({
 })
 const mapdispatchToProps=(dispatch, ownProps)=>{
     return {
-    }
+        editActive: (item) => {
+          dispatch(EditActive(item))
+        }
+      }
 }
 export default connect(mapStateToProps,mapdispatchToProps)(withRouter(index));

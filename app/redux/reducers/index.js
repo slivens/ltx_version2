@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-10-16 13:54:08
- * @LastEditTime: 2020-04-24 09:29:28
+ * @LastEditTime: 2020-04-29 13:13:59
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\redux\reducers\index.js
@@ -114,8 +114,17 @@ const ggwTasbs=(state = {}, action)=>{
             return state;
     }
 }
+const editActive=(state={},action)=>{
+    switch (action.type) {
+        case 'EditActive':
+            return action.activeObj
+    
+        default:
+            return state
+    }
+}
 export default combineReducers({
     userinfo, menuData, searchValue, serverCompany, address, allMemberData,
     condolationObject, fetchMenuList, condolationObject, condolationObjectChange,
-    ggwTasbs
+    ggwTasbs,editActive
 });

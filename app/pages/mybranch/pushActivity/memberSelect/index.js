@@ -36,7 +36,6 @@ class MemberSelect extends React.Component {
         this.fechData(username)
     }
     fechData=(username)=>{
-        
             Axios.post(`${commonUrl}/app/activity/findMemberByBranchId.do`, 
             { branchId: this.props.userinfo.partyBranchId,username })
                 .then(res => {
