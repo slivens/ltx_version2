@@ -176,7 +176,7 @@ class Logincomp extends Component {
                 <AgreeItem 
                 style={{marginLeft:".32rem"}}
                 data-seed="logId" onChange={e => this.AgreeSecret=e.target.checked}>
-                  勾选即代表您同意 <Link to="/secret" >《隐私政策》</Link>
+                  勾选即代表您同意 <Link to="/secret" >《隐私政策》</Link><Link to="/useragreement" >《用户协议》</Link>
                 </AgreeItem>
                 <Button onClick={this.handleLogin} type="warning" className="login_btn">登录</Button>
                 {/* <div className={prefix + "_pwd"}>

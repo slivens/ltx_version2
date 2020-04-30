@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-08-28 16:34:35
- * @LastEditTime: 2020-04-23 14:54:37
+ * @LastEditTime: 2020-04-30 17:21:49
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\pages\index.js
@@ -50,6 +50,7 @@ export {default as OrderDetail} from './homeServer/orderDetail';
 export {default as MemberSelect} from './mybranch/pushActivity/memberSelect';
 export {default as VerifyCode} from '../components/verifyCode';
 export {default as Secret} from '../components/secret/secret';
+export {default as Useragreement} from '../components/useragreement/secret';
 export {default as Ggw} from './ggw';
 export {default as GgwView} from './ggw/ggwView';
 

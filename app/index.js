@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-08-28 10:36:08
- * @LastEditTime: 2020-04-24 12:13:08
+ * @LastEditTime: 2020-04-30 17:25:07
  * @LastEditors: Sliven
  * @Description: In User Settings Edit
  * @FilePath: \ltx\app\index.js
@@ -30,7 +30,7 @@ import {
     Myorder,OrderDetail,
     MemberSelect,VerifyCode,
     Secret,Ggw,
-    GgwView,
+    GgwView,Useragreement,
     Ldyzj, Lgbdx,   //belong to :美玉
     PartyDetail, PartyMember,
     Consolation,
@@ -116,7 +116,8 @@ const App = ({history, location}) => {
         'ggwView':<GgwView/>,
         'teacherPool': <TeacherPool/>,
         'messageNotice': <MessageNotice/>,
-        'teacherPoolDetail': <TeacherPoolDetail/>
+        'teacherPoolDetail': <TeacherPoolDetail/>,
+        'useragreement':<Useragreement/>
     };
     const {pathname} = location;
     const path = pathname.split('/')[1];

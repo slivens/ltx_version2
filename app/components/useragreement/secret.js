@@ -2,7 +2,7 @@
  * @Author: Sliven
  * @Date: 2020-04-23 13:30:26
  * @LastEditors: Sliven
- * @LastEditTime: 2020-04-30 17:18:39
+ * @LastEditTime: 2020-04-30 17:18:30
  * @Description: the code is written by Sliven
  */
 
@@ -27,9 +27,9 @@ class secret extends Component {
                         fontSize: ".24rem",
                         transform: "translateY(-50%)"
                     }} type="left" />
-                隐私政策</div>
+                用户协议</div>
                 <iframe style={{height:"calc(100% - .6rem)",width:"100%"}}
-                 src="http://218.5.2.250:11889/app/policy.html "></iframe>
+                 src="http://220.160.52.124:8080/app/agreement.html "></iframe>
                 </div>
         );
     }
